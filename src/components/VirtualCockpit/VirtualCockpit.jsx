@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useCockpit } from '../../context/CockpitContext';
 import CockpitSidebar from './CockpitSidebar';
 import CockpitStatusBar from './CockpitStatusBar';
 import GroundstationView from './Views/GroundstationView';
@@ -10,37 +11,34 @@ import EvidenceModal from './Modals/EvidenceModal';
 import MissionAiModal from './Modals/MissionAiModal';
 import CommandPaletteModal from './Modals/CommandPaletteModal';
 
-export default function VirtualCockpit({ 
-  initialView = 'workspace',
-  onTriggerDownload,
-  className = "" 
-}) {
-  const [activeView, setActiveView] = useState(initialView);
-  const [focusMode, setFocusMode] = useState(false);
-  const [needsCount, setNeedsCount] = useState(1);
-  const [evidenceModalOpen, setEvidenceModalOpen] = useState(false);
-  const [missionAiOpen, setMissionAiOpen] = useState(false);
-  const [missionAiPrompt, setMissionAiPrompt] = useState("");
-  const [paletteOpen, setPaletteOpen] = useState(false);
-
-  const handleAcknowledge = () => {
-    setNeedsCount(0);
-  };
-
-  const openMissionAiWithPrompt = (prompt = "") => {
-    setMissionAiPrompt(prompt);
-    setMissionAiOpen(true);
-  };
+export default function VirtualCockpit({ className = "" }) {
+  const {
+    activeView,
+    setActiveView,
+    focusMode,
+    toggleFocusMode,
+    pendingDecisionsCount,
+    engineStatus,
+    evidenceModalOpen,
+    setEvidenceModalOpen,
+    missionAiOpen,
+    setMissionAiOpen,
+    missionAiPrompt,
+    openMissionAi,
+    paletteOpen,
+    setPaletteOpen,
+    acknowledgeDecision,
+  } = useCockpit();
 
   return (
-    <div className={`w-full max-w-7xl mx-auto bg-[#080a0f] border border-[#1a202c] rounded-2xl shadow-[0_0_80px_rgba(0,0,0,0.9),0_0_30px_rgba(59,130,246,0.15)] flex flex-col overflow-hidden transition-all duration-300 ${className}`}>
+    <div className={`w-full max-w-7xl mx-auto bg-[#080a0f] border border-[#1a202c] rounded-2xl shadow-[0_0_80px_rgba(0,0,0,0.9),0_0_30px_rgba(59,130,246,0.12)] flex flex-col overflow-hidden transition-all duration-300 ${className}`}>
       
       {/* Top Application Status Bar */}
       <CockpitStatusBar
         activeView={activeView}
         onViewChange={setActiveView}
-        needsCount={needsCount}
-        engineStatus={needsCount > 0 ? 'Waiting on you' : 'Healthy'}
+        needsCount={pendingDecisionsCount}
+        engineStatus={engineStatus}
         projectName="first"
       />
 
@@ -52,8 +50,8 @@ export default function VirtualCockpit({
           <CockpitSidebar
             activeView={activeView}
             onViewChange={setActiveView}
-            needsCount={needsCount}
-            onOpenMissionAi={() => openMissionAiWithPrompt()}
+            needsCount={pendingDecisionsCount}
+            onOpenMissionAi={() => openMissionAi()}
             onOpenPalette={() => setPaletteOpen(true)}
           />
         )}
@@ -63,7 +61,7 @@ export default function VirtualCockpit({
           {activeView === 'groundstation' && (
             <GroundstationView
               onNavigate={setActiveView}
-              onOpenMissionAi={openMissionAiWithPrompt}
+              onOpenMissionAi={openMissionAi}
               onRunRecipe={() => setActiveView('recipes')}
             />
           )}
@@ -73,7 +71,7 @@ export default function VirtualCockpit({
               onNavigate={setActiveView}
               onOpenNeeds={() => setActiveView('needs')}
               focusMode={focusMode}
-              onToggleFocusMode={() => setFocusMode(prev => !prev)}
+              onToggleFocusMode={toggleFocusMode}
             />
           )}
 
@@ -81,15 +79,15 @@ export default function VirtualCockpit({
             <NeedsYouView
               onNavigate={setActiveView}
               onInspectEvidence={() => setEvidenceModalOpen(true)}
-              onAcknowledge={handleAcknowledge}
-              acknowledged={needsCount === 0}
+              onAcknowledge={acknowledgeDecision}
+              acknowledged={pendingDecisionsCount === 0}
             />
           )}
 
           {activeView === 'recipes' && (
             <RecipesView
               onNavigate={setActiveView}
-              onOpenMissionAi={openMissionAiWithPrompt}
+              onOpenMissionAi={openMissionAi}
             />
           )}
 
@@ -110,7 +108,7 @@ export default function VirtualCockpit({
                 {activeView === 'integrations' ? 'Secure MCP & Extension Hub' : 'Preferences & Density Controls'}
               </h3>
               <p className="text-zinc-400 text-xs max-w-md mb-4 leading-relaxed">
-                Connect external AI clients (Claude Desktop, Cursor, ChatGPT) via authenticated MCP tokens, or pair the Mobile Companion over local LAN.
+                Connect external AI clients (Claude Desktop, Cursor, ChatGPT) via authenticated MCP tokens, or pair the Mobile Companion over local encrypted LAN.
               </p>
               <button
                 onClick={() => setActiveView('workspace')}
@@ -128,7 +126,7 @@ export default function VirtualCockpit({
       <EvidenceModal
         isOpen={evidenceModalOpen}
         onClose={() => setEvidenceModalOpen(false)}
-        onAcknowledge={handleAcknowledge}
+        onAcknowledge={acknowledgeDecision}
         onOpenTerminal={() => {
           setEvidenceModalOpen(false);
           setActiveView('workspace');
@@ -145,7 +143,7 @@ export default function VirtualCockpit({
         isOpen={paletteOpen}
         onClose={() => setPaletteOpen(false)}
         onNavigate={setActiveView}
-        onOpenMissionAi={openMissionAiWithPrompt}
+        onOpenMissionAi={openMissionAi}
       />
 
     </div>

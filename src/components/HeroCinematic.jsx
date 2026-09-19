@@ -1,29 +1,28 @@
 import React, { useState } from 'react';
 import GlitchLogo from './GlitchLogo';
 import VirtualCockpit from './VirtualCockpit/VirtualCockpit';
-import { Terminal, Shield, ArrowDown, Sparkles, Zap } from 'lucide-react';
 
 export default function HeroCinematic({ onOpenDownload }) {
   const [logoStabilized, setLogoStabilized] = useState(false);
 
   return (
-    <section className="relative pt-8 pb-20 px-4 md:px-6 max-w-[1440px] mx-auto flex flex-col items-center select-none font-mono">
+    <section className="relative pt-6 pb-12 px-4 md:px-6 max-w-[1440px] mx-auto flex flex-col items-center select-none font-mono">
       
-      {/* Background Ambient Technical Radial Grids */}
-      <div className="absolute inset-0 bg-tech-grid opacity-60 pointer-events-none" />
-      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none" />
+      {/* Background Ambient Subtle Grid */}
+      <div className="absolute inset-0 bg-tech-grid opacity-40 pointer-events-none" />
+      <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-600/10 blur-[100px] rounded-full pointer-events-none" />
 
-      {/* Frame 1 & 2 & 3: OUTARCH Glitch Identity & Tagline */}
+      {/* OUTARCH Logo & Tagline */}
       <div className="relative z-10 flex flex-col items-center text-center mt-2 mb-8">
         
         {/* Code-driven Glitch Logo */}
         <GlitchLogo 
           onComplete={() => setLogoStabilized(true)}
-          className="mb-2"
+          className="mb-1"
         />
 
-        {/* Confidence Statement / Tagline */}
-        <div className="mt-4 max-w-2xl mx-auto space-y-2">
+        {/* Hero Tagline */}
+        <div className="mt-3 max-w-2xl mx-auto space-y-2">
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-none">
             BUILD WITHOUT LOSING CONTROL.
           </h1>
@@ -32,20 +31,17 @@ export default function HeroCinematic({ onOpenDownload }) {
           </p>
         </div>
 
-        {/* Live Interaction Prompt Pill */}
-        <div className="mt-6 flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0d111a] border border-[#1e2535] text-[11px] text-zinc-300">
+        {/* Live Interaction Badge */}
+        <div className="mt-5 flex items-center gap-2 px-3 py-1 rounded-full bg-[#0b0e14] border border-[#1a202c] text-[11px] text-zinc-300">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span><strong>INTERACTIVE VIRTUAL COCKPIT</strong> — Click any terminal, sidebar view, or recipe below</span>
+          <span><strong>INTERACTIVE VIRTUAL COCKPIT</strong> — Full application behavior active below</span>
         </div>
 
       </div>
 
-      {/* Frame 4: The Virtual OUTARCH Command Center (Main Visual Object) */}
-      <div id="cockpit" className="w-full relative z-10 mt-2">
-        <VirtualCockpit 
-          initialView="workspace"
-          onTriggerDownload={onOpenDownload}
-        />
+      {/* The Virtual OUTARCH Command Center (Main Visual Object) */}
+      <div id="cockpit" className="w-full relative z-10">
+        <VirtualCockpit />
       </div>
 
     </section>

@@ -11,14 +11,12 @@ import {
   HelpCircle, 
   Server, 
   Shield, 
-  Sparkles,
-  Zap,
   ArrowRight,
   X
 } from 'lucide-react';
 
 export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
-  const { setStoryPhase, unlockTheme } = useCockpit();
+  const { setStoryPhase, focusMode, setFocusMode } = useCockpit();
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef(null);
@@ -36,13 +34,13 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
       }
     },
     {
-      id: 'control-loop',
+      id: 'story',
       category: 'Lifecycle',
-      title: 'Jump to Control Loop',
-      subtitle: '01 BUILD → 02 OBSERVE → 03 ATTENTION → 04 EVIDENCE → 05 INVESTIGATE → 06 RESOLVE',
+      title: 'Jump to 5-Stage Story Progression',
+      subtitle: 'CHAOS → OBSERVATION → CONTROL → ACTION → RESOLUTION',
       icon: Activity,
       action: () => {
-        onNavigate('home', 'control-loop');
+        onNavigate('home', 'story');
         onClose();
       }
     },
@@ -50,7 +48,7 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
       id: 'view-groundstation',
       category: 'Cockpit Action',
       title: 'Cockpit: Switch to Groundstation Fleet',
-      subtitle: 'Monitor active background workers & process streams',
+      subtitle: 'Monitor 20 active background workers & PTY streams',
       icon: Activity,
       action: () => {
         setStoryPhase('groundstation');
@@ -61,8 +59,8 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
     {
       id: 'view-workspace',
       category: 'Cockpit Action',
-      title: 'Cockpit: Switch to Workspace Grid',
-      subtitle: 'Terminal canvas with synchronized broadcast',
+      title: 'Cockpit: Switch to Workspace 2x2 Grid',
+      subtitle: 'Claude Code, dev server, and synchronized broadcast',
       icon: Terminal,
       action: () => {
         setStoryPhase('workspace');
@@ -73,8 +71,8 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
     {
       id: 'view-needs',
       category: 'Cockpit Action',
-      title: 'Cockpit: Open Needs You Decision Queue',
-      subtitle: 'Inspect port conflicts & pending human approvals',
+      title: 'Cockpit: Open Needs You Decision Room',
+      subtitle: 'Inspect CrashLens port conflict & approval request',
       icon: AlertTriangle,
       action: () => {
         setStoryPhase('needs');
@@ -86,7 +84,7 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
       id: 'view-recipes',
       category: 'Cockpit Action',
       title: 'Cockpit: Trigger Startup Recipe DAG',
-      subtitle: 'Deterministic multi-service boot sequence',
+      subtitle: 'Deterministic full-stack boot sequence',
       icon: Workflow,
       action: () => {
         setStoryPhase('recipes');
@@ -109,8 +107,8 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
     {
       id: 'features',
       category: 'Navigation',
-      title: 'Jump to Major Features',
-      subtitle: 'Recipes, Mobile Companion, MCP Gateway, Focus Mode, BYOK',
+      title: 'Jump to Feature Showcase',
+      subtitle: 'Groundstation, Workspace, Attention, Recipes, Memory',
       icon: Shield,
       action: () => {
         onNavigate('home', 'features');
@@ -121,7 +119,7 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
       id: 'integrations',
       category: 'Navigation',
       title: 'Jump to Ecosystem Integrations',
-      subtitle: 'VS Code Bridge, MCP Gateway, Android LAN Companion, Browser',
+      subtitle: 'Mission AI, VS Code Bridge, MCP Gateway, Android',
       icon: Server,
       action: () => {
         onNavigate('home', 'integrations');
@@ -132,7 +130,7 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
       id: 'architecture',
       category: 'Navigation',
       title: 'Jump to System Architecture',
-      subtitle: '4-tier local developer engine pipeline',
+      subtitle: 'Zero-cloud local sovereign engine pipeline',
       icon: Server,
       action: () => {
         onNavigate('home', 'architecture');
@@ -140,13 +138,13 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
       }
     },
     {
-      id: 'download-section',
+      id: 'pricing',
       category: 'Navigation',
-      title: 'Jump to Download Center',
-      subtitle: 'Desktop releases (Windows, macOS, Linux) and Android Companion',
-      icon: Download,
+      title: 'Jump to Pricing & Access Editions',
+      subtitle: 'Free Community Edition, Pro Preview, and Team Access',
+      icon: Shield,
       action: () => {
-        onNavigate('home', 'download-section');
+        onNavigate('home', 'pricing');
         onClose();
       }
     },
@@ -154,7 +152,7 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
       id: 'faq',
       category: 'Navigation',
       title: 'Jump to Developer FAQ',
-      subtitle: 'Architecture, local execution, and companion app questions',
+      subtitle: 'Privacy, supported agents, and architecture questions',
       icon: HelpCircle,
       action: () => {
         onNavigate('home', 'faq');
@@ -162,35 +160,13 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
       }
     },
     {
-      id: 'secret-supernova',
-      category: 'Secret Discovery',
-      title: 'Easter Egg: Unlock Supernova HUD',
-      subtitle: 'Secret holographic visual theme with hyper-vibrant plasma lighting',
-      icon: Sparkles,
+      id: 'download',
+      category: 'Deployment',
+      title: 'Download OUTARCH 2.19.0',
+      subtitle: 'Windows, macOS (Apple Silicon/Intel), Linux packages',
+      icon: Download,
       action: () => {
-        unlockTheme('supernova');
-        onClose();
-      }
-    },
-    {
-      id: 'secret-matrix',
-      category: 'Secret Discovery',
-      title: 'Easter Egg: Unlock Matrix Terminal Mode',
-      subtitle: 'Phosphor green high-density ConPTY aesthetic',
-      icon: Zap,
-      action: () => {
-        unlockTheme('matrix');
-        onClose();
-      }
-    },
-    {
-      id: 'secret-cyberpunk',
-      category: 'Secret Discovery',
-      title: 'Easter Egg: Unlock Cyberpunk Neon Glow',
-      subtitle: 'High-contrast synthetic cybernetics aesthetic',
-      icon: Sparkles,
-      action: () => {
-        unlockTheme('cyberpunk');
+        onNavigate('home', 'download-section');
         onClose();
       }
     }
@@ -249,7 +225,7 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Type a command or search... (Try typing 'supernova' or 'matrix' for secret themes)"
+            placeholder="Type a command or search sections... (/cockpit, /needs, /pricing)"
             className="w-full bg-transparent text-sm font-sans text-[#F4F6F8] placeholder-[#8B93A1] focus:outline-none"
           />
           <button
@@ -263,60 +239,59 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
         {/* Filtered Commands List */}
         <div className="max-h-[380px] overflow-y-auto p-2 space-y-1">
           {filtered.length === 0 ? (
-            <div className="p-6 text-center text-xs font-mono text-[#64748B]">
-              No commands found matching "{query}"
+            <div className="py-12 text-center text-xs font-sans text-[#8B93A1]">
+              No commands found for "{query}"
             </div>
           ) : (
             filtered.map((cmd, idx) => {
               const Icon = cmd.icon;
               const isSelected = selectedIndex === idx;
-              const isSecret = cmd.category === 'Secret Discovery';
               return (
                 <div
                   key={cmd.id}
-                  onClick={() => {
-                    cmd.action();
-                  }}
+                  onClick={cmd.action}
                   onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`p-3 rounded-xl flex items-center justify-between cursor-pointer transition-colors ${
-                    isSelected 
-                      ? isSecret ? 'bg-[#251238] border border-[#A855F7]/40 text-white' : 'bg-[#141C2B] text-white' 
-                      : 'text-[#94A3B8] hover:bg-white/[0.02]'
+                  className={`p-3 rounded-xl cursor-pointer flex items-center justify-between transition-colors ${
+                    isSelected ? 'bg-[#141A26] text-white' : 'text-[#8B93A1] hover:bg-[#0E131F]'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                      isSelected 
-                        ? isSecret ? 'bg-[#A855F7] text-white shadow-[0_0_12px_rgba(168,85,247,0.5)]' : 'bg-[#38BDF8] text-[#07090E]' 
-                        : 'bg-[#101622] text-[#94A3B8]'
+                      isSelected ? 'bg-[#1E2738] text-[#F4F6F8]' : 'bg-[#0E131F] text-[#8B93A1]'
                     }`}>
                       <Icon className="w-4 h-4" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold font-sans text-white">
+                        <span className="font-sans text-xs font-semibold text-[#F4F6F8]">
                           {cmd.title}
                         </span>
-                        <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-[#CBD5E1]">
+                        <span className="font-mono text-[9px] px-1.5 py-0.2 rounded bg-white/5 text-[#8B93A1]">
                           {cmd.category}
                         </span>
                       </div>
-                      <span className="text-[11px] text-[#64748B] block font-sans">
+                      <p className="font-sans text-[11px] text-[#8B93A1] line-clamp-1">
                         {cmd.subtitle}
-                      </span>
+                      </p>
                     </div>
                   </div>
-                  <ArrowRight className={`w-3.5 h-3.5 ${isSelected ? 'text-white' : 'opacity-0'}`} />
+                  <ArrowRight className={`w-3.5 h-3.5 transition-transform ${
+                    isSelected ? 'text-[#F4F6F8] translate-x-0.5' : 'text-transparent'
+                  }`} />
                 </div>
               );
             })
           )}
         </div>
 
-        {/* Footer Hint */}
-        <div className="px-5 py-2.5 bg-[#06080E] border-t border-white/[0.06] flex items-center justify-between text-[10px] font-mono text-[#64748B]">
-          <span>Navigation: ↑ ↓ · Select: Enter · Close: Esc</span>
-          <span>Tip: Type 'supernova' for Easter Egg HUD</span>
+        {/* Footer Navigation Hints */}
+        <div className="px-5 py-3 border-t border-white/[0.06] bg-[#07090F] flex items-center justify-between font-mono text-[10px] text-[#8B93A1]">
+          <div className="flex items-center gap-3">
+            <span>↑↓ Navigate</span>
+            <span>↵ Select</span>
+            <span>ESC Close</span>
+          </div>
+          <span className="text-[#10b981]">OUTARCH PALETTE ACTIVE</span>
         </div>
       </div>
     </div>

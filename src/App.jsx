@@ -7,7 +7,6 @@ import LiveSystemControlLoop from './components/LiveSystemControlLoop';
 import ProblemSection from './components/ProblemSection';
 import PhilosophySection from './components/PhilosophySection';
 import FeatureShowcase from './components/FeatureShowcase';
-import BrandAssetShowcase from './components/BrandAssetShowcase';
 import ArchitectureSection from './components/ArchitectureSection';
 import IntegrationsSection from './components/IntegrationsSection';
 import PricingSection from './components/PricingSection';
@@ -20,8 +19,6 @@ import CommandPaletteModal from './components/CommandPaletteModal';
 
 import CursorGlow from './components/CursorGlow';
 import ParticleGridCanvas from './components/ParticleGridCanvas';
-import AtmosphericNebula from './components/AtmosphericNebula';
-import ThemeToast from './components/ThemeToast';
 
 export default function App() {
   const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'auth'
@@ -103,15 +100,12 @@ export default function App() {
 
   return (
     <CockpitProvider>
-      <div className="min-h-screen bg-[#050608] text-[#F8FAFC] flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200 relative overflow-x-hidden">
+      <div className="min-h-screen bg-[#07090E] text-[#F8FAFC] flex flex-col selection:bg-white/20 selection:text-white relative bg-grain overflow-x-hidden">
         
-        {/* Layered Floating Cyberpunk Nebula Atmosphere, Fixed SVG Grain & Parallax Depth */}
-        <AtmosphericNebula />
-
-        {/* Dynamic Cursor Glow */}
+        {/* Restrained Dynamic Cursor Glow */}
         <CursorGlow />
 
-        {/* Ambient Particle Constellation */}
+        {/* Ambient Subtle Particle Constellation */}
         <ParticleGridCanvas />
 
         {/* Top Developer Navbar */}
@@ -137,7 +131,7 @@ export default function App() {
           {/* Main Comprehensive Product Experience */}
           {currentRoute === 'home' && (
             <>
-              {/* 01 · Hero with Real 60fps Hyperspace Warp Canvas & Glitch Wordmark */}
+              {/* 01 · Hero with Real Large OUTARCH Interface */}
               <HeroCinematic onOpenDownload={handleOpenDownload} />
 
               {/* 02 · Signature Live System Control Loop (01 BUILD -> 06 RESOLVE) */}
@@ -152,31 +146,28 @@ export default function App() {
               {/* 05–09 · Major Features (Recipes, Mobile Companion, MCP, Focus Mode, BYOK) */}
               <FeatureShowcase />
 
-              {/* 10 · Brand Identity System & Interactive Glitch Kit (from outarch-brand-sheet.png) */}
-              <BrandAssetShowcase />
-
-              {/* 11 · System Architecture: Real 4-Tier Engine Diagram */}
+              {/* 10 · System Architecture: Real 4-Tier Engine Diagram */}
               <ArchitectureSection />
 
-              {/* 12 · Integrations Hub (Mission AI, VS Code, MCP Gateway, Android LAN Companion, Browser) */}
+              {/* 11 · Integrations Hub (Mission AI, VS Code, MCP Gateway, Android LAN Companion, Browser) */}
               <IntegrationsSection />
 
-              {/* 13 · Direct Application Downloads (Desktop & Mobile Companion) */}
+              {/* 12 · Direct Application Downloads (Desktop & Mobile Companion) */}
               <PricingSection 
                 onOpenDownload={handleOpenDownload}
               />
 
-              {/* 14 · Developer FAQ */}
+              {/* 13 · Developer FAQ */}
               <FaqSection />
 
-              {/* 15 · High-Impact Final CTA */}
+              {/* 14 · High-Impact Final CTA */}
               <FinalCtaSection />
             </>
           )}
 
         </main>
 
-        {/* 16 · Developer Footer with Glitch Logo */}
+        {/* 15 · Restrained Developer Footer */}
         {currentRoute !== 'auth' && (
           <Footer 
             onOpenReel={() => handleRouteChange('home', 'cockpit')} 
@@ -195,9 +186,6 @@ export default function App() {
           onClose={() => setCommandPaletteOpen(false)}
           onNavigate={handleRouteChange}
         />
-
-        {/* Floating Easter Egg Theme Notification */}
-        <ThemeToast />
 
       </div>
     </CockpitProvider>

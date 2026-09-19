@@ -11,33 +11,52 @@ export function CockpitProvider({ children }) {
   const [missionAiPrompt, setMissionAiPrompt] = useState('');
   const [paletteOpen, setPaletteOpen] = useState(false);
 
-  // Easter Egg Theme System
-  const [activeTheme, setActiveTheme] = useState('default'); // 'default' | 'supernova' | 'matrix' | 'cyberpunk'
-  const [unlockedToast, setUnlockedToast] = useState(null);
-
   // 20 Supervised Sessions
   const [workers, setWorkers] = useState([
-    { id: 'sample', name: 'api-server', role: 'Service', state: 'Running', command: 'cargo run --bin api', activity: 'Listening on port 8080', resources: '38MB · 0.4%', dir: 'D:\\outarch', alert: false },
-    { id: 'agent-swarm', name: 'claude-agent', role: 'Agent', state: 'Running', command: 'claude --autonomous', activity: 'Supervising codebase DAG', resources: '64MB · 0.8%', dir: 'D:\\outarch' },
-    { id: 'frontend', name: 'frontend-dev', role: 'Service', state: 'Running', command: 'vite dev --port 3000', activity: 'Ready on http://localhost:3000', resources: '42MB · 0.5%', dir: 'D:\\outarch\\frontend' },
-    { id: 'db', name: 'postgres-db', role: 'Container', state: 'Running', command: 'docker compose up db', activity: 'Database ready for connections', resources: '112MB · 0.9%', dir: 'D:\\outarch' },
-    { id: 'vitest', name: 'vitest-watcher', role: 'Test', state: 'Running', command: 'vitest watch', activity: 'PASS 28 suites completed', resources: '24MB · 0.2%', dir: 'D:\\outarch' },
-    { id: 'redis', name: 'redis-cache', role: 'Service', state: 'Running', command: 'redis-server', activity: 'Accepting tcp port 6379', resources: '18MB · 0.1%', dir: 'D:\\outarch' },
-    { id: 'mcp-gateway', name: 'mcp-gateway', role: 'Gateway', state: 'Running', command: 'outarch-mcp --port 9090', activity: 'Single-use token firewall active', resources: '22MB · 0.2%', dir: 'D:\\outarch' },
-    { id: 'mobile-bridge', name: 'lan-companion', role: 'Daemon', state: 'Running', command: 'outarch companion --lan', activity: 'Android HUD paired (192.168.1.42)', resources: '14MB · 0.1%', dir: 'D:\\outarch' },
+    { id: 'sample', name: 'sample', role: 'Shell', state: 'Running', command: 'powershell.exe', activity: 'Alert: npm error enoent', resources: '14MB · 0.2%', dir: 'D:\\first', alert: true },
+    { id: 'wsgsgv', name: 'wsgsgv', role: 'Shell', state: 'Running', command: 'agy run --autonomous', activity: 'Supervising Gemini 3.7 Flash', resources: '32MB · 0.5%', dir: 'D:\\first' },
+    { id: 'zcvdc', name: 'zcvdc', role: 'Shell', state: 'Idle', command: 'powershell.exe', activity: 'Start when ready', resources: '—', dir: 'D:\\first' },
+    { id: 'zcvdc-2', name: 'zcvdc', role: 'Shell', state: 'Idle', command: 'powershell.exe', activity: 'Start when ready', resources: '—', dir: 'D:\\first' },
+    { id: 'backend', name: 'backend', role: 'Service', state: 'Idle', command: 'npm run start:api', activity: 'Start when ready', resources: '—', dir: 'D:\\first\\backend' },
+    { id: 'backend-2', name: 'backend', role: 'Service', state: 'Idle', command: 'npm run start:api', activity: 'Start when ready', resources: '—', dir: 'D:\\first\\backend' },
+    { id: 'db', name: 'db', role: 'Container', state: 'Idle', command: 'docker run -p 5432:5432 -e POSTGRES_P...', activity: 'Start when ready', resources: '—', dir: 'D:\\first' },
+    { id: 'db-2', name: 'db', role: 'Database', state: 'Idle', command: 'pg_ctl -D /var/lib/postgresql/data st...', activity: 'Start when ready', resources: '—', dir: 'D:\\first' },
+    { id: 'db-3', name: 'db', role: 'Container', state: 'Idle', command: 'docker run -p 5432:5432 -e POSTGRES_P...', activity: 'Start when ready', resources: '—', dir: 'D:\\first' },
+    { id: 'db-migrate', name: 'db-migrate', role: 'Database', state: 'Idle', command: 'npm run db:migrate', activity: 'Start when ready', resources: '—', dir: 'D:\\first' },
+    { id: 'frontend', name: 'frontend', role: 'Service', state: 'Idle', command: 'npm run start', activity: 'Start when ready', resources: '—', dir: 'D:\\first\\frontend' },
+    { id: 'frontend-2', name: 'frontend', role: 'Service', state: 'Idle', command: 'npm run start', activity: 'Start when ready', resources: '—', dir: 'D:\\first\\frontend' },
+    { id: 'git', name: 'git', role: 'Git', state: 'Idle', command: 'git status', activity: 'Start when ready', resources: '—', dir: 'D:\\first' },
+    { id: 'tests', name: 'tests', role: 'Test', state: 'Idle', command: 'npm test', activity: 'Start when ready', resources: '—', dir: 'D:\\first' },
+    { id: 'xbx', name: 'xbx', role: 'Shell', state: 'Idle', command: 'powershell.exe', activity: 'Start when ready', resources: '—', dir: 'D:\\first' },
+    { id: 'srhedbeh', name: 'srhedbeh', role: 'Shell', state: 'Idle', command: 'powershell.exe', activity: 'Start when ready', resources: '—', dir: 'D:\\first' },
+    { id: 'qwerwa', name: 'qwerwa', role: 'Shell', state: 'Idle', command: 'powershell.exe', activity: 'Start when ready', resources: '—', dir: 'D:\\first' },
+    { id: 'xvx cvxv', name: 'xvx cvxv', role: 'Shell', state: 'Idle', command: 'powershell.exe', activity: 'Start when ready', resources: '—', dir: 'D:\\first' },
+    { id: 'server', name: 'server', role: 'Service', state: 'Idle', command: 'node dist/index.js', activity: 'Start when ready', resources: '—', dir: 'D:\\first' },
+    { id: 'tests-2', name: 'tests', role: 'Test', state: 'Idle', command: 'vitest run', activity: 'Start when ready', resources: '—', dir: 'D:\\first' },
   ]);
 
   // Needs You Decision Queue
-  const [decisions, setDecisions] = useState([]);
+  const [decisions, setDecisions] = useState([
+    {
+      id: 'W01',
+      worker: 'sample',
+      alert: 'npm error enoent',
+      impact: 'This is an engine-owned worker; acting changes its lifecycle.',
+      recommended: 'Review the evidence and consequence before acting.',
+      recovery: 'Recovery appears only after the engine verifies the alert cleared.',
+      opened: '1m ago',
+      acknowledged: false
+    }
+  ]);
 
   // Terminal Real-Time Histories
   const [claudeHistory, setClaudeHistory] = useState([
-    'Loaded project context at D:\\outarch',
-    'Supervised daemon active on ConPTY channel 04'
+    'Loaded project context at D:\\first',
+    'Warning: npm error enoent detected in build script'
   ]);
 
   const [antigravityHistory, setAntigravityHistory] = useState([
-    'OUTARCH Engine 1.0 active. Native PTY supervisors ready.'
+    'Antigravity CLI 1.2.4 active. Supervised PTY listening...'
   ]);
 
   // Recipe DAG Execution Engine State
@@ -64,14 +83,14 @@ export function CockpitProvider({ children }) {
 
   const acknowledgeDecision = useCallback((decisionId = 'W01') => {
     setDecisions(prev => prev.map(d => d.id === decisionId ? { ...d, acknowledged: true } : d));
-    setWorkers(prev => prev.map(w => w.name === 'api-server' ? { ...w, alert: false, activity: 'All evidence verified' } : w));
+    setWorkers(prev => prev.map(w => w.name === 'sample' ? { ...w, alert: false, activity: 'All evidence verified' } : w));
   }, []);
 
   const launchRecipe = useCallback(() => {
     setRecipeState({ isRunning: true, currentStep: 1, totalSteps: 4 });
-    setTimeout(() => setRecipeState(r => ({ ...r, currentStep: 2 })), 600);
-    setTimeout(() => setRecipeState(r => ({ ...r, currentStep: 3 })), 1200);
-    setTimeout(() => setRecipeState(r => ({ ...r, currentStep: 4 })), 1800);
+    setTimeout(() => setRecipeState(r => ({ ...r, currentStep: 2 })), 800);
+    setTimeout(() => setRecipeState(r => ({ ...r, currentStep: 3 })), 1600);
+    setTimeout(() => setRecipeState(r => ({ ...r, currentStep: 4 })), 2400);
     setTimeout(() => {
       setRecipeState({ isRunning: false, currentStep: 5, totalSteps: 4 });
       setWorkers(prev => prev.map(w => ({
@@ -80,66 +99,7 @@ export function CockpitProvider({ children }) {
         activity: 'Active via Recipe DAG',
         resources: '18MB · 0.3%'
       })));
-    }, 2400);
-  }, []);
-
-  // Sandbox Playground Simulation Triggers
-  const simulateDeploySwarm = useCallback(() => {
-    setActiveView('workspace');
-    setClaudeHistory(prev => [
-      ...prev,
-      `> outarch swarm --deploy --count=3`,
-      `[Claude Agent 01] Spawned subagent for DB migration audit`,
-      `[Claude Agent 02] Analyzing endpoints at src/api/routes.rs`,
-      `[Swarm Orchestrator] All 3 agent threads running with strict ConPTY isolation.`
-    ]);
-  }, []);
-
-  const simulatePortCollision = useCallback(() => {
-    setActiveView('needs');
-    setDecisions([
-      {
-        id: 'PORT-8080',
-        worker: 'api-server',
-        alert: 'EADDRINUSE :8080',
-        impact: 'Port collision blocks backend startup. Zombie PID 14920 holding socket.',
-        recommended: 'Kill zombie PID 14920 and restart api-server.',
-        recovery: 'Automatic 1-click execution ready.',
-        opened: 'Just now',
-        acknowledged: false
-      }
-    ]);
-    setWorkers(prev => prev.map(w => w.name === 'api-server' ? { ...w, alert: true, activity: 'CRASH: EADDRINUSE :8080' } : w));
-  }, []);
-
-  const simulateCrashLensTriage = useCallback(() => {
-    setActiveView('needs');
-    setEvidenceModalOpen(true);
-  }, []);
-
-  const simulateAutoResolve = useCallback(() => {
-    setDecisions([]);
-    setEvidenceModalOpen(false);
-    setActiveView('workspace');
-    setWorkers(prev => prev.map(w => ({
-      ...w,
-      alert: false,
-      state: 'Running',
-      activity: 'Resolved · Listening on port 8080'
-    })));
-    setClaudeHistory(prev => [
-      ...prev,
-      `[Auto-Heal] Zombie PID 14920 terminated.`,
-      `[Port Manager] Port 8080 released. Backend restarted successfully in 120ms.`,
-      `[System Status] All 8 monitored workers verified healthy.`
-    ]);
-  }, []);
-
-  // Easter Egg Theme Activation
-  const unlockTheme = useCallback((themeName) => {
-    setActiveTheme(themeName);
-    setUnlockedToast(`🎉 Secret Theme Unlocked: ${themeName.toUpperCase()} HUD`);
-    setTimeout(() => setUnlockedToast(null), 4000);
+    }, 3200);
   }, []);
 
   const runClaudePrompt = useCallback((prompt) => {
@@ -147,8 +107,8 @@ export function CockpitProvider({ children }) {
     setClaudeHistory(prev => [
       ...prev,
       `> ${prompt.trim()}`,
-      `[Claude 3.7 Sonnet] Synthesizing AST fix for operational pipeline...`,
-      `[Verified] Restored manifest at D:\\outarch\\package.json. Zero syntax faults.`
+      `[Haiku 4.5] Synthesizing AST fix for ENOENT dependency resolver...`,
+      `[Verified] Restored manifest at D:\\first\\package.json. Zero syntax faults.`
     ]);
   }, []);
 
@@ -157,8 +117,8 @@ export function CockpitProvider({ children }) {
     setAntigravityHistory(prev => [
       ...prev,
       `> ${cmd.trim()}`,
-      `[OUTARCH Engine] Executing verified operational probe...`,
-      `[Protocol v1] 28 unit test assertions verified. Clean heartbeat.`
+      `[Gemini 3.7 Flash] Executing verified operational probe...`,
+      `[Protocol v1] 42 unit test assertions verified. Clean heartbeat.`
     ]);
   }, []);
 
@@ -167,7 +127,7 @@ export function CockpitProvider({ children }) {
     setMissionAiOpen(true);
   }, []);
 
-  // Story Stepper / Narrative Director
+  // Story Stepper / Narrative Director that drives the single cockpit
   const setStoryPhase = useCallback((phaseId) => {
     switch (phaseId) {
       case 'groundstation':
@@ -243,13 +203,6 @@ export function CockpitProvider({ children }) {
         idleCount,
         engineStatus,
         setStoryPhase,
-        simulateDeploySwarm,
-        simulatePortCollision,
-        simulateCrashLensTriage,
-        simulateAutoResolve,
-        activeTheme,
-        unlockTheme,
-        unlockedToast,
       }}
     >
       {children}

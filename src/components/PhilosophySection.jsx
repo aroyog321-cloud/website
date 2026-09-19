@@ -27,51 +27,50 @@ export default function PhilosophySection() {
   ];
 
   return (
-    <section id="philosophy" className="py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto select-none">
+    <section id="philosophy" className="py-28 px-6 max-w-7xl mx-auto select-none border-t border-white/[0.06]">
       
       {/* Editorial Manifesto Statement */}
       <div className="max-w-4xl mx-auto text-center mb-20">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0B0F17]/80 border border-white/10 backdrop-blur-md text-[11px] font-mono text-[#94A3B8] mb-6">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#A855F7]" />
-          <span className="text-[#E2E8F0] font-semibold tracking-wider uppercase">// PRINCIPLES OF OPERATION</span>
-        </div>
-        <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-black tracking-[-0.03em] uppercase leading-[0.96] text-titanium">
+        <span className="font-mono text-xs text-[#64748B] uppercase tracking-wider block mb-4">
+          // PRINCIPLES OF OPERATION
+        </span>
+        <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-black tracking-tight uppercase leading-[1.05] text-titanium">
           The developer should not have to watch everything.
         </h2>
-        <p className="font-display text-xl sm:text-2xl text-[#94A3B8] font-bold mt-5 tracking-tight">
+        <p className="font-display text-xl sm:text-2xl text-[#94A3B8] font-bold mt-4 tracking-tight">
           OUTARCH watches. <span className="text-white">You decide.</span>
         </p>
       </div>
 
-      {/* 3 Core Pillars in Full-Width Bento Grid */}
+      {/* 3 Core Pillars in Full-Width Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
         {pillars.map((p) => {
           const Icon = p.icon;
           return (
             <div 
               key={p.num} 
-              className="bento-card p-6 sm:p-8 flex flex-col justify-between"
+              className="rounded-xl bg-[#0D1117] p-6 sm:p-7 flex flex-col justify-between border border-white/10 hover:border-white/20 transition-all duration-200"
             >
               <div>
-                <div className="flex items-center justify-between mb-6">
-                  <div className={`w-10 h-10 rounded-xl bg-[#101622] border border-white/10 flex items-center justify-center ${p.tone} shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]`}>
-                    <Icon className="w-5 h-5" />
+                <div className="flex items-center justify-between mb-5">
+                  <div className={`w-9 h-9 rounded-lg bg-[#131822] border border-white/10 flex items-center justify-center ${p.tone}`}>
+                    <Icon className="w-4 h-4" />
                   </div>
-                  <span className="font-mono text-xs font-bold text-[#64748B]">
+                  <span className="font-mono text-[11px] font-bold text-[#64748B]">
                     0{p.num}
                   </span>
                 </div>
 
-                <h3 className="font-display text-lg font-bold text-white mb-2.5">
+                <h3 className="font-display text-base font-bold text-white mb-2">
                   {p.title}
                 </h3>
 
-                <p className="font-sans text-sm text-[#CBD5E1] leading-relaxed">
+                <p className="font-sans text-xs sm:text-sm text-[#94A3B8] leading-relaxed">
                   {p.desc}
                 </p>
               </div>
 
-              <div className="pt-4 mt-8 border-t border-white/[0.06] font-mono text-[11px] text-[#64748B]">
+              <div className="pt-4 mt-6 border-t border-white/[0.04] font-mono text-[11px] text-[#64748B]">
                 <span>Deterministic Local Boundary</span>
               </div>
             </div>

@@ -20,6 +20,7 @@ import CommandPaletteModal from './components/CommandPaletteModal';
 import CursorGlow from './components/CursorGlow';
 import ParticleGridCanvas from './components/ParticleGridCanvas';
 import AtmosphericNebula from './components/AtmosphericNebula';
+import ThemeToast from './components/ThemeToast';
 
 export default function App() {
   const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'auth'
@@ -190,6 +191,9 @@ export default function App() {
           onClose={() => setCommandPaletteOpen(false)}
           onNavigate={handleRouteChange}
         />
+
+        {/* Floating Easter Egg Theme Notification */}
+        <ThemeToast />
 
       </div>
     </CockpitProvider>

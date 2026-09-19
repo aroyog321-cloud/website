@@ -11,12 +11,14 @@ import {
   HelpCircle, 
   Server, 
   Shield, 
+  Sparkles,
+  Zap,
   ArrowRight,
   X
 } from 'lucide-react';
 
 export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
-  const { setStoryPhase, focusMode, setFocusMode } = useCockpit();
+  const { setStoryPhase, unlockTheme } = useCockpit();
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef(null);
@@ -160,13 +162,35 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
       }
     },
     {
-      id: 'download',
-      category: 'Deployment',
-      title: 'Download OUTARCH Desktop & Mobile',
-      subtitle: 'Direct installers and companion app downloads',
-      icon: Download,
+      id: 'secret-supernova',
+      category: 'Secret Discovery',
+      title: 'Easter Egg: Unlock Supernova HUD',
+      subtitle: 'Secret holographic visual theme with hyper-vibrant plasma lighting',
+      icon: Sparkles,
       action: () => {
-        onNavigate('home', 'download-section');
+        unlockTheme('supernova');
+        onClose();
+      }
+    },
+    {
+      id: 'secret-matrix',
+      category: 'Secret Discovery',
+      title: 'Easter Egg: Unlock Matrix Terminal Mode',
+      subtitle: 'Phosphor green high-density ConPTY aesthetic',
+      icon: Zap,
+      action: () => {
+        unlockTheme('matrix');
+        onClose();
+      }
+    },
+    {
+      id: 'secret-cyberpunk',
+      category: 'Secret Discovery',
+      title: 'Easter Egg: Unlock Cyberpunk Neon Glow',
+      subtitle: 'High-contrast synthetic cybernetics aesthetic',
+      icon: Sparkles,
+      action: () => {
+        unlockTheme('cyberpunk');
         onClose();
       }
     }
@@ -225,7 +249,7 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Type a command or search sections... (/cockpit, /needs, /pricing)"
+            placeholder="Type a command or search... (Try typing 'supernova' or 'matrix' for secret themes)"
             className="w-full bg-transparent text-sm font-sans text-[#F4F6F8] placeholder-[#8B93A1] focus:outline-none"
           />
           <button
@@ -239,59 +263,60 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
         {/* Filtered Commands List */}
         <div className="max-h-[380px] overflow-y-auto p-2 space-y-1">
           {filtered.length === 0 ? (
-            <div className="py-12 text-center text-xs font-sans text-[#8B93A1]">
-              No commands found for "{query}"
+            <div className="p-6 text-center text-xs font-mono text-[#64748B]">
+              No commands found matching "{query}"
             </div>
           ) : (
             filtered.map((cmd, idx) => {
               const Icon = cmd.icon;
               const isSelected = selectedIndex === idx;
+              const isSecret = cmd.category === 'Secret Discovery';
               return (
                 <div
                   key={cmd.id}
-                  onClick={cmd.action}
+                  onClick={() => {
+                    cmd.action();
+                  }}
                   onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`p-3 rounded-xl cursor-pointer flex items-center justify-between transition-colors ${
-                    isSelected ? 'bg-[#141A26] text-white' : 'text-[#8B93A1] hover:bg-[#0E131F]'
+                  className={`p-3 rounded-xl flex items-center justify-between cursor-pointer transition-colors ${
+                    isSelected 
+                      ? isSecret ? 'bg-[#251238] border border-[#A855F7]/40 text-white' : 'bg-[#141C2B] text-white' 
+                      : 'text-[#94A3B8] hover:bg-white/[0.02]'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                      isSelected ? 'bg-[#1E2738] text-[#F4F6F8]' : 'bg-[#0E131F] text-[#8B93A1]'
+                      isSelected 
+                        ? isSecret ? 'bg-[#A855F7] text-white shadow-[0_0_12px_rgba(168,85,247,0.5)]' : 'bg-[#38BDF8] text-[#07090E]' 
+                        : 'bg-[#101622] text-[#94A3B8]'
                     }`}>
                       <Icon className="w-4 h-4" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-sans text-xs font-semibold text-[#F4F6F8]">
+                        <span className="text-xs font-bold font-sans text-white">
                           {cmd.title}
                         </span>
-                        <span className="font-mono text-[9px] px-1.5 py-0.2 rounded bg-white/5 text-[#8B93A1]">
+                        <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-[#CBD5E1]">
                           {cmd.category}
                         </span>
                       </div>
-                      <p className="font-sans text-[11px] text-[#8B93A1] line-clamp-1">
+                      <span className="text-[11px] text-[#64748B] block font-sans">
                         {cmd.subtitle}
-                      </p>
+                      </span>
                     </div>
                   </div>
-                  <ArrowRight className={`w-3.5 h-3.5 transition-transform ${
-                    isSelected ? 'text-[#F4F6F8] translate-x-0.5' : 'text-transparent'
-                  }`} />
+                  <ArrowRight className={`w-3.5 h-3.5 ${isSelected ? 'text-white' : 'opacity-0'}`} />
                 </div>
               );
             })
           )}
         </div>
 
-        {/* Footer Navigation Hints */}
-        <div className="px-5 py-3 border-t border-white/[0.06] bg-[#07090F] flex items-center justify-between font-mono text-[10px] text-[#8B93A1]">
-          <div className="flex items-center gap-3">
-            <span>↑↓ Navigate</span>
-            <span>↵ Select</span>
-            <span>ESC Close</span>
-          </div>
-          <span className="text-[#10b981]">OUTARCH PALETTE ACTIVE</span>
+        {/* Footer Hint */}
+        <div className="px-5 py-2.5 bg-[#06080E] border-t border-white/[0.06] flex items-center justify-between text-[10px] font-mono text-[#64748B]">
+          <span>Navigation: ↑ ↓ · Select: Enter · Close: Esc</span>
+          <span>Tip: Type 'supernova' for Easter Egg HUD</span>
         </div>
       </div>
     </div>

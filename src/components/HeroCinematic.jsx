@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import VirtualCockpit from './VirtualCockpit/VirtualCockpit';
+import InteractiveSandboxControls from './InteractiveSandboxControls';
 import MagneticButton from './MagneticButton';
 import { Download, ArrowDown } from 'lucide-react';
 
@@ -106,7 +107,7 @@ export default function HeroCinematic({ onOpenDownload }) {
           </div>
           
           <div className="flex items-center gap-4 text-[11px] font-mono">
-            <span className="text-[#64748B] hidden sm:inline">Interactive preview — click tabs or workers</span>
+            <span className="text-[#64748B] hidden sm:inline">Interactive sandbox playground — trigger live missions</span>
             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg badge-running font-semibold text-[10px] shadow-[inset_0_1px_0_0_rgba(16,185,129,0.3)]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-ping" />
               <span>DAEMON ONLINE</span>
@@ -114,8 +115,9 @@ export default function HeroCinematic({ onOpenDownload }) {
           </div>
         </div>
 
-        {/* Live Virtual OUTARCH Engine Canvas */}
-        <div className="p-1 sm:p-2.5 bg-[#07090E]/60 backdrop-blur-md">
+        {/* Live Interactive Sandbox Toolbar & Engine Canvas */}
+        <div className="p-2 sm:p-4 bg-[#07090E]/80 backdrop-blur-md">
+          <InteractiveSandboxControls />
           <VirtualCockpit />
         </div>
 

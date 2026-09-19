@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Lenis from 'lenis';
 import { CockpitProvider } from './context/CockpitContext';
 import Navbar from './components/Navbar';
 import HeroCinematic from './components/HeroCinematic';
@@ -14,19 +15,51 @@ import FinalCtaSection from './components/FinalCtaSection';
 import AuthScreen from './components/AuthScreen';
 import Footer from './components/Footer';
 import KeyboardShortcutsModal from './components/KeyboardShortcutsModal';
+import CommandPaletteModal from './components/CommandPaletteModal';
+import AmbientHudOverlay from './components/AmbientHudOverlay';
 
 export default function App() {
   const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'auth'
   const [shortcutsModalOpen, setShortcutsModalOpen] = useState(false);
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
 
-  // Global key listener for shortcuts overlay ('?' or 'F1')
+  // Initialize Lenis Smooth Scrolling
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 2.0,
+      infinite: false,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
+  // Global key listener for shortcuts overlay ('?' or 'F1') and command palette ('Cmd+K' or 'Ctrl+K')
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if ((e.key === '?' || e.key === 'F1') && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setCommandPaletteOpen(prev => !prev);
+      } else if ((e.key === '?' || e.key === 'F1') && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
         e.preventDefault();
         setShortcutsModalOpen(prev => !prev);
       } else if (e.key === 'Escape') {
         setShortcutsModalOpen(false);
+        setCommandPaletteOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -65,8 +98,13 @@ export default function App() {
 
   return (
     <CockpitProvider>
-      <div className="min-h-screen bg-[#050608] text-[#F4F6F8] flex flex-col selection:bg-white/20 selection:text-white">
+      <div className="min-h-screen bg-[#050608] text-[#F4F6F8] flex flex-col selection:bg-white/20 selection:text-white relative bg-grain">
         
+        {/* Ambient Corner HUD Overlay */}
+        <AmbientHudOverlay 
+          onOpenCommandPalette={() => setCommandPaletteOpen(true)}
+        />
+
         {/* Top Developer Navbar */}
         {currentRoute !== 'auth' && (
           <Navbar
@@ -138,6 +176,13 @@ export default function App() {
         <KeyboardShortcutsModal
           isOpen={shortcutsModalOpen}
           onClose={() => setShortcutsModalOpen(false)}
+        />
+
+        {/* Global Command Palette Overlay (Cmd+K) */}
+        <CommandPaletteModal
+          isOpen={commandPaletteOpen}
+          onClose={() => setCommandPaletteOpen(false)}
+          onNavigate={handleRouteChange}
         />
 
       </div>

@@ -8,26 +8,54 @@
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
 
-  /* OUTARCH Design Tokens */
-  --mc-void: #050608;
-  --mc-surface-1: #0b0d11;
-  --mc-surface-2: #10131a;
-  --mc-surface-3: #161b24;
-  --mc-border: #1e2430;
-  --mc-border-bright: #2d3548;
+  /* Sovereign Dark Palette */
+  --bg-void: #050608;
+  --bg-surface-1: #0B0D11;
+  --bg-surface-2: #10131A;
+  --bg-surface-3: #161B24;
+  --border-subtle: #1A1E26;
+  --border-medium: #252B36;
   
-  --mc-ok: #10b981;
-  --mc-warning: #f59e0b;
-  --mc-danger: #ef4444;
-  --mc-accent: #3b82f6;
-  --mc-ai: #8b5cf6;
+  --text-primary: #F4F6F8;
+  --text-secondary: #D8DDE5;
+  --text-muted: #8B93A1;
+
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+  --color-active: #3B82F6;
+  --color-ai: #8B5CF6;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #050608;
 }
 
 body {
   background-color: #050608;
-  color: #f1f5f9;
+  color: #F4F6F8;
   font-family: var(--font-sans);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Lenis Smooth Scroll Recommended CSS */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
 
 .font-display {
@@ -36,92 +64,56 @@ body {
 
 .font-mono {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
 }
 
 /* Custom minimal scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: #050608;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e2430;
-  border-radius: 3px;
+  background: #1A1E26;
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2a3344;
+  background: #252B36;
 }
 
 /* Subtle Technical Grid */
 .bg-tech-grid {
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 40px 40px;
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
-.bg-radial-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+/* Subtle Film Grain */
+.bg-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
-/* Subtle scanlines for live terminal elements */
-.scanlines {
-  background: linear-gradient(
-    rgba(18, 23, 30, 0) 50%, 
-    rgba(0, 0, 0, 0.2) 50%
-  );
-  background-size: 100% 4px;
+/* Animated Dynamic Rim Lighting */
+@keyframes rim-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-/* Authentic OUTARCH Brand Glitch Animations */
-@keyframes brand-glitch-1 {
-  0%, 100% {
-    clip-path: inset(0 0 0 0);
-    transform: translate(0, 0);
-  }
-  20% {
-    clip-path: inset(25% 0 55% 0);
-    transform: translate(-3px, 1px);
-  }
-  40% {
-    clip-path: inset(65% 0 15% 0);
-    transform: translate(3px, -1px);
-  }
-  60% {
-    clip-path: inset(10% 0 75% 0);
-    transform: translate(-2px, 2px);
-  }
-  80% {
-    clip-path: inset(80% 0 5% 0);
-    transform: translate(2px, -2px);
-  }
+.rim-light {
+  position: relative;
 }
-
-@keyframes brand-glitch-2 {
-  0%, 100% {
-    clip-path: inset(0 0 0 0);
-    transform: translate(0, 0);
-  }
-  25% {
-    clip-path: inset(50% 0 30% 0);
-    transform: translate(3px, -1px);
-  }
-  50% {
-    clip-path: inset(15% 0 65% 0);
-    transform: translate(-3px, 1px);
-  }
-  75% {
-    clip-path: inset(70% 0 10% 0);
-    transform: translate(2px, 2px);
-  }
-}
-
-.animate-brand-glitch-1 {
-  animation: brand-glitch-1 3s infinite steps(2, end);
-}
-
-.animate-brand-glitch-2 {
-  animation: brand-glitch-2 2.4s infinite steps(2, end);
+.rim-light::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.15) 50%, transparent 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }

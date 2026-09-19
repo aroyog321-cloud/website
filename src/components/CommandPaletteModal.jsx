@@ -34,13 +34,13 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
       }
     },
     {
-      id: 'story',
+      id: 'control-loop',
       category: 'Lifecycle',
-      title: 'Jump to 5-Stage Story Progression',
-      subtitle: 'CHAOS → OBSERVATION → CONTROL → ACTION → RESOLUTION',
+      title: 'Jump to Control Loop',
+      subtitle: '01 BUILD → 02 OBSERVE → 03 ATTENTION → 04 EVIDENCE → 05 INVESTIGATE → 06 RESOLVE',
       icon: Activity,
       action: () => {
-        onNavigate('home', 'story');
+        onNavigate('home', 'control-loop');
         onClose();
       }
     },
@@ -48,7 +48,7 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
       id: 'view-groundstation',
       category: 'Cockpit Action',
       title: 'Cockpit: Switch to Groundstation Fleet',
-      subtitle: 'Monitor 20 active background workers & PTY streams',
+      subtitle: 'Monitor active background workers & process streams',
       icon: Activity,
       action: () => {
         setStoryPhase('groundstation');
@@ -59,8 +59,8 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
     {
       id: 'view-workspace',
       category: 'Cockpit Action',
-      title: 'Cockpit: Switch to Workspace 2x2 Grid',
-      subtitle: 'Claude Code, dev server, and synchronized broadcast',
+      title: 'Cockpit: Switch to Workspace Grid',
+      subtitle: 'Terminal canvas with synchronized broadcast',
       icon: Terminal,
       action: () => {
         setStoryPhase('workspace');
@@ -71,8 +71,8 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
     {
       id: 'view-needs',
       category: 'Cockpit Action',
-      title: 'Cockpit: Open Needs You Decision Room',
-      subtitle: 'Inspect CrashLens port conflict & approval request',
+      title: 'Cockpit: Open Needs You Decision Queue',
+      subtitle: 'Inspect port conflicts & pending human approvals',
       icon: AlertTriangle,
       action: () => {
         setStoryPhase('needs');
@@ -84,7 +84,7 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
       id: 'view-recipes',
       category: 'Cockpit Action',
       title: 'Cockpit: Trigger Startup Recipe DAG',
-      subtitle: 'Deterministic full-stack boot sequence',
+      subtitle: 'Deterministic multi-service boot sequence',
       icon: Workflow,
       action: () => {
         setStoryPhase('recipes');
@@ -107,8 +107,8 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
     {
       id: 'features',
       category: 'Navigation',
-      title: 'Jump to Feature Showcase',
-      subtitle: 'Groundstation, Workspace, Attention, Recipes, Memory',
+      title: 'Jump to Major Features',
+      subtitle: 'Recipes, Mobile Companion, MCP Gateway, Focus Mode, BYOK',
       icon: Shield,
       action: () => {
         onNavigate('home', 'features');
@@ -119,7 +119,7 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
       id: 'integrations',
       category: 'Navigation',
       title: 'Jump to Ecosystem Integrations',
-      subtitle: 'Mission AI, VS Code Bridge, MCP Gateway, Android',
+      subtitle: 'VS Code Bridge, MCP Gateway, Android LAN Companion, Browser',
       icon: Server,
       action: () => {
         onNavigate('home', 'integrations');
@@ -130,7 +130,7 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
       id: 'architecture',
       category: 'Navigation',
       title: 'Jump to System Architecture',
-      subtitle: 'Zero-cloud local sovereign engine pipeline',
+      subtitle: '4-tier local developer engine pipeline',
       icon: Server,
       action: () => {
         onNavigate('home', 'architecture');
@@ -138,13 +138,13 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
       }
     },
     {
-      id: 'pricing',
+      id: 'download-section',
       category: 'Navigation',
-      title: 'Jump to Pricing & Access Editions',
-      subtitle: 'Free Community Edition, Pro Preview, and Team Access',
-      icon: Shield,
+      title: 'Jump to Download Center',
+      subtitle: 'Desktop releases (Windows, macOS, Linux) and Android Companion',
+      icon: Download,
       action: () => {
-        onNavigate('home', 'pricing');
+        onNavigate('home', 'download-section');
         onClose();
       }
     },
@@ -152,7 +152,7 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
       id: 'faq',
       category: 'Navigation',
       title: 'Jump to Developer FAQ',
-      subtitle: 'Privacy, supported agents, and architecture questions',
+      subtitle: 'Architecture, local execution, and companion app questions',
       icon: HelpCircle,
       action: () => {
         onNavigate('home', 'faq');
@@ -162,8 +162,8 @@ export default function CommandPaletteModal({ isOpen, onClose, onNavigate }) {
     {
       id: 'download',
       category: 'Deployment',
-      title: 'Download OUTARCH 2.19.0',
-      subtitle: 'Windows, macOS (Apple Silicon/Intel), Linux packages',
+      title: 'Download OUTARCH Desktop & Mobile',
+      subtitle: 'Direct installers and companion app downloads',
       icon: Download,
       action: () => {
         onNavigate('home', 'download-section');

@@ -56,7 +56,7 @@ export default function KeyboardShortcutsModal({ isOpen, onClose }) {
                 Keyboard Shortcuts & Hotkeys
               </h3>
               <span className="font-mono text-[11px] text-zinc-400">
-                OUTARCH v2.19.0 Native Keybindings
+                OUTARCH Native Keybindings
               </span>
             </div>
           </div>

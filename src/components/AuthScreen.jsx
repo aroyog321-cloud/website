@@ -48,7 +48,7 @@ export default function AuthScreen({ onNavigateHome }) {
 
           <div className="pt-2">
             <code className="text-[11px] text-blue-400 bg-[#080a0f] p-2 rounded border border-[#1a202c] block">
-              $ agy auth --status
+              $ outarch auth --status
             </code>
           </div>
         </div>

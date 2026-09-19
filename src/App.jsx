@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CockpitProvider } from './context/CockpitContext';
 import Navbar from './components/Navbar';
 import HeroCinematic from './components/HeroCinematic';
+import StoryProgression from './components/StoryProgression';
 import ProblemSection from './components/ProblemSection';
 import PhilosophySection from './components/PhilosophySection';
 import FeatureShowcase from './components/FeatureShowcase';
@@ -64,7 +65,7 @@ export default function App() {
 
   return (
     <CockpitProvider>
-      <div className="min-h-screen bg-[#050608] text-[#e2e8f0] flex flex-col selection:bg-blue-600/30 selection:text-blue-200">
+      <div className="min-h-screen bg-[#050608] text-[#F4F6F8] flex flex-col selection:bg-white/20 selection:text-white">
         
         {/* Top Developer Navbar */}
         {currentRoute !== 'auth' && (
@@ -89,34 +90,37 @@ export default function App() {
           {/* Main Comprehensive Product Experience */}
           {currentRoute === 'home' && (
             <>
-              {/* 01 · Hero & Live Interactive Virtual Cockpit */}
+              {/* 01 · Hero & Live Interactive Virtual Cockpit Centerpiece */}
               <HeroCinematic onOpenDownload={handleOpenDownload} />
 
-              {/* 02 · The Problem: Multi-Terminal Chaos vs The Cockpit */}
+              {/* 02 · 5-Stage Story Progression (CHAOS → OBSERVATION → CONTROL → ACTION → RESOLUTION) */}
+              <StoryProgression />
+
+              {/* 03 · The Problem: Multi-Process Fragmentation vs Supervision */}
               <ProblemSection />
 
-              {/* 03 · Product Philosophy: The Governance Layer for Autonomous Code */}
+              {/* 04 · Product Philosophy: Why OUTARCH Exists */}
               <PhilosophySection />
 
-              {/* 04 · Deep Feature Capabilities (6 Visual Pillars with Cockpit Test Drives) */}
+              {/* 05 · Deep Feature Storytelling (Groundstation, Workspace, Needs You, Recipes, Focus, Memory) */}
               <FeatureShowcase />
 
-              {/* 05 · Integrations Hub (Mission AI, VS Code, MCP, Android, Web Browser) */}
+              {/* 06 · Integrations Hub (Mission AI, VS Code, MCP, Android, Web Browser) */}
               <IntegrationsSection />
 
-              {/* 06 · Architecture: Zero-Cloud Sovereign Engine & MCP Gateway */}
+              {/* 07 · System Architecture: Zero-Cloud Sovereign Engine & Execution Pipeline */}
               <ArchitectureSection />
 
-              {/* 07 · Transparent In-Page Pricing Editions */}
+              {/* 08 · Transparent Editions & Developer Access */}
               <PricingSection 
                 onOpenDownload={handleOpenDownload}
                 onSelectPlan={(plan) => handleRouteChange('auth')}
               />
 
-              {/* 08 · Technical Developer FAQ (Accordion) */}
+              {/* 09 · Developer FAQ */}
               <FaqSection />
 
-              {/* 09 · High-Impact Final CTA & Native Platform Downloads */}
+              {/* 10 · High-Impact Final CTA & Platform Deployment */}
               <FinalCtaSection />
             </>
           )}

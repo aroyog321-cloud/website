@@ -1,19 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CockpitProvider } from './context/CockpitContext';
 import Navbar from './components/Navbar';
 import HeroCinematic from './components/HeroCinematic';
 import ProblemSection from './components/ProblemSection';
 import PhilosophySection from './components/PhilosophySection';
 import FeatureShowcase from './components/FeatureShowcase';
+import IntegrationsSection from './components/IntegrationsSection';
 import ArchitectureSection from './components/ArchitectureSection';
 import PricingSection from './components/PricingSection';
 import FaqSection from './components/FaqSection';
 import FinalCtaSection from './components/FinalCtaSection';
 import AuthScreen from './components/AuthScreen';
 import Footer from './components/Footer';
+import KeyboardShortcutsModal from './components/KeyboardShortcutsModal';
 
 export default function App() {
   const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'auth'
+  const [shortcutsModalOpen, setShortcutsModalOpen] = useState(false);
+
+  // Global key listener for shortcuts overlay ('?' or 'F1')
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.key === '?' || e.key === 'F1') && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+        e.preventDefault();
+        setShortcutsModalOpen(prev => !prev);
+      } else if (e.key === 'Escape') {
+        setShortcutsModalOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const handleRouteChange = (route, sectionId) => {
     if (route === 'auth') {
@@ -55,6 +72,7 @@ export default function App() {
             activeRoute={currentRoute}
             onRouteChange={handleRouteChange}
             onOpenDownload={handleOpenDownload}
+            onOpenShortcuts={() => setShortcutsModalOpen(true)}
           />
         )}
 
@@ -83,19 +101,22 @@ export default function App() {
               {/* 04 · Deep Feature Capabilities (6 Visual Pillars with Cockpit Test Drives) */}
               <FeatureShowcase />
 
-              {/* 05 · Architecture: Zero-Cloud Sovereign Engine & MCP Gateway */}
+              {/* 05 · Integrations Hub (Mission AI, VS Code, MCP, Android, Web Browser) */}
+              <IntegrationsSection />
+
+              {/* 06 · Architecture: Zero-Cloud Sovereign Engine & MCP Gateway */}
               <ArchitectureSection />
 
-              {/* 06 · Transparent In-Page Pricing Editions */}
+              {/* 07 · Transparent In-Page Pricing Editions */}
               <PricingSection 
                 onOpenDownload={handleOpenDownload}
                 onSelectPlan={(plan) => handleRouteChange('auth')}
               />
 
-              {/* 07 · Technical Developer FAQ (Accordion) */}
+              {/* 08 · Technical Developer FAQ (Accordion) */}
               <FaqSection />
 
-              {/* 08 · High-Impact Final CTA & Native Platform Downloads */}
+              {/* 09 · High-Impact Final CTA & Native Platform Downloads */}
               <FinalCtaSection />
             </>
           )}
@@ -104,8 +125,16 @@ export default function App() {
 
         {/* Developer Footer */}
         {currentRoute !== 'auth' && (
-          <Footer onOpenReel={() => handleRouteChange('home', 'cockpit')} />
+          <Footer 
+            onOpenReel={() => handleRouteChange('home', 'cockpit')} 
+          />
         )}
+
+        {/* Interactive Keyboard Shortcuts Overlay */}
+        <KeyboardShortcutsModal
+          isOpen={shortcutsModalOpen}
+          onClose={() => setShortcutsModalOpen(false)}
+        />
 
       </div>
     </CockpitProvider>

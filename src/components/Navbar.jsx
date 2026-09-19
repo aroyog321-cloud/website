@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Terminal, ArrowRight, ShieldCheck, Download, Sparkles } from 'lucide-react';
+import { Menu, X, Terminal, ArrowRight, ShieldCheck, Download, Keyboard, Sparkles } from 'lucide-react';
 
 export default function Navbar({ 
   activeRoute = 'home', 
   onRouteChange,
-  onOpenDownload 
+  onOpenDownload,
+  onOpenShortcuts 
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -21,13 +22,14 @@ export default function Navbar({
     { label: 'Virtual Cockpit', href: '#cockpit', action: () => onRouteChange('home', 'cockpit') },
     { label: 'The Problem', href: '#problem', action: () => onRouteChange('home', 'problem') },
     { label: 'Features', href: '#features', action: () => onRouteChange('home', 'features') },
+    { label: 'Integrations', href: '#integrations', action: () => onRouteChange('home', 'integrations') },
     { label: 'Architecture', href: '#architecture', action: () => onRouteChange('home', 'architecture') },
     { label: 'Pricing', href: '#pricing', action: () => onRouteChange('home', 'pricing') },
     { label: 'FAQ', href: '#faq', action: () => onRouteChange('home', 'faq') },
   ];
 
   return (
-    <header className={`sticky top-0 z-50 w-full transition-all duration-200 select-none ${
+    <header className={`sticky top-0 z-40 w-full transition-all duration-200 select-none ${
       scrolled 
         ? 'bg-[#050608]/90 backdrop-blur-xl border-b border-[#161b26] shadow-[0_10px_30px_rgba(0,0,0,0.5)]' 
         : 'bg-[#050608]/60 backdrop-blur-md border-b border-[#10141e]'
@@ -63,7 +65,7 @@ export default function Navbar({
             <button
               key={idx}
               onClick={link.action}
-              className="px-3.5 py-2 rounded-lg text-zinc-300 hover:text-white hover:bg-[#121724] transition-all"
+              className="px-3 py-2 rounded-lg text-zinc-300 hover:text-white hover:bg-[#121724] transition-all"
             >
               {link.label}
             </button>
@@ -73,8 +75,18 @@ export default function Navbar({
         {/* Right Action Stack */}
         <div className="hidden md:flex items-center gap-3">
           <button
+            onClick={onOpenShortcuts}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0b0f19] border border-[#1a2336] text-zinc-400 hover:text-white hover:border-blue-500/40 transition-colors font-mono text-xs"
+            title="View Keyboard Shortcuts (or press ?)"
+          >
+            <Keyboard className="w-3.5 h-3.5 text-blue-400" />
+            <span>Shortcuts</span>
+            <kbd className="px-1.5 py-0.2 bg-[#121826] border border-[#232f48] rounded text-[10px] text-blue-300">?</kbd>
+          </button>
+
+          <button
             onClick={() => onRouteChange('auth', 'signin')}
-            className="px-3.5 py-2 text-xs font-sans font-medium text-zinc-400 hover:text-white transition-colors"
+            className="px-3 py-2 text-xs font-sans font-medium text-zinc-400 hover:text-white transition-colors"
           >
             Sign in
           </button>
@@ -117,6 +129,20 @@ export default function Navbar({
           </nav>
 
           <div className="pt-3 border-t border-[#141822] flex flex-col gap-2 font-sans">
+            <button
+              onClick={() => {
+                if (onOpenShortcuts) onOpenShortcuts();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full py-2.5 px-3 flex items-center justify-between text-xs font-mono text-zinc-300 bg-[#0c101a] border border-[#1a2336] rounded-lg"
+            >
+              <div className="flex items-center gap-2">
+                <Keyboard className="w-4 h-4 text-blue-400" />
+                <span>Keyboard Shortcuts</span>
+              </div>
+              <kbd className="px-1.5 py-0.5 bg-[#121826] rounded text-[10px] text-blue-300">?</kbd>
+            </button>
+
             <button
               onClick={() => {
                 onRouteChange('auth', 'signin');

@@ -13,7 +13,11 @@ import {
   Cpu,
   Layers,
   Sparkles,
-  Zap
+  Zap,
+  Globe,
+  BellRing,
+  Radio,
+  Share2
 } from 'lucide-react';
 
 export default function FeatureShowcase() {
@@ -36,21 +40,21 @@ export default function FeatureShowcase() {
     {
       id: 'groundstation',
       phaseNumber: '01',
-      tag: 'HUD & PROCESS FLEET',
+      tag: 'HUD & SUPERVISION BY EXCEPTION',
       title: 'Groundstation: 20-Worker Process Telemetry',
-      desc: 'Monitor your entire local stack—AI agents, dev servers, worker queues, and database containers—in one responsive heads-up display with verified CPU, memory, port occupancy, and exit status.',
+      desc: 'Supervise all long-running processes—AI agents, backend APIs, microservices, databases, and test runners—in a unified dashboard. Built on the principle of Supervision by Exception: it monitors everything continuously but only alerts you when human action is strictly required.',
       bullets: [
-        'Live health checks on ports 3000, 5432, 6379, and 8080',
-        'Automatic zombie process detection and zero-delay restart',
-        'Resource consumption alerts before memory leaks exhaust your machine'
+        'Live health checks on ports 3000, 5432, 6379, and 8080 with automated status indicators',
+        'Worker Inspector slide-out rail with command, cwd, CPU/RAM, and "Ask Mission AI" button',
+        'Activity Waterline ("NOW") streaming real-time workspace lifecycle transitions'
       ],
       previewSnippet: {
         type: 'stats',
         items: [
           { label: 'WORKERS MONITORED', value: '20' },
-          { label: 'FLEET HEALTH', value: '98.2%' },
-          { label: 'LATENCY OVERHEAD', value: '< 1.2ms' },
-          { label: 'PTY BUFFER', value: '64KB FIFO' }
+          { label: 'ENGINE HEALTH', value: '99.4%' },
+          { label: 'LATENCY OVERHEAD', value: '< 0.8ms' },
+          { label: 'PTY BUFFER', value: '20,000 Lines' }
         ]
       },
       icon: Activity,
@@ -59,21 +63,21 @@ export default function FeatureShowcase() {
     {
       id: 'workspace',
       phaseNumber: '02',
-      tag: 'TERMINAL MULTIPLEXER',
-      title: 'Workspace: Native 2x2 Agent Grid',
-      desc: 'Run Claude Code, Antigravity CLI, and local builds inside native pseudo-terminals (PTY). Switch between full grid mode and single-terminal expansion with millisecond responsiveness.',
+      tag: 'TERMINAL MULTIPLEXER & BROADCAST',
+      title: 'Workspace: 2x2 Matrix & Synchronized Broadcast',
+      desc: 'High-performance terminal canvas powered by @xterm/xterm and ConPTY. Supports 1-pane, 2-pane, 4-pane grid, and auto-packed mosaic layouts with synchronized multi-terminal command broadcasting (Ctrl+Shift+B) and directional Alt+Arrow navigation.',
       bullets: [
-        'Full ANSI color support, interactive curses UI, and raw PTY stream',
-        'Isolated stdin/stdout sandboxing for independent agent sessions',
-        'Direct keystroke injection with zero lag or frame jitter'
+        'Pop-out detached windows: Render any terminal inside an independent native OS window',
+        'Synchronized Broadcast Bar (Ctrl+Shift+B) to broadcast commands across multiple terminals',
+        'Embedded Workspace Browser (Alt+B) to view localhost:3000 alongside your code'
       ],
       previewSnippet: {
         type: 'terminal',
         lines: [
-          '$ outarch worker attach claude-code',
-          'Agent active on pty/3 (pid: 48921)',
-          '> Analyzing schema migrations in /db/schema.prisma',
-          '✓ Verified 4 relations. Awaiting permission to apply.'
+          '$ outarch broadcast --target "worker-01,worker-02,worker-03"',
+          '[Broadcast Engine] Synchronizing 3 PTY sessions...',
+          '> Running: pnpm test --watch --coverage',
+          '✓ Worker 01: 42 passed · Worker 02: 18 passed · Worker 03: 31 passed'
         ]
       },
       icon: Terminal,
@@ -82,19 +86,19 @@ export default function FeatureShowcase() {
     {
       id: 'needs',
       phaseNumber: '03',
-      tag: 'RADICAL ATTENTION',
-      title: 'Needs You: Evidence Before Action',
-      desc: 'When an AI agent requests high-privilege access, schema mutations, or hits a runtime exception, OUTARCH intercepts execution. It presents synthesized diffs and logs for swift human sign-off.',
+      tag: 'CRASHLENS & ATTENTION INBOX',
+      title: 'Needs You: CrashLens & Decision Room',
+      desc: 'When an unhandled exception or port conflict occurs, CrashLens automatically parses the stream, diagnoses the root cause, and opens an actionable decision in the Needs You room. External AI agents (Claude, Codex, Gemini) request destructive mutations through single-use approval tokens.',
       bullets: [
-        'Zero silent file mutations or destructive database migrations',
-        'Structured evidence logs with one-click "Approve" or "Reject"',
-        'Eliminates constant alt-tabbing by notifying you only when needed'
+        'CrashLens instant port conflict inspector: Identifies holding PIDs with 1-click "Stop Conflicting Worker"',
+        'Storm Collapse protection: Merges 3+ simultaneous errors into one summary alert',
+        'Contextual actions: Restart, Inspect Port, Approve & Run, Deny, and Snooze 15m'
       ],
       previewSnippet: {
         type: 'decision',
-        title: 'Decision Required: Schema Drift on Worker 03',
-        diff: '- table "users" drop column "legacy_hash"\n+ table "users" add column "argon2_hash"',
-        badge: pendingDecisionsCount > 0 ? `${pendingDecisionsCount} Pending Decision` : 'Verified'
+        title: 'CrashLens: Port 3000 Conflict Detected (EADDRINUSE)',
+        diff: '- Conflicting Process: node (PID 14209)\n+ Recommended Action: Terminate PID 14209 & Restart Dev Server',
+        badge: pendingDecisionsCount > 0 ? `${pendingDecisionsCount} Urgent Problem` : 'Verified'
       },
       icon: AlertTriangle,
       color: 'amber'
@@ -102,17 +106,17 @@ export default function FeatureShowcase() {
     {
       id: 'recipes',
       phaseNumber: '04',
-      tag: 'DETERMINISTIC DAG',
-      title: 'Recipes: Ordered Startup & Teardown DAG',
-      desc: 'Say goodbye to flaky bash startup scripts. Define your microservices as a Directed Acyclic Graph (DAG). OUTARCH enforces dependency gates—ensuring Postgres is healthy before migrations run, and Redis is ready before API servers boot.',
+      tag: 'DETERMINISTIC STARTUP DAG',
+      title: 'Recipes: Multi-Worker Startup DAGs',
+      desc: 'Define complex microservices as Directed Acyclic Graphs (DAGs). OUTARCH enforces strict readiness gates (TCP port availability, HTTP 200 response, stdout regex matching) to ensure databases boot and migrate before API servers start.',
       bullets: [
-        'Topological sorting ensures zero port collisions on cold start',
-        'Configurable readiness probes (HTTP 200, TCP connect, exit code 0)',
-        'One-click full stack boot and clean teardown'
+        'Topological sorting guarantees zero port collisions on cold boots',
+        '1-Click "Recover" button that re-runs only failed or skipped DAG nodes',
+        '"Design with Mission AI" automatic recipe generation from repo structure'
       ],
       previewSnippet: {
         type: 'dag',
-        nodes: ['Postgres (5432)', 'Redis (6379)', 'Prisma Migrate', 'API Server (8080)', 'Vite Frontend (5173)']
+        nodes: ['PostgreSQL (5432) [TCP Gate]', 'Prisma Migrate [Exit 0 Gate]', 'Redis (6379) [Ping Gate]', 'Fastify API (8080) [HTTP Gate]', 'Next.js Frontend (3000)']
       },
       icon: Workflow,
       color: 'indigo'
@@ -120,17 +124,17 @@ export default function FeatureShowcase() {
     {
       id: 'focus',
       phaseNumber: '05',
-      tag: 'COGNITIVE CLARITY',
-      title: 'Focus Mode: Silence Peripheral Noise',
-      desc: 'When debugging a critical race condition, secondary terminal chatter becomes cognitive noise. Activate Focus Mode to dim non-essential workers and maximize your target terminal.',
+      tag: 'FULLSCREEN FOCUS (ALT+F)',
+      title: 'Focus Mode: Total Cognitive Quiet',
+      desc: 'Silence peripheral noise instantly. Toggle Fullscreen Focus Mode (Alt+F) to collapse the navigation sidebar, status bar, and secondary drawers—allocating 100% of your screen estate to your active terminal session while background workers run silently.',
       bullets: [
-        'Instant terminal isolation with single keybinding (⌘+F)',
-        'Background workers continue running silently with background health checks',
-        'Reduces visual distraction during complex problem-solving'
+        'Instant terminal isolation with single keybinding (Alt+F)',
+        'Quiet Hours scheduling to mute audible chimes during deep work sessions',
+        'In-App notification deduplication to prevent distracting OS toast spam'
       ],
       previewSnippet: {
         type: 'focus_badge',
-        text: 'FOCUS LOCK ACTIVE // PERIPHERAL NOISE REDUCED 80%'
+        text: 'FOCUS LOCK ENGAGED (ALT+F) // FULL DISPLAY CANVAS ACTIVE'
       },
       icon: Maximize2,
       color: 'purple'
@@ -138,20 +142,20 @@ export default function FeatureShowcase() {
     {
       id: 'history',
       phaseNumber: '06',
-      tag: 'OPERATIONAL LEDGER',
-      title: 'Project Memory: Durable Operational Facts',
-      desc: 'Don’t rely on ephemeral console scrollback. OUTARCH maintains an append-only timeline of operational facts—capturing exactly when builds succeeded, which agent executed what command, and what caused crashes.',
+      tag: 'CHRONOLOGICAL OPERATIONAL MEMORY',
+      title: 'History: Append-Only Fact Ledger',
+      desc: 'An immutable, append-only SQLite memory store that captures workspace transitions, structured evidence, decision outcomes, and process crashes. Query exact execution facts instead of digging through raw ANSI logs.',
       bullets: [
-        '100% local SQLite storage for lightning-fast historical queries',
-        'Crash forensics with full environment snapshot and log slices',
-        'No AI hallucinations—grounded strictly in recorded process events'
+        'Memory Checkpoints highlighting operational risks and changes since last review',
+        '"Ask Mission AI about Memory" for instant natural language crash summaries',
+        'Secret Redaction: Automatically masks passwords, API tokens, and secrets'
       ],
       previewSnippet: {
         type: 'facts',
         items: [
           '11:04:12 UTC · Recipe "Full Stack Boot" completed (5 nodes ok)',
-          '11:08:45 UTC · Worker "antigravity-swarm" deployed 3 unit tests',
-          '11:12:01 UTC · Port 5432 query throughput verified at 1,420 rps'
+          '11:08:45 UTC · CrashLens intercepted EADDRINUSE on port 3000',
+          '11:12:01 UTC · Decision resolved: Port released & server restarted'
         ]
       },
       icon: Clock,
@@ -166,13 +170,13 @@ export default function FeatureShowcase() {
       <div className="text-center max-w-3xl mx-auto mb-16">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/40 border border-blue-500/30 text-blue-400 font-mono text-xs font-semibold mb-4">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>DEEP PRODUCT CAPABILITIES</span>
+          <span>OUTARCH 2.19.0 CAPABILITIES</span>
         </div>
         <h2 className="font-display text-3xl sm:text-5xl font-black text-white tracking-tight uppercase">
           Engineered for Total Developer Command
         </h2>
         <p className="font-sans text-zinc-400 text-sm sm:text-base mt-4 leading-relaxed">
-          Every capability in OUTARCH is built around one premise: give developers absolute clarity, bounded agency, and effortless control over high-volume execution.
+          Every capability in OUTARCH is built around one premise: give developers absolute clarity, bounded autonomy, and effortless control over high-volume execution.
         </p>
       </div>
 
@@ -269,7 +273,7 @@ export default function FeatureShowcase() {
                 {feat.previewSnippet.type === 'terminal' && (
                   <div className="space-y-1.5 text-zinc-300 py-2">
                     {feat.previewSnippet.lines.map((line, lIdx) => (
-                      <div key={lIdx} className={line.startsWith('$') ? 'text-blue-400 font-semibold' : line.startsWith('✓') ? 'text-emerald-400' : 'text-zinc-300'}>
+                      <div key={lIdx} className={line.startsWith('$') ? 'text-blue-400 font-semibold' : line.startsWith('✓') ? 'text-emerald-400' : line.startsWith('[') ? 'text-amber-300' : 'text-zinc-300'}>
                         {line}
                       </div>
                     ))}
@@ -283,12 +287,12 @@ export default function FeatureShowcase() {
                       <span>{feat.previewSnippet.title}</span>
                     </div>
                     <div className="bg-[#0e121c] p-3 rounded border border-amber-500/20 text-xs font-mono">
-                      <div className="text-red-400">- table "users" drop column "legacy_hash"</div>
-                      <div className="text-emerald-400">+ table "users" add column "argon2_hash"</div>
+                      <div className="text-red-400">- Conflicting Process: node (PID 14209)</div>
+                      <div className="text-emerald-400">+ Action: Terminate PID 14209 & Restart Dev Server</div>
                     </div>
                     <div className="flex gap-2 pt-1">
                       <span className="px-3 py-1 rounded bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-[11px] font-bold">
-                        ✓ AUTO-SYNTHESIZED
+                        ✓ CRASHLENS SIGNATURE MATCHED
                       </span>
                     </div>
                   </div>

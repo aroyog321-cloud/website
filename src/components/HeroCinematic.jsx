@@ -1,6 +1,6 @@
 import React from 'react';
 import VirtualCockpit from './VirtualCockpit/VirtualCockpit';
-import { Download, ArrowDown, Terminal } from 'lucide-react';
+import { Download, ArrowDown, Terminal, Sparkles, Layers } from 'lucide-react';
 import GlitchLogo from './GlitchLogo';
 
 export default function HeroCinematic({ onOpenDownload }) {
@@ -12,30 +12,33 @@ export default function HeroCinematic({ onOpenDownload }) {
   };
 
   return (
-    <section id="cockpit" className="relative pt-12 sm:pt-16 pb-20 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto flex flex-col items-center select-none">
+    <section id="cockpit" className="relative pt-12 sm:pt-16 pb-24 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto flex flex-col items-center select-none">
       
-      {/* Subtle Restrained Radial Color Fields & Tech Grid Background */}
-      <div className="absolute top-0 inset-x-0 h-[650px] bg-radial-hero pointer-events-none -z-10" />
-      <div className="absolute inset-0 bg-tech-grid opacity-25 pointer-events-none -z-10" />
-
       {/* Hero Header Composition */}
-      <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto mb-12 sm:mb-14">
+      <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto mb-12 sm:mb-16">
         
-        {/* Step 1: Official OUTARCH Eyebrow Logo Badge */}
-        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#0A0E17]/90 border border-white/10 backdrop-blur-md shadow-sm mb-6">
-          <span className="w-2 h-2 rounded-full bg-emerald-400" />
-          <span className="font-mono text-xs font-semibold text-slate-200 tracking-wider uppercase">
-            LOCAL-FIRST DEVELOPER COMMAND CENTER
+        {/* Step 1: Prominent Official OUTARCH Logo Badge */}
+        <div className="mb-6 flex items-center gap-3 px-4 py-2 rounded-full bg-[#0A0E18]/90 border border-white/10 backdrop-blur-md shadow-md hover:border-sky-500/30 transition-all">
+          <img 
+            src="/outarch-icon.png" 
+            alt="OUTARCH Logo Icon" 
+            className="w-5 h-5 object-contain"
+            onError={(e) => { e.target.style.display = 'none'; }}
+          />
+          <span className="font-mono text-xs font-bold text-slate-200 tracking-wider uppercase flex items-center gap-2">
+            <span>OUTARCH</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-slate-400 font-normal">DEVELOPER COMMAND CENTER</span>
           </span>
         </div>
 
-        {/* Step 2: Primary Headline with Controlled Responsive Typography */}
+        {/* Step 2: Primary Headline */}
         <h1 
           className="font-display font-black tracking-[-0.035em] uppercase leading-[0.95] mb-6 text-white text-center"
-          style={{ fontSize: 'clamp(2.75rem, 6.5vw, 5.75rem)' }}
+          style={{ fontSize: 'clamp(2.75rem, 6.5vw, 6rem)' }}
         >
           BUILD WITHOUT <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-200 via-slate-400 to-slate-200">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-100 via-slate-300 to-slate-400">
             LOSING CONTROL.
           </span>
         </h1>
@@ -46,10 +49,10 @@ export default function HeroCinematic({ onOpenDownload }) {
         </p>
 
         {/* Step 4: Action Buttons */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5 w-full sm:w-auto">
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
           <button
             onClick={scrollToControlLoop}
-            className="w-full sm:w-auto px-7 py-3.5 rounded-xl btn-primary text-xs font-mono font-bold tracking-tight flex items-center justify-center gap-2 shadow-sm"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-xl btn-primary text-xs font-mono font-bold tracking-tight flex items-center justify-center gap-2.5 shadow-md"
           >
             <span>EXPLORE OUTARCH</span>
             <ArrowDown className="w-3.5 h-3.5" />
@@ -57,7 +60,7 @@ export default function HeroCinematic({ onOpenDownload }) {
 
           <button
             onClick={onOpenDownload}
-            className="w-full sm:w-auto px-7 py-3.5 rounded-xl btn-secondary text-xs font-mono font-bold tracking-tight flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-xl btn-secondary text-xs font-mono font-bold tracking-tight flex items-center justify-center gap-2.5 shadow-sm"
           >
             <Download className="w-4 h-4 text-slate-300" />
             <span>DOWNLOAD</span>
@@ -66,26 +69,26 @@ export default function HeroCinematic({ onOpenDownload }) {
 
       </div>
 
-      {/* Step 5: Large, Polished OUTARCH Product Interface (Centerpiece) */}
-      <div className="w-full relative z-10 rounded-2xl bg-[#080B10] border border-white/10 overflow-hidden shadow-2xl transition-all duration-300">
+      {/* Step 5: Large, Beautiful OUTARCH Application Interface (The Visual Hero) */}
+      <div className="w-full relative z-10 rounded-2xl bg-[#080B12] border border-white/15 overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.7)] transition-all duration-300">
         
         {/* Cockpit Window Chrome Header */}
-        <div className="px-5 py-3 border-b border-white/[0.08] bg-[#0A0E17]/95 backdrop-blur-xl flex items-center justify-between text-xs text-slate-400">
+        <div className="px-5 py-3 border-b border-white/[0.08] bg-[#0A0E18]/95 backdrop-blur-xl flex items-center justify-between text-xs text-slate-400">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500/70" />
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/70" />
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
             </div>
             <span className="font-mono text-[11px] text-slate-300 pl-2.5 border-l border-white/10 flex items-center gap-2">
               <span className="font-bold text-white tracking-wide">OUTARCH Groundstation</span>
               <span className="text-white/20">/</span>
-              <span className="text-slate-400 text-[10px]">Session PTY Matrix</span>
+              <span className="text-sky-400 text-[10px]">Session PTY Matrix</span>
             </span>
           </div>
           
           <div className="flex items-center gap-4 text-[11px] font-mono">
-            <span className="text-slate-500 hidden sm:inline">Interactive sandbox — inspect workers & triage alerts</span>
+            <span className="text-slate-500 hidden sm:inline">Interactive preview — inspect live terminals & triage blockers</span>
             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md badge-running font-semibold text-[10px]">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <span>DAEMON ONLINE</span>
@@ -93,8 +96,8 @@ export default function HeroCinematic({ onOpenDownload }) {
           </div>
         </div>
 
-        {/* Live Virtual Cockpit Interface */}
-        <div className="p-1 sm:p-2 bg-[#05070B]">
+        {/* Live Virtual Cockpit Engine Canvas */}
+        <div className="p-1 sm:p-2 bg-[#05060A]">
           <VirtualCockpit />
         </div>
 

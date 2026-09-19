@@ -19,6 +19,7 @@ import CommandPaletteModal from './components/CommandPaletteModal';
 
 import CursorGlow from './components/CursorGlow';
 import ParticleGridCanvas from './components/ParticleGridCanvas';
+import AtmosphericBackground from './components/AtmosphericBackground';
 
 export default function App() {
   const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'auth'
@@ -100,9 +101,12 @@ export default function App() {
 
   return (
     <CockpitProvider>
-      <div className="min-h-screen bg-[#07090E] text-[#F8FAFC] flex flex-col selection:bg-white/20 selection:text-white relative bg-grain overflow-x-hidden">
+      <div className="min-h-screen bg-[#05060A] text-[#F8FAFC] flex flex-col selection:bg-sky-500/20 selection:text-sky-200 relative overflow-x-hidden">
         
-        {/* Restrained Dynamic Cursor Glow */}
+        {/* Layered Atmospheric Background with Depth & Radial Lighting */}
+        <AtmosphericBackground />
+
+        {/* Dynamic Cursor Glow */}
         <CursorGlow />
 
         {/* Ambient Subtle Particle Constellation */}
@@ -119,7 +123,7 @@ export default function App() {
         )}
 
         {/* Main Content Flow */}
-        <main className="flex-1">
+        <main className="flex-1 relative z-10">
           
           {/* Authentication View */}
           {currentRoute === 'auth' && (
@@ -167,7 +171,7 @@ export default function App() {
 
         </main>
 
-        {/* 15 · Restrained Developer Footer */}
+        {/* 15 · Developer Footer */}
         {currentRoute !== 'auth' && (
           <Footer 
             onOpenReel={() => handleRouteChange('home', 'cockpit')} 

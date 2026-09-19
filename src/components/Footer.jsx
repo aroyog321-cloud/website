@@ -1,105 +1,105 @@
 import React from 'react';
+import { ExternalLink, Terminal, Shield, Check, Smartphone, Download } from 'lucide-react';
 
 export default function Footer({ onOpenReel }) {
   return (
-    <footer className="bg-[#050608] text-[#8B93A1] text-xs font-sans border-t border-white/[0.04] select-none">
+    <footer className="bg-[#030509] text-[#94A3B8] text-xs font-sans border-t border-white/[0.06] select-none">
       
       {/* Top Status Tape */}
-      <div className="border-b border-white/[0.04] bg-[#080A0F] py-3 px-6 overflow-x-auto">
+      <div className="border-b border-white/[0.06] bg-[#070A12] py-3.5 px-6 overflow-x-auto">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-6 whitespace-nowrap font-mono text-[11px]">
           <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5 text-[#10b981]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#10b981]" />
-              SESSION ENGINE: ACTIVE
+            <span className="flex items-center gap-2 text-[#00F5A0] font-bold">
+              <span className="w-2 h-2 rounded-full bg-[#00F5A0] shadow-[0_0_6px_#00F5A0] animate-pulse" />
+              OUTARCH COCKPIT v2.19
             </span>
-            <span className="text-white/10">•</span>
-            <span>PTY BINDINGS: CONPTY / NODE-PTY</span>
-            <span className="text-white/10">•</span>
-            <span>MEMORY: LOCAL SQLITE</span>
+            <span className="text-white/20">•</span>
+            <span className="text-[#CBD5E1]">WORKSPACE RECIPES (DAG)</span>
+            <span className="text-white/20">•</span>
+            <span className="text-[#00E5FF]">MOBILE COMPANION (ANDROID)</span>
+            <span className="text-white/20">•</span>
+            <span className="text-[#C084FC]">SECURE MCP GATEWAY</span>
           </div>
-          <div className="flex items-center gap-4 text-[#8B93A1]">
-            <span>ZERO CLOUD TELEMETRY</span>
-            <span className="text-white/10">•</span>
-            <span>DPAPI ENCRYPTED</span>
-            <span className="text-white/10">•</span>
-            <span className="text-[#F4F6F8]">OUTARCH 2.19.0</span>
+          <div className="flex items-center gap-4 text-[#CBD5E1] font-medium">
+            <span className="text-[#38BDF8]">FOCUS MODE (ALT+F)</span>
+            <span className="text-white/20">•</span>
+            <span className="text-[#FFB800]">BYOK MULTI-LLM VAULT</span>
           </div>
         </div>
       </div>
 
       {/* Main Footer Links */}
-      <div className="max-w-7xl mx-auto px-6 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-12 mb-16">
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-12 mb-12">
           
           {/* Brand Info */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-7 h-7 rounded-lg bg-[#0B0D11] border border-white/10 p-1 flex items-center justify-center">
-                <img src="/outarch-icon.png" alt="OUTARCH" className="w-full h-full object-contain" />
+              <div className="w-8 h-8 rounded-xl bg-[#0B1220] border border-[#00E5FF]/30 p-1.5 flex items-center justify-center shadow-[0_0_10px_rgba(0,229,255,0.2)]">
+                <img src="/outarch-icon.png" alt="OUTARCH" className="w-full h-full object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
               </div>
-              <span className="font-display font-bold text-lg text-[#F4F6F8] tracking-tight">
+              <span className="font-display font-black text-lg text-white tracking-tight">
                 OUTARCH
               </span>
             </div>
-            <p className="text-[#8B93A1] text-xs leading-relaxed max-w-sm">
-              The AI Developer Command Center. A local-first developer operating system with shared PTY multiplexing, radical attention filtering, and evidence-verified operations.
+            <p className="text-[#94A3B8] text-xs leading-relaxed max-w-sm">
+              Local developer command center for running, observing, and supervising multi-terminal processes, automated DAG recipes, and autonomous AI agents.
             </p>
-            <div className="font-mono text-[11px] text-[#F4F6F8] font-medium pt-2">
+            <div className="font-mono text-[11px] text-[#00E5FF] font-bold pt-1">
               BUILD WITHOUT LOSING CONTROL.
             </div>
           </div>
 
-          {/* Product Links */}
+          {/* Major Systems */}
           <div className="space-y-3">
-            <span className="font-mono text-xs uppercase tracking-wider text-[#F4F6F8] block font-semibold">
+            <span className="font-mono text-xs uppercase tracking-wider text-white block font-bold">
+              Major Features
+            </span>
+            <ul className="space-y-2 text-xs">
+              <li><a href="#recipes-feature" className="hover:text-white transition-colors">Workspace Recipes (DAG)</a></li>
+              <li><a href="#mobile-feature" className="hover:text-white transition-colors">Mobile Companion (Android)</a></li>
+              <li><a href="#mcp-feature" className="hover:text-white transition-colors">Secure MCP Gateway</a></li>
+              <li><a href="#focus-feature" className="hover:text-white transition-colors">Fullscreen Focus Mode (Alt+F)</a></li>
+              <li><a href="#byok-feature" className="hover:text-white transition-colors">BYOK Multi-LLM Vault</a></li>
+            </ul>
+          </div>
+
+          {/* Navigation */}
+          <div className="space-y-3">
+            <span className="font-mono text-xs uppercase tracking-wider text-white block font-bold">
               Product
             </span>
-            <ul className="space-y-2.5 text-xs">
+            <ul className="space-y-2 text-xs">
               <li><a href="#cockpit" className="hover:text-white transition-colors">Groundstation Cockpit</a></li>
-              <li><a href="#problem" className="hover:text-white transition-colors">The Terminal Crisis</a></li>
-              <li><a href="#features" className="hover:text-white transition-colors">Feature Showcase</a></li>
-              <li><a href="#architecture" className="hover:text-white transition-colors">System Architecture</a></li>
-              <li><a href="#pricing" className="hover:text-white transition-colors">Editions & Pricing</a></li>
-            </ul>
-          </div>
-
-          {/* Capabilities */}
-          <div className="space-y-3">
-            <span className="font-mono text-xs uppercase tracking-wider text-[#F4F6F8] block font-semibold">
-              Capabilities
-            </span>
-            <ul className="space-y-2.5 text-xs">
-              <li><a href="#features" className="hover:text-white transition-colors">Fleet Supervision (20 Workers)</a></li>
-              <li><a href="#features" className="hover:text-white transition-colors">Workspace 2x2 Matrix</a></li>
-              <li><a href="#features" className="hover:text-white transition-colors">CrashLens Diagnostics</a></li>
-              <li><a href="#features" className="hover:text-white transition-colors">Recipes Startup DAGs</a></li>
-              <li><a href="#features" className="hover:text-white transition-colors">Fullscreen Focus Mode</a></li>
-            </ul>
-          </div>
-
-          {/* Platforms & Docs */}
-          <div className="space-y-3">
-            <span className="font-mono text-xs uppercase tracking-wider text-[#F4F6F8] block font-semibold">
-              Downloads & Docs
-            </span>
-            <ul className="space-y-2.5 text-xs">
-              <li><a href="#download-section" className="hover:text-white transition-colors">Windows Setup (.exe)</a></li>
-              <li><a href="#download-section" className="hover:text-white transition-colors">macOS Apple Silicon (.dmg)</a></li>
-              <li><a href="#download-section" className="hover:text-white transition-colors">Linux Package (.AppImage)</a></li>
+              <li><a href="#problem" className="hover:text-white transition-colors">The Execution Crisis</a></li>
+              <li><a href="#philosophy" className="hover:text-white transition-colors">Product Philosophy</a></li>
+              <li><a href="#integrations" className="hover:text-white transition-colors">Integrations Fabric</a></li>
               <li><a href="#faq" className="hover:text-white transition-colors">Developer FAQ</a></li>
-              <li><a href="#download-section" className="hover:text-white transition-colors">CLI One-Liner</a></li>
+            </ul>
+          </div>
+
+          {/* Downloads */}
+          <div className="space-y-3">
+            <span className="font-mono text-xs uppercase tracking-wider text-white block font-bold">
+              Downloads
+            </span>
+            <ul className="space-y-2 text-xs">
+              <li><a href="#download-section" className="hover:text-white transition-colors">Windows Desktop App</a></li>
+              <li><a href="#download-section" className="hover:text-white transition-colors">macOS Desktop App (DMG)</a></li>
+              <li><a href="#download-section" className="hover:text-white transition-colors">Linux Desktop App (.AppImage)</a></li>
+              <li><a href="#download-section" className="hover:text-white transition-colors">Android Mobile Companion (.apk)</a></li>
             </ul>
           </div>
 
         </div>
 
         {/* Bottom Notice */}
-        <div className="pt-8 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-[#8B93A1]">
+        <div className="pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-[#94A3B8]">
           <div>
-            © {new Date().getFullYear()} OUTARCH Command Center. All rights reserved.
+            © {new Date().getFullYear()} OUTARCH Command Center.
           </div>
-          <div>
-            Local-First · Zero Remote Telemetry · Windows, macOS, Linux
+          <div className="flex items-center gap-6">
+            <span className="text-[#00F5A0] font-semibold">Local-First Developer Tooling</span>
           </div>
         </div>
 

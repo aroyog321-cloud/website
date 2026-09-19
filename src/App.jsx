@@ -3,12 +3,10 @@ import Lenis from 'lenis';
 import { CockpitProvider } from './context/CockpitContext';
 import Navbar from './components/Navbar';
 import HeroCinematic from './components/HeroCinematic';
-import StoryProgression from './components/StoryProgression';
 import ProblemSection from './components/ProblemSection';
 import PhilosophySection from './components/PhilosophySection';
 import FeatureShowcase from './components/FeatureShowcase';
 import IntegrationsSection from './components/IntegrationsSection';
-import ArchitectureSection from './components/ArchitectureSection';
 import PricingSection from './components/PricingSection';
 import FaqSection from './components/FaqSection';
 import FinalCtaSection from './components/FinalCtaSection';
@@ -16,6 +14,9 @@ import AuthScreen from './components/AuthScreen';
 import Footer from './components/Footer';
 import KeyboardShortcutsModal from './components/KeyboardShortcutsModal';
 import CommandPaletteModal from './components/CommandPaletteModal';
+
+import CursorGlow from './components/CursorGlow';
+import ParticleGridCanvas from './components/ParticleGridCanvas';
 import AmbientHudOverlay from './components/AmbientHudOverlay';
 
 export default function App() {
@@ -26,7 +27,7 @@ export default function App() {
   // Initialize Lenis Smooth Scrolling
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
@@ -51,7 +52,7 @@ export default function App() {
   // Global key listener for shortcuts overlay ('?' or 'F1') and command palette ('Cmd+K' or 'Ctrl+K')
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         setCommandPaletteOpen(prev => !prev);
       } else if ((e.key === '?' || e.key === 'F1') && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
@@ -98,12 +99,16 @@ export default function App() {
 
   return (
     <CockpitProvider>
-      <div className="min-h-screen bg-[#050608] text-[#F4F6F8] flex flex-col selection:bg-white/20 selection:text-white relative bg-grain">
+      <div className="min-h-screen bg-[#030509] text-[#F8FAFC] flex flex-col selection:bg-[#00E5FF]/20 selection:text-white relative bg-grain overflow-x-hidden">
         
-        {/* Ambient Corner HUD Overlay */}
-        <AmbientHudOverlay 
-          onOpenCommandPalette={() => setCommandPaletteOpen(true)}
-        />
+        {/* Dynamic Interactive Cursor Glow & Spotlight HUD */}
+        <CursorGlow />
+
+        {/* Ambient Interactive Particle Constellation Grid */}
+        <ParticleGridCanvas />
+
+        {/* Fixed Ambient HUD Telemetry Status */}
+        <AmbientHudOverlay onOpenCommandPalette={() => setCommandPaletteOpen(true)} />
 
         {/* Top Developer Navbar */}
         {currentRoute !== 'auth' && (
@@ -131,41 +136,34 @@ export default function App() {
               {/* 01 · Hero & Live Interactive Virtual Cockpit Centerpiece */}
               <HeroCinematic onOpenDownload={handleOpenDownload} />
 
-              {/* 02 · 5-Stage Story Progression (CHAOS → OBSERVATION → CONTROL → ACTION → RESOLUTION) */}
-              <StoryProgression />
-
-              {/* 03 · The Problem: Multi-Process Fragmentation vs Supervision */}
+              {/* 02 & 03 · The Problem & The Control Layer */}
               <ProblemSection />
 
               {/* 04 · Product Philosophy: Why OUTARCH Exists */}
               <PhilosophySection />
 
-              {/* 05 · Deep Feature Storytelling (Groundstation, Workspace, Needs You, Recipes, Focus, Memory) */}
+              {/* 05–10 · Major Features Spotlight (Recipes DAG, Mobile Companion, Secure MCP, Focus Mode, BYOK) */}
               <FeatureShowcase />
 
-              {/* 06 · Integrations Hub (Mission AI, VS Code, MCP, Android, Web Browser) */}
+              {/* 11 · Integrations Hub (Mission AI, VS Code, MCP Gateway, Android LAN Companion, Browser) */}
               <IntegrationsSection />
 
-              {/* 07 · System Architecture: Zero-Cloud Sovereign Engine & Execution Pipeline */}
-              <ArchitectureSection />
-
-              {/* 08 · Transparent Editions & Developer Access */}
+              {/* 12 · Direct Application Downloads (Desktop & Mobile Companion) */}
               <PricingSection 
                 onOpenDownload={handleOpenDownload}
-                onSelectPlan={(plan) => handleRouteChange('auth')}
               />
 
-              {/* 09 · Developer FAQ */}
+              {/* 13 · Developer FAQ */}
               <FaqSection />
 
-              {/* 10 · High-Impact Final CTA & Platform Deployment */}
+              {/* 14 · High-Impact Final CTA & Platform Deployment */}
               <FinalCtaSection />
             </>
           )}
 
         </main>
 
-        {/* Developer Footer */}
+        {/* 15 · Developer Footer */}
         {currentRoute !== 'auth' && (
           <Footer 
             onOpenReel={() => handleRouteChange('home', 'cockpit')} 

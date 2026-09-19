@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Download, Keyboard, Terminal } from 'lucide-react';
+import { Menu, X, Download, Keyboard, Terminal, Smartphone, Sparkles, Cpu, Layers, Maximize2, KeyRound } from 'lucide-react';
 
 export default function Navbar({ 
   activeRoute = 'home', 
@@ -19,20 +19,21 @@ export default function Navbar({
   }, []);
 
   const navLinks = [
-    { label: 'Product', href: '#cockpit', action: () => onRouteChange('home', 'cockpit') },
-    { label: 'Problem', href: '#problem', action: () => onRouteChange('home', 'problem') },
-    { label: 'Features', href: '#features', action: () => onRouteChange('home', 'features') },
-    { label: 'Integrations', href: '#integrations', action: () => onRouteChange('home', 'integrations') },
-    { label: 'Architecture', href: '#architecture', action: () => onRouteChange('home', 'architecture') },
-    { label: 'Pricing', href: '#pricing', action: () => onRouteChange('home', 'pricing') },
+    { label: 'Cockpit', href: '#cockpit', action: () => onRouteChange('home', 'cockpit') },
+    { label: 'Recipes (DAG)', href: '#recipes-feature', action: () => onRouteChange('home', 'features') },
+    { label: 'Mobile App', href: '#mobile-feature', action: () => onRouteChange('home', 'features') },
+    { label: 'MCP Gateway', href: '#mcp-feature', action: () => onRouteChange('home', 'features') },
+    { label: 'Focus Mode', href: '#focus-feature', action: () => onRouteChange('home', 'features') },
+    { label: 'BYOK AI', href: '#byok-feature', action: () => onRouteChange('home', 'features') },
+    { label: 'Download', href: '#download-section', action: () => onRouteChange('home', 'download-section') },
     { label: 'FAQ', href: '#faq', action: () => onRouteChange('home', 'faq') },
   ];
 
   return (
     <header className={`sticky top-0 z-40 w-full transition-all duration-300 select-none ${
       scrolled 
-        ? 'bg-[#050608]/90 backdrop-blur-xl border-b border-[#161B26]' 
-        : 'bg-[#050608]/60 backdrop-blur-md border-b border-white/[0.04]'
+        ? 'bg-[#030509]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.8)]' 
+        : 'bg-[#030509]/80 backdrop-blur-md border-b border-white/[0.06]'
     }`}>
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         
@@ -41,7 +42,7 @@ export default function Navbar({
           onClick={() => onRouteChange('home', 'cockpit')} 
           className="flex items-center gap-3 cursor-pointer group"
         >
-          <div className="w-8 h-8 rounded-lg bg-[#0B0D11] border border-white/10 p-1 flex items-center justify-center group-hover:border-white/20 transition-all">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#090D18] to-[#121A2C] border border-[#00E5FF]/30 p-1.5 flex items-center justify-center group-hover:border-[#00E5FF]/60 shadow-[0_0_12px_rgba(0,229,255,0.2)] transition-all">
             <img 
               src="/outarch-icon.png" 
               alt="OUTARCH" 
@@ -50,113 +51,107 @@ export default function Navbar({
             />
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="font-display text-lg font-bold tracking-tight text-[#F4F6F8]">
+            <span className="font-display text-base font-black tracking-tight text-white group-hover:text-[#00E5FF] transition-colors">
               OUTARCH
             </span>
-            <span className="font-mono text-[10px] text-[#8B93A1] tracking-wider uppercase">
-              2.19.0
+            <span className="font-mono text-[10px] text-[#00F5A0] tracking-wider uppercase font-bold px-1.5 py-0.5 rounded bg-[#00F5A0]/10 border border-[#00F5A0]/30">
+              v2.19
             </span>
           </div>
         </div>
 
-        {/* Desktop Links - Refined Inter Sans */}
-        <nav className="hidden lg:flex items-center gap-8 text-xs font-medium text-[#8B93A1]">
+        {/* Desktop Links */}
+        <nav className="hidden lg:flex items-center gap-7 text-xs font-semibold text-[#CBD5E1]">
           {navLinks.map((link, idx) => (
             <button
               key={idx}
               onClick={link.action}
-              className="hover:text-[#F4F6F8] transition-colors py-1 relative group"
+              className="hover:text-white transition-colors py-1 relative group tracking-tight"
             >
               <span>{link.label}</span>
-              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white/40 transition-all duration-200 group-hover:w-full" />
+              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#00F5A0] to-[#00E5FF] transition-all duration-300 group-hover:w-full rounded-full" />
             </button>
           ))}
         </nav>
 
-        {/* Right Action Stack */}
-        <div className="hidden md:flex items-center gap-4">
+        {/* Right Action Stack with Direct Downloads */}
+        <div className="hidden md:flex items-center gap-3">
           <button
             onClick={onOpenShortcuts}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-mono text-[#8B93A1] hover:text-[#F4F6F8] hover:bg-white/[0.04] transition-colors"
-            title="Keyboard Shortcuts"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono text-[#CBD5E1] hover:text-white hover:bg-white/[0.06] border border-transparent hover:border-white/10 transition-all"
+            title="Keyboard Shortcuts (? or F1)"
           >
-            <Keyboard className="w-3.5 h-3.5 text-[#8B93A1]" />
-            <kbd className="px-1.5 py-0.5 rounded bg-[#10131A] border border-white/10 text-[10px] text-[#8B93A1]">?</kbd>
-          </button>
-
-          <button
-            onClick={() => onRouteChange('auth', 'signin')}
-            className="text-xs font-medium text-[#8B93A1] hover:text-[#F4F6F8] transition-colors px-2 py-1.5"
-          >
-            Sign in
+            <Keyboard className="w-3.5 h-3.5 text-[#94A3B8]" />
+            <kbd className="px-1.5 py-0.5 rounded bg-[#0E1524] border border-white/15 text-[10px] text-[#E2E8F0] font-bold">?</kbd>
           </button>
 
           <button
             onClick={onOpenDownload}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#F4F6F8] hover:bg-white text-[#050608] text-xs font-medium tracking-tight transition-all active:scale-[0.98]"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#0F1728] hover:bg-[#162238] border border-[#00E5FF]/30 text-white text-xs font-mono font-bold tracking-tight transition-all"
+            title="Download Android Companion"
+          >
+            <Smartphone className="w-3.5 h-3.5 text-[#00E5FF]" />
+            <span>Mobile APK</span>
+          </button>
+
+          <button
+            onClick={onOpenDownload}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#00F5A0] to-[#00E5FF] hover:from-[#00E5FF] hover:to-[#00F5A0] text-[#030509] text-xs font-mono font-bold tracking-tight transition-all duration-300 active:scale-[0.98] shadow-[0_0_15px_rgba(0,245,160,0.3)] btn-shimmer"
           >
             <Download className="w-3.5 h-3.5" />
-            <span>Download</span>
+            <span>Download Desktop</span>
           </button>
         </div>
 
-        {/* Mobile Hamburger Toggle */}
-        <button
-          onClick={() => setMobileMenuOpen(prev => !prev)}
-          className="lg:hidden p-2 text-[#8B93A1] hover:text-white"
-        >
-          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        {/* Mobile Menu Toggle */}
+        <div className="flex lg:hidden items-center gap-2.5">
+          <button
+            onClick={onOpenDownload}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-[#00F5A0] to-[#00E5FF] text-[#030509] text-xs font-bold font-mono"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>Get App</span>
+          </button>
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-1.5 rounded-lg text-[#CBD5E1] hover:text-white"
+            aria-label="Toggle Navigation Menu"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
 
       </div>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#050608]/98 backdrop-blur-2xl border-b border-[#161B26] p-6 space-y-4 animate-fade-in">
-          <nav className="flex flex-col space-y-3 text-sm">
-            {navLinks.map((link, idx) => (
-              <button
-                key={idx}
-                onClick={() => {
-                  link.action();
-                  setMobileMenuOpen(false);
-                }}
-                className="text-left py-2 text-[#8B93A1] hover:text-white font-medium transition-colors"
-              >
-                {link.label}
-              </button>
-            ))}
-          </nav>
-
-          <div className="pt-4 border-t border-white/[0.06] flex flex-col gap-3">
+        <div className="lg:hidden border-b border-white/10 bg-[#070B14]/95 backdrop-blur-2xl px-6 py-4 space-y-3">
+          {navLinks.map((link, idx) => (
             <button
+              key={idx}
               onClick={() => {
-                if (onOpenShortcuts) onOpenShortcuts();
+                link.action();
                 setMobileMenuOpen(false);
               }}
-              className="w-full py-2 px-3 flex items-center justify-between text-xs font-mono text-[#8B93A1] bg-[#0B0D11] border border-white/10 rounded-lg"
+              className="block w-full text-left py-2 text-sm text-[#CBD5E1] hover:text-white font-medium"
             >
-              <div className="flex items-center gap-2">
-                <Keyboard className="w-4 h-4" />
-                <span>Shortcuts</span>
-              </div>
-              <kbd className="px-1.5 py-0.5 bg-[#10131A] rounded text-[10px]">?</kbd>
+              {link.label}
             </button>
-
+          ))}
+          <div className="pt-3 border-t border-white/[0.08] flex items-center justify-between">
             <button
               onClick={() => {
-                onOpenDownload();
+                onOpenShortcuts();
                 setMobileMenuOpen(false);
               }}
-              className="w-full py-3 bg-[#F4F6F8] hover:bg-white text-[#050608] text-xs font-medium rounded-lg flex items-center justify-center gap-2"
+              className="text-xs font-mono text-[#CBD5E1] flex items-center gap-2"
             >
-              <Download className="w-4 h-4" />
-              <span>Download OUTARCH 2.19.0</span>
+              <Keyboard className="w-3.5 h-3.5" />
+              <span>Keyboard Shortcuts</span>
             </button>
           </div>
         </div>
       )}
-
     </header>
   );
 }

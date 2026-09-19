@@ -19,6 +19,7 @@ import CommandPaletteModal from './components/CommandPaletteModal';
 
 import CursorGlow from './components/CursorGlow';
 import ParticleGridCanvas from './components/ParticleGridCanvas';
+import AtmosphericNebula from './components/AtmosphericNebula';
 
 export default function App() {
   const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'auth'
@@ -100,8 +101,11 @@ export default function App() {
 
   return (
     <CockpitProvider>
-      <div className="min-h-screen bg-[#07090E] text-[#F8FAFC] flex flex-col selection:bg-white/20 selection:text-white relative bg-grain overflow-x-hidden">
+      <div className="min-h-screen bg-[#06080D] text-[#F8FAFC] flex flex-col selection:bg-white/20 selection:text-white relative overflow-x-hidden">
         
+        {/* Layered Floating Nebula Atmosphere, Fixed SVG Grain & Parallax Depth */}
+        <AtmosphericNebula />
+
         {/* Restrained Dynamic Cursor Glow */}
         <CursorGlow />
 

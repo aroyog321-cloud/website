@@ -44,23 +44,24 @@ export default function FeatureShowcase() {
   ];
 
   return (
-    <section id="features" className="py-24 px-6 max-w-7xl mx-auto select-none border-t border-white/[0.06]">
+    <section id="features" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto select-none">
       
       {/* Section Header */}
       <div className="max-w-3xl mb-12">
-        <span className="font-mono text-xs text-[#64748B] uppercase tracking-wider block mb-3">
-          // MAJOR CAPABILITIES
-        </span>
-        <h2 className="font-display text-3xl sm:text-5xl font-black text-titanium uppercase leading-[1.05]">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0B0F17]/80 border border-white/10 backdrop-blur-md text-[11px] font-mono text-[#94A3B8] mb-4">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#A855F7]" />
+          <span className="text-[#E2E8F0] font-semibold tracking-wider uppercase">// MAJOR CAPABILITIES</span>
+        </div>
+        <h2 className="font-display text-3xl sm:text-5xl font-black text-titanium uppercase leading-[1.02]">
           Built for repeatable autonomy.
         </h2>
-        <p className="font-sans text-[#94A3B8] text-base mt-4 leading-relaxed">
+        <p className="font-sans text-[#CBD5E1] text-base sm:text-lg mt-4 leading-relaxed">
           Experience the core features that maintain system clarity: deterministic workspace startup, bounded attention triage, instant focus isolation, and multi-model investigation.
         </p>
       </div>
 
       {/* High-Impact Tab Selector */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-8 no-scrollbar font-mono text-xs">
+      <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-[#0B0F17]/80 border border-white/10 backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10)] overflow-x-auto pb-1.5 mb-8 no-scrollbar font-mono text-xs">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -68,10 +69,10 @@ export default function FeatureShowcase() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg border whitespace-nowrap transition-all duration-150 ${
+              className={`flex items-center gap-2.5 px-4 py-3 rounded-xl whitespace-nowrap transition-all duration-200 ${
                 isActive 
-                  ? 'bg-[#131822] text-white border-white/20 font-bold shadow-sm' 
-                  : 'bg-[#0D1117] text-[#94A3B8] border-white/5 hover:border-white/15 hover:text-white'
+                  ? 'bg-[#141C2B] text-white border border-white/20 font-bold shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)]' 
+                  : 'text-[#94A3B8] hover:border-white/15 hover:text-white hover:bg-white/[0.02]'
               }`}
             >
               <Icon className={`w-4 h-4 ${tab.tone}`} />
@@ -81,8 +82,8 @@ export default function FeatureShowcase() {
         })}
       </div>
 
-      {/* PRODUCT-LED SHOWCASE FRAME */}
-      <div className="rounded-xl p-6 sm:p-8 border border-white/10 bg-[#0D1117] shadow-xl">
+      {/* PRODUCT-LED SHOWCASE BENTO FRAME */}
+      <div className="rounded-3xl p-6 sm:p-10 glass-panel shadow-2xl">
         
         {/* SCENE 01: WORKSPACE RECIPES (DAG) */}
         {activeTab === 'recipes' && (

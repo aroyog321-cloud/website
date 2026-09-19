@@ -87,38 +87,39 @@ export default function LiveSystemControlLoop() {
   };
 
   return (
-    <section id="control-loop" className="py-24 px-6 max-w-7xl mx-auto select-none border-t border-white/[0.06]">
+    <section id="control-loop" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto select-none">
       
       {/* Editorial Header */}
       <div className="max-w-3xl mb-12">
-        <span className="font-mono text-xs text-[#94A3B8] uppercase tracking-wider block mb-3">
-          // THE OUTARCH CONTROL LOOP
-        </span>
-        <h2 className="font-display text-3xl sm:text-5xl font-black text-titanium uppercase leading-[1.05]">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0B0F17]/80 border border-white/10 backdrop-blur-md text-[11px] font-mono text-[#94A3B8] mb-4">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
+          <span className="text-[#E2E8F0] font-semibold tracking-wider uppercase">// THE OUTARCH CONTROL LOOP</span>
+        </div>
+        <h2 className="font-display text-3xl sm:text-5xl font-black text-titanium uppercase leading-[1.02]">
           Watch OUTARCH in action.
         </h2>
-        <p className="font-sans text-[#94A3B8] text-base mt-4 leading-relaxed">
+        <p className="font-sans text-[#CBD5E1] text-base sm:text-lg mt-4 leading-relaxed">
           OUTARCH doesn't force you to babysit dozens of streaming terminals. It runs quietly in the background and surfaces structured evidence only when an action is required.
         </p>
       </div>
 
       {/* Cinematic Chapter Progress Indicator */}
-      <div className="w-full flex items-center justify-between gap-1 p-1 rounded-xl bg-[#0D1117] border border-white/10 mb-8 overflow-x-auto no-scrollbar font-mono text-xs">
+      <div className="w-full flex items-center justify-between gap-1.5 p-1.5 rounded-2xl bg-[#0B0F17]/80 border border-white/10 backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10)] mb-8 overflow-x-auto no-scrollbar font-mono text-xs">
         {stages.map((st, idx) => {
           const isActive = activeStage === idx;
           return (
             <button
               key={st.id}
               onClick={() => handleSelectStage(idx)}
-              className={`flex-1 py-2.5 px-3 rounded-lg transition-all flex items-center justify-center gap-2 whitespace-nowrap ${
+              className={`flex-1 py-3 px-3.5 rounded-xl transition-all flex items-center justify-center gap-2 whitespace-nowrap ${
                 isActive 
-                  ? 'bg-[#131822] text-white border border-white/15 shadow-sm font-bold' 
-                  : 'text-[#64748B] hover:text-[#CBD5E1] hover:bg-white/[0.02]'
+                  ? 'bg-[#141C2B] text-white border border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)] font-bold' 
+                  : 'text-[#64748B] hover:text-[#CBD5E1] hover:bg-white/[0.03]'
               }`}
             >
-              <span className={`w-1.5 h-1.5 rounded-full ${
+              <span className={`w-2 h-2 rounded-full ${
                 isActive 
-                  ? (idx === 2 ? 'bg-[#F97316]' : idx === 3 || idx === 4 ? 'bg-[#EF4444]' : 'bg-[#10B981]') 
+                  ? (idx === 2 ? 'bg-[#F97316] shadow-[0_0_8px_rgba(249,115,22,0.6)]' : idx === 3 || idx === 4 ? 'bg-[#EF4444] shadow-[0_0_8px_rgba(239,68,68,0.6)]' : 'bg-[#10B981] shadow-[0_0_8px_rgba(16,185,129,0.6)]') 
                   : 'bg-[#334155]'
               }`} />
               <span className="text-[10px] text-[#64748B]">{st.num}</span>
@@ -129,7 +130,7 @@ export default function LiveSystemControlLoop() {
       </div>
 
       {/* Main Interactive Stage Demonstration Frame */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch rounded-xl p-6 sm:p-8 border border-white/10 bg-[#080A0F] shadow-2xl">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch rounded-3xl p-6 sm:p-10 glass-panel shadow-2xl">
         
         {/* Left: Narrative Context & Explanations */}
         <div className="lg:col-span-5 flex flex-col justify-between space-y-6">

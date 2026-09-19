@@ -2,18 +2,28 @@ import React, { useState } from 'react';
 import { CockpitProvider } from './context/CockpitContext';
 import Navbar from './components/Navbar';
 import HeroCinematic from './components/HeroCinematic';
-import ProductStoryTimeline from './components/ProductStoryTimeline';
-import DownloadCta from './components/DownloadCta';
-import PricingPage from './components/PricingPage';
+import ProblemSection from './components/ProblemSection';
+import PhilosophySection from './components/PhilosophySection';
+import FeatureShowcase from './components/FeatureShowcase';
+import ArchitectureSection from './components/ArchitectureSection';
+import PricingSection from './components/PricingSection';
+import FaqSection from './components/FaqSection';
+import FinalCtaSection from './components/FinalCtaSection';
 import AuthScreen from './components/AuthScreen';
 import Footer from './components/Footer';
 
 export default function App() {
-  const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'pricing' | 'auth'
+  const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'auth'
 
   const handleRouteChange = (route, sectionId) => {
-    setCurrentRoute(route);
-    if (route === 'home' && sectionId) {
+    if (route === 'auth') {
+      setCurrentRoute('auth');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    setCurrentRoute('home');
+    if (sectionId) {
       setTimeout(() => {
         const el = document.getElementById(sectionId);
         if (el) {
@@ -43,56 +53,56 @@ export default function App() {
         {currentRoute !== 'auth' && (
           <Navbar
             activeRoute={currentRoute}
-            onRouteChange={(route, section) => {
-              if (route === 'auth') {
-                setCurrentRoute('auth');
-              } else {
-                handleRouteChange(route, section);
-              }
-            }}
+            onRouteChange={handleRouteChange}
             onOpenDownload={handleOpenDownload}
           />
         )}
 
-        {/* Main Content Area */}
+        {/* Main Content Flow */}
         <main className="flex-1">
           
-          {/* 1. Dedicated Pricing View */}
-          {currentRoute === 'pricing' && (
-            <PricingPage
-              onNavigateHome={() => handleRouteChange('home')}
-              onSelectPlan={() => setCurrentRoute('auth')}
-            />
-          )}
-
-          {/* 2. Dedicated Authentication View */}
+          {/* Authentication View */}
           {currentRoute === 'auth' && (
             <AuthScreen
               onNavigateHome={() => handleRouteChange('home')}
             />
           )}
 
-          {/* 3. Main Unified Virtual Cockpit Experience */}
+          {/* Main Comprehensive Product Experience */}
           {currentRoute === 'home' && (
             <>
-              {/* 01 · Hero with Logo & Unified Virtual OUTARCH Cockpit */}
+              {/* 01 · Hero & Live Interactive Virtual Cockpit */}
               <HeroCinematic onOpenDownload={handleOpenDownload} />
 
-              {/* 02 · Interactive Lifecycle Storyteller (Drives the Single Cockpit) */}
-              <div id="features">
-                <ProductStoryTimeline />
-              </div>
+              {/* 02 · The Problem: Multi-Terminal Chaos vs The Cockpit */}
+              <ProblemSection />
 
-              {/* 03 · Native Download & Verified Acceptance Scripts */}
-              <div id="download-section">
-                <DownloadCta />
-              </div>
+              {/* 03 · Product Philosophy: The Governance Layer for Autonomous Code */}
+              <PhilosophySection />
+
+              {/* 04 · Deep Feature Capabilities (6 Visual Pillars with Cockpit Test Drives) */}
+              <FeatureShowcase />
+
+              {/* 05 · Architecture: Zero-Cloud Sovereign Engine & MCP Gateway */}
+              <ArchitectureSection />
+
+              {/* 06 · Transparent In-Page Pricing Editions */}
+              <PricingSection 
+                onOpenDownload={handleOpenDownload}
+                onSelectPlan={(plan) => handleRouteChange('auth')}
+              />
+
+              {/* 07 · Technical Developer FAQ (Accordion) */}
+              <FaqSection />
+
+              {/* 08 · High-Impact Final CTA & Native Platform Downloads */}
+              <FinalCtaSection />
             </>
           )}
 
         </main>
 
-        {/* Footer */}
+        {/* Developer Footer */}
         {currentRoute !== 'auth' && (
           <Footer onOpenReel={() => handleRouteChange('home', 'cockpit')} />
         )}

@@ -5,10 +5,10 @@
 :root {
   color-scheme: dark;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
   --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
 
-  /* App Design Tokens */
+  /* OUTARCH Design Tokens */
   --mc-void: #050608;
   --mc-surface-1: #0b0d11;
   --mc-surface-2: #10131a;
@@ -25,9 +25,17 @@
 
 body {
   background-color: #050608;
-  color: #e2e8f0;
+  color: #f1f5f9;
   font-family: var(--font-sans);
   overflow-x: hidden;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
 }
 
 /* Custom minimal scrollbar */
@@ -36,7 +44,7 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #07090c;
+  background: #050608;
 }
 ::-webkit-scrollbar-thumb {
   background: #1e2430;
@@ -46,111 +54,74 @@ body {
   background: #2a3344;
 }
 
-/* Technical grid patterns */
+/* Subtle Technical Grid */
 .bg-tech-grid {
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 32px 32px;
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-.bg-tech-dots {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 0);
-  background-size: 24px 24px;
+.bg-radial-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
 }
 
-/* CRT Scanlines */
+/* Subtle scanlines for live terminal elements */
 .scanlines {
   background: linear-gradient(
     rgba(18, 23, 30, 0) 50%, 
-    rgba(0, 0, 0, 0.25) 50%
+    rgba(0, 0, 0, 0.2) 50%
   );
   background-size: 100% 4px;
 }
 
-/* Logo Glitch Animation */
-@keyframes glitch-slice-1 {
-  0% {
-    clip-path: inset(40% 0 61% 0);
-    transform: skew(0.3deg) translate(-2px, -1px);
+/* Authentic OUTARCH Brand Glitch Animations */
+@keyframes brand-glitch-1 {
+  0%, 100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0, 0);
   }
   20% {
-    clip-path: inset(92% 0 1% 0);
-    transform: skew(-0.8deg) translate(2px, 1px);
+    clip-path: inset(25% 0 55% 0);
+    transform: translate(-3px, 1px);
   }
   40% {
-    clip-path: inset(10% 0 85% 0);
-    transform: skew(0.4deg) translate(-3px, 0);
+    clip-path: inset(65% 0 15% 0);
+    transform: translate(3px, -1px);
   }
   60% {
-    clip-path: inset(70% 0 15% 0);
-    transform: skew(-0.2deg) translate(2px, -2px);
+    clip-path: inset(10% 0 75% 0);
+    transform: translate(-2px, 2px);
   }
   80% {
-    clip-path: inset(25% 0 58% 0);
-    transform: skew(0.6deg) translate(-1px, 2px);
-  }
-  100% {
-    clip-path: inset(50% 0 45% 0);
-    transform: skew(0deg) translate(0, 0);
+    clip-path: inset(80% 0 5% 0);
+    transform: translate(2px, -2px);
   }
 }
 
-@keyframes glitch-slice-2 {
-  0% {
-    clip-path: inset(25% 0 58% 0);
-    transform: skew(-0.5deg) translate(2px, 1px);
+@keyframes brand-glitch-2 {
+  0%, 100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0, 0);
   }
   25% {
-    clip-path: inset(54% 0 7% 0);
-    transform: skew(0.4deg) translate(-2px, -1px);
+    clip-path: inset(50% 0 30% 0);
+    transform: translate(3px, -1px);
   }
   50% {
-    clip-path: inset(80% 0 5% 0);
-    transform: skew(-0.3deg) translate(3px, 0);
+    clip-path: inset(15% 0 65% 0);
+    transform: translate(-3px, 1px);
   }
   75% {
-    clip-path: inset(15% 0 75% 0);
-    transform: skew(0.7deg) translate(-2px, 2px);
-  }
-  100% {
-    clip-path: inset(30% 0 60% 0);
-    transform: skew(0deg) translate(0, 0);
+    clip-path: inset(70% 0 10% 0);
+    transform: translate(2px, 2px);
   }
 }
 
-@keyframes glitch-flicker {
-  0%, 100% { opacity: 1; }
-  33% { opacity: 0.85; }
-  35% { opacity: 0.4; }
-  37% { opacity: 0.95; }
-  78% { opacity: 0.9; }
-  80% { opacity: 0.25; }
-  82% { opacity: 1; }
+.animate-brand-glitch-1 {
+  animation: brand-glitch-1 3s infinite steps(2, end);
 }
 
-.animate-glitch-1 {
-  animation: glitch-slice-1 2.2s infinite linear alternate-reverse;
-}
-
-.animate-glitch-2 {
-  animation: glitch-slice-2 1.8s infinite linear alternate-reverse;
-}
-
-.animate-flicker {
-  animation: glitch-flicker 4s infinite steps(1);
-}
-
-/* Focus mode transitions */
-.focus-dimmed {
-  opacity: 0.15;
-  filter: blur(1px) grayscale(50%);
-  pointer-events: none;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.focus-active {
-  transform: scale(1.01);
-  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.4), 0 20px 40px -10px rgba(0, 0, 0, 0.8);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+.animate-brand-glitch-2 {
+  animation: brand-glitch-2 2.4s infinite steps(2, end);
 }

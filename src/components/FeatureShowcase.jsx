@@ -11,19 +11,18 @@ import {
   Bot, 
   FileText,
   Lock,
-  Sparkles,
   Terminal,
-  CheckCircle2
+  CheckCircle2,
+  Layers,
+  ArrowRight
 } from 'lucide-react';
 
 export default function FeatureShowcase() {
   const [activeTab, setActiveTab] = useState('recipes');
   const [activeRecipeRunning, setActiveRecipeRunning] = useState(false);
   const [recipeStep, setRecipeStep] = useState(0);
-  const [mobileApproved, setMobileApproved] = useState(false);
-  const [mcpTokenActive, setMcpTokenActive] = useState(true);
-  const [focusDemoState, setFocusDemoState] = useState(false);
-  const [selectedProvider, setSelectedProvider] = useState('anthropic');
+  const [focusActive, setFocusActive] = useState(false);
+  const [selectedModel, setSelectedModel] = useState('Claude 3.7 Sonnet');
 
   const handleRunRecipeDemo = () => {
     setActiveRecipeRunning(true);
@@ -37,37 +36,32 @@ export default function FeatureShowcase() {
     }, 2400);
   };
 
-  const majorTabs = [
-    { id: 'recipes', num: '01', label: 'Workspace Recipes (DAG)', icon: Workflow, tone: 'text-[#A855F7]' },
-    { id: 'mobile', num: '02', label: 'Mobile Companion (Android)', icon: Smartphone, tone: 'text-[#10B981]' },
-    { id: 'mcp', num: '03', label: 'Secure MCP Gateway', icon: Cpu, tone: 'text-[#38BDF8]' },
-    { id: 'focus', num: '04', label: 'Focus Mode (Alt+F)', icon: Maximize2, tone: 'text-[#38BDF8]' },
-    { id: 'byok', num: '05', label: 'BYOK Multi-LLM Vault', icon: KeyRound, tone: 'text-[#F59E0B]' },
+  const tabs = [
+    { id: 'recipes', label: 'Recipes (DAG)', icon: Workflow, tone: 'text-[#A855F7]' },
+    { id: 'attention', label: 'Needs You Queue', icon: AlertTriangle, tone: 'text-[#F97316]' },
+    { id: 'focus', label: 'Focus Mode (Alt+F)', icon: Maximize2, tone: 'text-[#38BDF8]' },
+    { id: 'mission-ai', label: 'Mission AI Investigator', icon: Bot, tone: 'text-[#A855F7]' },
   ];
 
   return (
     <section id="features" className="py-24 px-6 max-w-7xl mx-auto select-none border-t border-white/[0.06]">
       
       {/* Section Header */}
-      <div className="max-w-4xl mb-12">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#38BDF8]/10 border border-[#38BDF8]/25 text-xs font-mono text-[#38BDF8] mb-4">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>MAJOR ARCHITECTURAL CAPABILITIES</span>
-        </div>
-        <h2 className="font-display text-4xl sm:text-6xl font-black tracking-[-0.03em] uppercase leading-[0.98] text-titanium">
-          Engineered For <br />
-          <span className="text-[#94A3B8]">
-            Repeatable Autonomy.
-          </span>
+      <div className="max-w-3xl mb-12">
+        <span className="font-mono text-xs text-[#64748B] uppercase tracking-wider block mb-3">
+          // MAJOR CAPABILITIES
+        </span>
+        <h2 className="font-display text-3xl sm:text-5xl font-black text-titanium uppercase leading-[1.05]">
+          Built for repeatable autonomy.
         </h2>
-        <p className="font-sans text-[#CBD5E1] text-base sm:text-lg mt-5 max-w-2xl leading-relaxed">
-          Deep-dive into the signature pillars that power OUTARCH: automated launch DAGs, encrypted remote mobile supervision, secure agent firewalls, distraction-free focus mode, and multi-model BYOK intelligence.
+        <p className="font-sans text-[#94A3B8] text-base mt-4 leading-relaxed">
+          Experience the core features that maintain system clarity: deterministic workspace startup, bounded attention triage, instant focus isolation, and multi-model investigation.
         </p>
       </div>
 
-      {/* Interactive Major Feature Spotlight Navigation Strip */}
+      {/* High-Impact Tab Selector */}
       <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-8 no-scrollbar font-mono text-xs">
-        {majorTabs.map((tab) => {
+        {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
           return (
@@ -81,28 +75,27 @@ export default function FeatureShowcase() {
               }`}
             >
               <Icon className={`w-4 h-4 ${tab.tone}`} />
-              <span className="text-[10px] text-[#64748B]">{tab.num}</span>
               <span>{tab.label}</span>
             </button>
           );
         })}
       </div>
 
-      {/* ACTIVE SPOTLIGHT COMPONENT CONTAINER */}
+      {/* PRODUCT-LED SHOWCASE FRAME */}
       <div className="rounded-xl p-6 sm:p-8 border border-white/10 bg-[#0D1117] shadow-xl">
         
-        {/* TAB 01: WORKSPACE RECIPES (DAG ENGINE) */}
+        {/* SCENE 01: WORKSPACE RECIPES (DAG) */}
         {activeTab === 'recipes' && (
-          <div id="recipes-feature" className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-5 space-y-4">
               <span className="font-mono text-xs text-[#A855F7] font-bold uppercase tracking-wider block">
-                01 // REPEATABLE WORKSPACE ORCHESTRATION
+                01 // WORKSPACE RECIPES
               </span>
               <h3 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                Workspace Recipes: Declarative DAG Engine
+                Run the entire stack without losing context.
               </h3>
               <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">
-                Never manually open 8 terminal tabs in order again. OUTARCH Recipes launch dependencies sequentially with active readiness probes (waiting for port or log match) before launching dependent services.
+                Recipes launch dependencies sequentially with active readiness probes (waiting for port or log match) before downstream services start. Zero port conflicts, zero blind startup crashes.
               </p>
               <div className="pt-2">
                 <button
@@ -120,16 +113,16 @@ export default function FeatureShowcase() {
               <div className="flex items-center justify-between pb-2.5 mb-1 border-b border-white/[0.08] text-[11px] text-[#94A3B8]">
                 <span className="text-white font-bold flex items-center gap-2">
                   <Workflow className="w-3.5 h-3.5 text-[#A855F7]" />
-                  <span>DAG EXECUTION PIPELINE</span>
+                  <span>RECIPE: full-stack-dev.json</span>
                 </span>
                 <span className="badge-ai px-2 py-0.5 rounded text-[10px] font-bold">4 STAGES</span>
               </div>
 
               {[
                 { name: '1. Docker Postgres & Redis', match: 'Port 5432 & 6379 ready', step: 1 },
-                { name: '2. Prisma Migrations & Seed', match: 'Database schema synchronized', step: 2 },
-                { name: '3. API Microservices (Go + Rust)', match: 'Listening on port 8080', step: 3 },
-                { name: '4. Web Frontend & AI Worker', match: 'Vite & Agent Daemon ready', step: 4 }
+                { name: '2. Database Migrations & Seed', match: 'Prisma schema synchronized', step: 2 },
+                { name: '3. API Microservices (Go / Rust)', match: 'Listening on port 8080', step: 3 },
+                { name: '4. Web Frontend & Agent Worker', match: 'Vite & Daemon ready', step: 4 }
               ].map((s, idx) => {
                 const isPassed = recipeStep >= s.step;
                 const isCurrent = recipeStep === s.step;
@@ -156,162 +149,90 @@ export default function FeatureShowcase() {
           </div>
         )}
 
-        {/* TAB 02: MOBILE COMPANION (ANDROID) */}
-        {activeTab === 'mobile' && (
-          <div id="mobile-feature" className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        {/* SCENE 02: NEEDS YOU QUEUE */}
+        {activeTab === 'attention' && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-5 space-y-4">
-              <span className="font-mono text-xs text-[#10B981] font-bold uppercase tracking-wider block">
-                02 // ENCRYPTED LOCAL LAN SUPERVISION
+              <span className="font-mono text-xs text-[#F97316] font-bold uppercase tracking-wider block">
+                02 // BOUNDED ATTENTION
               </span>
               <h3 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                Mobile Companion (Android APK)
+                Only interruptions that actually need you.
               </h3>
               <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">
-                Pair your Android device over encrypted local LAN with zero cloud relays. Receive instant push alerts for crashed workers and approve high-stakes agent mutations right from your phone.
+                Normal execution stays quiet. When an autonomous agent requests a high-stakes file mutation, or a dev server hits an address collision, OUTARCH halts the change and surfaces verified evidence for 1-click triage.
               </p>
-              <div className="pt-2">
-                <button
-                  onClick={() => setMobileApproved(!mobileApproved)}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#10B981] hover:bg-[#059669] text-[#07090E] font-mono text-xs font-bold transition-all"
-                >
-                  <Smartphone className="w-3.5 h-3.5" />
-                  <span>{mobileApproved ? 'DECISION APPROVED FROM PHONE' : 'SIMULATE REMOTE MOBILE APPROVAL'}</span>
-                </button>
-              </div>
             </div>
 
             <div className="lg:col-span-7 bg-[#080A0F] rounded-lg border border-white/10 p-5 font-mono text-xs space-y-3">
-              <div className="flex items-center justify-between pb-2.5 border-b border-white/[0.08]">
-                <span className="text-[#10B981] font-bold flex items-center gap-2">
-                  <Smartphone className="w-3.5 h-3.5 text-[#10B981]" />
-                  <span>OUTARCH MOBILE // LOCAL LAN ENCRYPTION</span>
+              <div className="flex items-center justify-between pb-2.5 border-b border-white/[0.08] text-[11px]">
+                <span className="text-white font-bold flex items-center gap-2">
+                  <AlertTriangle className="w-3.5 h-3.5 text-[#F97316]" />
+                  <span>NEEDS YOU QUEUE (1 BLOCKER)</span>
                 </span>
-                <span className="badge-running text-[10px] px-2 py-0.5 rounded font-bold">
-                  PAIRED (LAN)
-                </span>
+                <span className="badge-needs-you text-[10px] px-2 py-0.5 rounded font-bold">ACTION REQUIRED</span>
               </div>
 
-              <div className="p-3.5 rounded-md bg-[#0D1117] border border-white/5 space-y-1.5">
-                <span className="text-[#F59E0B] font-bold text-[11px] block">REMOTE TRIAGE NOTIFICATION:</span>
+              <div className="p-4 rounded-md bg-[#180A0E] border border-[#EF4444]/30 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-white">Worker: claude-agent (PID 18420)</span>
+                  <span className="text-[10px] text-[#F4A7AE]">Mutation Token Pending</span>
+                </div>
                 <p className="text-[#CBD5E1] text-[11px] leading-relaxed">
-                  Worker <code className="text-white font-bold">claude-code</code> requests permission to execute <code className="text-[#38BDF8]">rm -rf dist/ && pnpm build</code>.
+                  Agent requested permission to execute: <br />
+                  <code className="text-[#38BDF8] bg-black/40 px-1 py-0.5 rounded mt-1 inline-block">rm -rf dist/ &amp;&amp; prisma migrate reset --force</code>
                 </p>
-              </div>
-
-              {mobileApproved ? (
-                <div className="p-3 rounded-md bg-[#0A1812] border border-[#10B981]/30 text-[#10B981] flex items-center justify-between">
-                  <span className="flex items-center gap-2 font-bold">
-                    <CheckCircle2 className="w-4 h-4" />
-                    <span>Authorized via Mobile Companion. Token dispatched.</span>
-                  </span>
-                  <span className="badge-running text-[10px] px-2 py-0.5 rounded font-bold">APPROVED</span>
+                <div className="pt-2 flex items-center gap-2">
+                  <button className="px-3 py-1.5 rounded bg-[#10B981] hover:bg-[#059669] text-[#07090E] font-bold text-[10px]">
+                    APPROVE &amp; DISPATCH
+                  </button>
+                  <button className="px-3 py-1.5 rounded bg-[#131822] hover:bg-[#1A2230] text-white border border-white/10 text-[10px]">
+                    DENY ACTION
+                  </button>
                 </div>
-              ) : (
-                <div className="p-3 rounded-md bg-[#0D1117] border border-white/5 flex items-center justify-between">
-                  <span className="text-[#94A3B8]">Awaiting push sign-off from operator...</span>
-                  <span className="badge-waiting text-[10px] px-2 py-0.5 rounded font-bold">PENDING IN QUEUE</span>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* TAB 03: SECURE MCP GATEWAY */}
-        {activeTab === 'mcp' && (
-          <div id="mcp-feature" className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-5 space-y-4">
-              <span className="font-mono text-xs text-[#38BDF8] font-bold uppercase tracking-wider block">
-                03 // AGENT PROTOCOL FIREWALL
-              </span>
-              <h3 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                Secure Model Context Protocol Gateway
-              </h3>
-              <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">
-                Runs a local MCP server enabling Claude Code, Cursor, and autonomous CLI swarms to inspect supervised terminals and listening ports through single-use approval gates.
-              </p>
-              <div className="pt-2">
-                <button
-                  onClick={() => setMcpTokenActive(!mcpTokenActive)}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#131822] hover:bg-[#1A2230] border border-white/10 text-xs font-mono text-white transition-all font-bold"
-                >
-                  <Lock className="w-3.5 h-3.5 text-[#38BDF8]" />
-                  <span>{mcpTokenActive ? 'REVOKE ACTIVE MCP TOKEN' : 'ISSUE SINGLE-USE MCP TOKEN'}</span>
-                </button>
-              </div>
-            </div>
-
-            <div className="lg:col-span-7 bg-[#080A0F] rounded-lg border border-white/10 p-5 font-mono text-xs space-y-3">
-              <div className="flex items-center justify-between pb-2.5 border-b border-white/[0.08]">
-                <div className="flex items-center gap-2 text-white font-bold">
-                  <Cpu className="w-3.5 h-3.5 text-[#38BDF8]" />
-                  <span>MCP SERVER // LOCAL PORT 4848</span>
-                </div>
-                <span className={`text-[10px] px-2 py-0.5 rounded font-bold ${
-                  mcpTokenActive ? 'badge-running' : 'badge-failed'
-                }`}>
-                  {mcpTokenActive ? 'GATEWAY ACTIVE' : 'TOKEN REVOKED'}
-                </span>
-              </div>
-
-              <div className="p-3.5 rounded-md bg-[#0D1117] border border-white/5 space-y-2">
-                <span className="text-[#38BDF8] text-[10px] font-bold block">SCOPED CLIENTS CONNECTED:</span>
-                <div className="space-y-1 text-[#CBD5E1] text-[11px]">
-                  <div className="flex items-center justify-between">
-                    <span>Claude Code Agent CLI (PID 1420)</span>
-                    <span className="text-[#10B981]">Read Terminal Streams</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span>VS Code Bridge Extension</span>
-                    <span className="text-[#10B981]">Two-Way Diagnostics</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-2.5 rounded-md bg-[#0D1117] border border-white/5 text-[11px] text-[#64748B]">
-                <span>Zero environment secret exposure. Shell writes strictly intercepted.</span>
               </div>
             </div>
           </div>
         )}
 
-        {/* TAB 04: FULLSCREEN FOCUS MODE (SIGNATURE MOMENT) */}
+        {/* SCENE 03: FOCUS MODE (SIGNATURE MOMENT) */}
         {activeTab === 'focus' && (
-          <div id="focus-feature" className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-5 space-y-4">
               <span className="font-mono text-xs text-[#38BDF8] font-bold uppercase tracking-wider block">
-                04 // ZERO-CHROME CODING CANVAS
+                03 // DISTRACTION-FREE CANVAS
               </span>
               <h3 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                Focus Mode (Alt+F)
+                Collapse everything except what matters.
               </h3>
               <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">
-                Hit <code className="text-white bg-black/40 px-1 py-0.5 rounded font-mono">Alt+F</code> to collapse navigation sidebars and peripheral noise. The entire interface calms and focuses on the active terminal while background workers continue running silently.
+                Press <code className="text-white bg-black/40 px-1 py-0.5 rounded font-mono">Alt+F</code> to instantly silence peripheral logs and sidebars. 100% of your viewport isolates the active terminal and related diagnostic evidence.
               </p>
               <div className="pt-2">
                 <button
-                  onClick={() => setFocusDemoState(!focusDemoState)}
+                  onClick={() => setFocusActive(!focusActive)}
                   className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#131822] hover:bg-[#1A2230] border border-white/10 text-xs font-mono text-white transition-all font-bold"
                 >
                   <Maximize2 className="w-3.5 h-3.5 text-[#38BDF8]" />
-                  <span>{focusDemoState ? 'RESTORE FULL WORKSPACE' : 'ACTIVATE FOCUS MODE (ALT+F)'}</span>
+                  <span>{focusActive ? 'RESTORE FULL WORKSPACE' : 'TOGGLE FOCUS MODE (ALT+F)'}</span>
                 </button>
               </div>
             </div>
 
             <div className={`lg:col-span-7 rounded-lg border transition-all duration-200 p-5 font-mono text-xs space-y-3 ${
-              focusDemoState ? 'bg-[#050608] border-[#38BDF8]/40' : 'bg-[#080A0F] border-white/10'
+              focusActive ? 'bg-[#050608] border-[#38BDF8]/40' : 'bg-[#080A0F] border-white/10'
             }`}>
               <div className="flex items-center justify-between pb-2.5 border-b border-white/[0.08]">
                 <span className="text-white font-bold flex items-center gap-2">
                   <Terminal className="w-3.5 h-3.5 text-[#38BDF8]" />
-                  <span>{focusDemoState ? 'FOCUSED PTY // BACKEND SERVER' : 'MONOSPACE CANVAS // 2x2 GRID'}</span>
+                  <span>{focusActive ? 'FOCUSED PTY // BACKEND PROCESS' : 'WORKSPACE // MULTI-TERMINAL GRID'}</span>
                 </span>
-                <span className={`text-[10px] px-2 py-0.5 rounded font-bold ${focusDemoState ? 'badge-observing' : 'text-[#64748B]'}`}>
-                  {focusDemoState ? 'ALT+F ACTIVE' : 'NORMAL VIEW'}
+                <span className={`text-[10px] px-2 py-0.5 rounded font-bold ${focusActive ? 'badge-observing' : 'text-[#64748B]'}`}>
+                  {focusActive ? 'ALT+F ACTIVE' : 'GRID VIEW'}
                 </span>
               </div>
 
-              {focusDemoState ? (
+              {focusActive ? (
                 <div className="p-4 rounded-md bg-[#0D1117] border border-white/10 space-y-2">
                   <div className="flex items-center justify-between text-[11px]">
                     <span className="text-white font-bold">cargo run --bin api</span>
@@ -330,79 +251,57 @@ export default function FeatureShowcase() {
                     <code className="text-[#94A3B8] text-[10px] block">&gt; vite dev [3000]</code>
                   </div>
                   <div className="p-3 rounded-md bg-[#0D1117] border border-white/5 space-y-1">
-                    <span className="text-[#10B981] font-bold text-[10px] block">PANE 2 · IN-CANVAS BROWSER</span>
-                    <code className="text-[#94A3B8] text-[10px] block">Alt+B [localhost:3000]</code>
+                    <span className="text-[#10B981] font-bold text-[10px] block">PANE 2 · BROWSER (ALT+B)</span>
+                    <code className="text-[#94A3B8] text-[10px] block">localhost:3000</code>
                   </div>
                 </div>
               )}
 
               <div className="p-2.5 rounded-md bg-[#0D1117] border border-white/5 text-[10px] text-[#64748B]">
-                <span>{focusDemoState ? 'Peripheral noise silenced. Background workers continue running.' : 'Directional keyboard navigation with Alt+Arrow Keys.'}</span>
+                <span>{focusActive ? 'Peripheral noise silenced. Background processes continue running.' : 'Press Alt+F to isolate the focused terminal pane.'}</span>
               </div>
             </div>
           </div>
         )}
 
-        {/* TAB 05: BYOK MULTI-LLM VAULT */}
-        {activeTab === 'byok' && (
-          <div id="byok-feature" className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        {/* SCENE 04: MISSION AI INVESTIGATOR */}
+        {activeTab === 'mission-ai' && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-5 space-y-4">
-              <span className="font-mono text-xs text-[#F59E0B] font-bold uppercase tracking-wider block">
-                05 // HARDWARE KEYCHAIN ENCRYPTION
+              <span className="font-mono text-xs text-[#A855F7] font-bold uppercase tracking-wider block">
+                04 // SYSTEM INVESTIGATOR
               </span>
               <h3 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                BYOK Multi-LLM Vault
+                Mission AI Developer Investigator
               </h3>
               <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">
-                Connect Anthropic Claude, Google Gemini, OpenAI, Groq, OpenRouter, NVIDIA NIM, or local Ollama instances with OS-level credential encryption (Windows DPAPI, macOS Keychain, Linux Secret Service).
+                Mission AI connects to local or cloud LLMs via your own API key stored securely in your OS keychain. It correlates terminal streams, file modifications, and crash logs to propose verified fixes.
               </p>
-              <div className="pt-2">
-                <div className="flex flex-wrap gap-2">
-                  {['anthropic', 'gemini', 'openai', 'ollama'].map((prov) => (
-                    <button
-                      key={prov}
-                      onClick={() => setSelectedProvider(prov)}
-                      className={`px-3 py-1.5 rounded-md font-mono text-xs uppercase font-bold transition-all ${
-                        selectedProvider === prov
-                          ? 'bg-white text-[#07090E]'
-                          : 'bg-[#080A0F] text-[#94A3B8] hover:text-white border border-white/5'
-                      }`}
-                    >
-                      {prov}
-                    </button>
-                  ))}
-                </div>
-              </div>
             </div>
 
             <div className="lg:col-span-7 bg-[#080A0F] rounded-lg border border-white/10 p-5 font-mono text-xs space-y-3">
-              <div className="flex items-center justify-between pb-2.5 border-b border-white/[0.08]">
-                <div className="flex items-center gap-2 text-white font-bold">
-                  <KeyRound className="w-3.5 h-3.5 text-[#F59E0B]" />
-                  <span>DPAPI VAULT // ENCRYPTED PROVIDER</span>
-                </div>
-                <span className="badge-running text-[10px] px-2 py-0.5 rounded font-bold">
-                  OS SECURED
+              <div className="flex items-center justify-between pb-2.5 border-b border-white/[0.08] text-[11px]">
+                <span className="text-white font-bold flex items-center gap-2">
+                  <Bot className="w-3.5 h-3.5 text-[#A855F7]" />
+                  <span>MISSION AI // ROOT CAUSE SYNTHESIS</span>
                 </span>
+                <span className="badge-ai text-[10px] px-2 py-0.5 rounded font-bold">SYNTHESIS READY</span>
               </div>
 
-              <div className="p-3.5 rounded-md bg-[#0D1117] border border-white/5 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-[#F59E0B] text-[10px] font-bold">ACTIVE MODEL:</span>
-                  <span className="text-white font-bold uppercase">{selectedProvider}</span>
+              <div className="p-4 rounded-md bg-[#140C20] border border-[#A855F7]/30 space-y-2">
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="text-[#A855F7] font-bold">Investigating backend failure...</span>
+                  <span className="text-[10px] text-[#94A3B8]">4 events correlated</span>
                 </div>
-                <div className="flex items-center justify-between text-[11px] text-[#CBD5E1]">
-                  <span>Key Storage:</span>
-                  <span className="text-[#10B981]">Native OS Keychain</span>
+                <div className="text-[#CBD5E1] text-[11px] space-y-1">
+                  <div>· 3 files inspected (src/server.ts, .env, docker-compose.yml)</div>
+                  <div>· 1 likely cause identified: <span className="text-white font-bold">Port 8080 occupied by orphaned PID 9184</span></div>
                 </div>
-                <div className="flex items-center justify-between text-[11px] text-[#CBD5E1]">
-                  <span>Local LLM Option:</span>
-                  <span className="text-[#38BDF8]">Ollama / vLLM (Offline Mode)</span>
+                <div className="pt-2 flex items-center gap-2">
+                  <button className="px-3 py-1.5 rounded bg-[#A855F7] hover:bg-[#9333EA] text-white font-bold text-[10px]">
+                    TERMINATE PID 9184 &amp; RESUME
+                  </button>
                 </div>
-              </div>
-
-              <div className="p-2.5 rounded-md bg-[#0D1117] border border-white/5 text-[10px] text-[#64748B]">
-                <span>Zero telemetry. Per-worker token usage and cost tracking stored locally.</span>
               </div>
             </div>
           </div>

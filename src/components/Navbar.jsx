@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Download, Keyboard, Command } from 'lucide-react';
+import { Menu, X, Download, Command } from 'lucide-react';
 
 export default function Navbar({ 
   activeRoute = 'home', 
@@ -23,14 +23,15 @@ export default function Navbar({
     { label: 'Control Loop', href: '#control-loop', action: () => onRouteChange('home', 'control-loop') },
     { label: 'Features', href: '#features', action: () => onRouteChange('home', 'features') },
     { label: 'Architecture', href: '#architecture', action: () => onRouteChange('home', 'architecture') },
+    { label: 'Download', href: '#download-section', action: () => onRouteChange('home', 'download-section') },
     { label: 'FAQ', href: '#faq', action: () => onRouteChange('home', 'faq') },
   ];
 
   return (
     <header className={`sticky top-0 z-40 w-full transition-all duration-200 select-none ${
       scrolled 
-        ? 'bg-[#07090E]/95 backdrop-blur-xl border-b border-white/[0.08] py-2' 
-        : 'bg-[#07090E]/80 backdrop-blur-md border-b border-white/[0.04] py-3'
+        ? 'bg-[#07090E]/95 backdrop-blur-xl border-b border-white/[0.08] py-2.5' 
+        : 'bg-[#07090E]/80 backdrop-blur-md border-b border-white/[0.04] py-3.5'
     }`}>
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         
@@ -51,14 +52,14 @@ export default function Navbar({
             <span className="font-display text-sm font-bold tracking-tight text-white group-hover:text-[#38BDF8] transition-colors">
               OUTARCH
             </span>
-            <span className="font-mono text-[10px] text-[#94A3B8] tracking-wider uppercase font-semibold">
-              v2.19
+            <span className="font-mono text-[10px] text-[#64748B] tracking-wider uppercase font-medium">
+              Developer Command Center
             </span>
           </div>
         </div>
 
         {/* Desktop Links - Calm, Editorial Sans */}
-        <nav className="hidden md:flex items-center gap-8 text-xs font-medium text-[#94A3B8]">
+        <nav className="hidden md:flex items-center gap-7 text-xs font-medium text-[#94A3B8]">
           {navLinks.map((link, idx) => (
             <button
               key={idx}
@@ -75,7 +76,7 @@ export default function Navbar({
           <button
             onClick={onOpenShortcuts}
             className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-mono text-[#94A3B8] hover:text-white hover:bg-white/[0.04] border border-transparent hover:border-white/10 transition-all"
-            title="Keyboard Shortcuts (? or F1)"
+            title="Command Palette (Cmd+K)"
           >
             <Command className="w-3 h-3 text-[#94A3B8]" />
             <span className="text-[10px]">K</span>
@@ -132,8 +133,8 @@ export default function Navbar({
               }}
               className="text-xs font-mono text-[#94A3B8] flex items-center gap-2"
             >
-              <Keyboard className="w-3.5 h-3.5" />
-              <span>Shortcuts</span>
+              <Command className="w-3.5 h-3.5" />
+              <span>Palette (Cmd+K)</span>
             </button>
           </div>
         </div>

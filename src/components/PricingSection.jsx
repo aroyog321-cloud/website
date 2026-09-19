@@ -1,5 +1,5 @@
 import React from 'react';
-import { Download, Smartphone, Monitor, Check } from 'lucide-react';
+import { Download, Smartphone, Check } from 'lucide-react';
 
 export default function PricingSection({ onOpenDownload }) {
   const downloadTiers = [
@@ -8,18 +8,18 @@ export default function PricingSection({ onOpenDownload }) {
       name: 'OUTARCH Desktop Application',
       category: 'WINDOWS · MACOS · LINUX',
       tagline: 'Complete standalone command center with native PTY session engine and multi-pane workspace canvas.',
-      badge: 'OFFICIAL PREVIEW (v2.19.0)',
+      badge: 'OFFICIAL BUILD',
       badgeColor: 'badge-running',
       cta: 'Download for Desktop',
       ctaAction: onOpenDownload,
-      platforms: ['Windows 10/11 (x64)', 'macOS (Apple Silicon & Intel)', 'Linux (.AppImage / .deb)'],
+      platforms: ['Windows (x64)', 'macOS (Apple Silicon & Intel)', 'Linux (.AppImage / .deb)'],
       features: [
         'Multi-pane monospace canvas (1, 2, 4, 6-pane, mosaic)',
         'Fullscreen Focus Mode (Alt+F) & Embedded browser (Alt+B)',
         'Workspace Recipes DAG engine with readiness checks',
         'Needs You triage queue with CrashLens diagnostics',
         'Secure local MCP Gateway for Claude Code & agents',
-        'BYOK Multi-LLM Vault with OS keychain DPAPI encryption'
+        'Multi-LLM Vault with native OS keychain encryption'
       ]
     },
     {
@@ -31,11 +31,11 @@ export default function PricingSection({ onOpenDownload }) {
       badgeColor: 'badge-observing',
       cta: 'Download Android APK',
       ctaAction: onOpenDownload,
-      platforms: ['Android 10+ (Direct .APK Download)', 'Encrypted Local LAN Gateway'],
+      platforms: ['Android (.APK)', 'Encrypted Local LAN'],
       features: [
         'Real-time push alerts for crashed or blocked workers',
         '1-click remote approval for Needs You triage items',
-        'Live worker CPU and memory telemetry pulse',
+        'Live worker status and memory telemetry pulse',
         'Zero cloud relay dependencies (strictly local network)',
         'Instant pairing via Desktop Groundstation QR code'
       ]
@@ -49,7 +49,7 @@ export default function PricingSection({ onOpenDownload }) {
       <div className="max-w-3xl mb-16">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#10B981]/10 border border-[#10B981]/25 text-xs font-mono text-[#10B981] mb-4">
           <Download className="w-3.5 h-3.5" />
-          <span>DIRECT APPLICATION DOWNLOADS</span>
+          <span>GET OUTARCH</span>
         </div>
         <h2 className="font-display text-4xl sm:text-6xl font-black text-titanium tracking-tight uppercase leading-[1.02]">
           Download OUTARCH.

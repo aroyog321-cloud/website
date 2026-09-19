@@ -6,36 +6,28 @@ export default function FaqSection() {
 
   const faqs = [
     {
-      q: "What is OUTARCH (version 2.19.0)?",
-      a: "OUTARCH is a local-first developer command center for Windows, macOS, and Linux. It features two primary interfaces: Groundstation (Electron + React 18 + xterm.js) and the TUI Client. It manages long-running multi-terminal processes, supervises autonomous AI agents (Claude Code, OpenCode, Gemini), and extracts structured evidence in real time."
+      q: "What is OUTARCH?",
+      a: "OUTARCH is a developer command center for running, observing, and supervising multi-terminal processes, microservices, and autonomous AI agents in one unified local interface."
     },
     {
-      q: "Does OUTARCH send my code, commands, or logs to external servers?",
-      a: "No. OUTARCH is built on a 100% sovereign local-first architecture. All PTY sessions, process lifecycles, SQLite memory ledgers, and operational telemetry execute and remain strictly on your local machine. API keys are encrypted using native OS keychains (DPAPI on Windows, macOS Keychain, Linux Secret Service)."
+      q: "Where does terminal execution and data live?",
+      a: "100% on your local machine. OUTARCH spawns and manages native OS pseudo-terminals (ConPTY / node-pty) and records session checkpoints to a local SQLite database. No logs or code are transmitted to external servers."
     },
     {
-      q: "How does OUTARCH supervise autonomous AI coding agents?",
-      a: "OUTARCH runs agents like Claude Code and Gemini CLI inside monitored native PTY sessions. When an agent requests a file mutation, command execution, or schema migration, the MCP Gateway intercepts execution and requires human approval via the Needs You triage queue before proceeding."
+      q: "How does OUTARCH supervise AI agents?",
+      a: "Agents execute inside monitored PTY sessions or connect through a local Model Context Protocol (MCP) gateway. When an agent attempts high-stakes mutations (file deletions, schema migrations, package installs), OUTARCH pauses execution and routes the decision into the Needs You triage queue for human verification."
     },
     {
-      q: "How do Workspace Recipes prevent port collisions and startup crashes?",
-      a: "Unlike dumb shell scripts that fire everything simultaneously, OUTARCH Recipes model your stack as a Directed Acyclic Graph (DAG). Downstream processes only initialize once upstream dependencies pass active readiness gates (such as TCP port availability, HTTP 200 health checks, or stdout regex match)."
+      q: "How do Workspace Recipes work?",
+      a: "Recipes define your services as a Directed Acyclic Graph (DAG). Instead of starting all services at once, dependencies initialize in deterministic order with readiness gates (such as port binding or log match) before downstream workers spin up."
     },
     {
-      q: "What is CrashLens and how does 1-click recovery work?",
-      a: "CrashLens analyzes process termination and stderr output in real time. When an error like WSAEADDRINUSE (port locked) or a missing environment variable occurs, CrashLens isolates the offending line or zombie process PID and offers a 1-click remediation action."
+      q: "What platforms and operating systems are supported?",
+      a: "OUTARCH provides desktop applications for Windows 10/11, macOS (Apple Silicon and Intel), and Linux (x86_64 AppImage and .deb), alongside an Android Mobile Companion app for local LAN notifications."
     },
     {
-      q: "Can I synchronize OUTARCH with VS Code or Cursor?",
-      a: "Yes. OUTARCH includes an official VS Code extension bridge that provides two-way sync for active editor file path, cursor line/column, diagnostics/problems, and git branch status."
-    },
-    {
-      q: "What is Fullscreen Focus Mode (Alt+F)?",
-      a: "Pressing Alt+F instantly collapses navigation sidebars and secondary panels—allocating 100% of your display to your focused terminal pane while background workers continue running silently."
-    },
-    {
-      q: "What platforms and shells are supported?",
-      a: "OUTARCH supports Windows 10/11 (PowerShell, Command Prompt, WSL2), macOS (Apple Silicon ARM64 & Intel x86), and Linux (x86_64 AppImage and .deb packages), along with the Android Mobile Companion."
+      q: "How do I get started?",
+      a: "Download and run the desktop application for your platform. OUTARCH auto-detects your local workspace directory and provides sample Recipes and terminal profiles out of the box."
     }
   ];
 
@@ -48,15 +40,14 @@ export default function FaqSection() {
       
       {/* Header */}
       <div className="max-w-3xl mb-14">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#38BDF8]/10 border border-[#38BDF8]/25 text-xs font-mono text-[#38BDF8] mb-4">
-          <HelpCircle className="w-3.5 h-3.5" />
-          <span>15 // KNOWLEDGE BASE</span>
-        </div>
-        <h2 className="font-display text-4xl sm:text-6xl font-black text-titanium tracking-tight uppercase leading-[1.02]">
+        <span className="font-mono text-xs text-[#64748B] uppercase tracking-wider block mb-3">
+          // KNOWLEDGE BASE
+        </span>
+        <h2 className="font-display text-3xl sm:text-5xl font-black text-titanium tracking-tight uppercase leading-[1.02]">
           Frequently Asked Questions.
         </h2>
-        <p className="font-sans text-[#CBD5E1] text-base sm:text-lg mt-5 leading-relaxed">
-          Everything you need to know about OUTARCH's architecture, security boundaries, and local execution model.
+        <p className="font-sans text-[#94A3B8] text-base mt-4 leading-relaxed">
+          Core details about OUTARCH architecture, execution boundaries, and workflows.
         </p>
       </div>
 

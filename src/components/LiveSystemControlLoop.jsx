@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Activity, 
   Terminal, 
   AlertTriangle, 
-  Search, 
   Bot, 
   CheckCircle2, 
   ArrowRight, 
-  RefreshCw, 
-  ShieldAlert, 
-  Zap, 
-  Play, 
-  Check 
+  FileText,
+  ShieldAlert
 } from 'lucide-react';
 
 export default function LiveSystemControlLoop() {
@@ -108,7 +103,7 @@ export default function LiveSystemControlLoop() {
       </div>
 
       {/* Cinematic Chapter Progress Indicator */}
-      <div className="w-full flex items-center justify-between gap-1 p-1.5 rounded-xl bg-[#0D1117] border border-white/10 mb-10 overflow-x-auto no-scrollbar font-mono text-xs">
+      <div className="w-full flex items-center justify-between gap-1 p-1 rounded-xl bg-[#0D1117] border border-white/10 mb-8 overflow-x-auto no-scrollbar font-mono text-xs">
         {stages.map((st, idx) => {
           const isActive = activeStage === idx;
           return (
@@ -117,7 +112,7 @@ export default function LiveSystemControlLoop() {
               onClick={() => handleSelectStage(idx)}
               className={`flex-1 py-2.5 px-3 rounded-lg transition-all flex items-center justify-center gap-2 whitespace-nowrap ${
                 isActive 
-                  ? 'bg-[#161D2A] text-white border border-white/15 shadow-sm font-bold' 
+                  ? 'bg-[#131822] text-white border border-white/15 shadow-sm font-bold' 
                   : 'text-[#64748B] hover:text-[#CBD5E1] hover:bg-white/[0.02]'
               }`}
             >
@@ -134,7 +129,7 @@ export default function LiveSystemControlLoop() {
       </div>
 
       {/* Main Interactive Stage Demonstration Frame */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch rounded-2xl glass-panel p-6 sm:p-10 border border-white/10 shadow-2xl bg-[#0A0D14]">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch rounded-xl p-6 sm:p-8 border border-white/10 bg-[#080A0F] shadow-2xl">
         
         {/* Left: Narrative Context & Explanations */}
         <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
@@ -168,7 +163,7 @@ export default function LiveSystemControlLoop() {
         </div>
 
         {/* Right: Live Interactive Miniature Product UI */}
-        <div className="lg:col-span-7 rounded-xl bg-[#07090E] border border-white/10 p-5 font-mono text-xs space-y-4 shadow-xl">
+        <div className="lg:col-span-7 rounded-lg bg-[#0D1117] border border-white/10 p-5 font-mono text-xs space-y-3">
           
           {/* Top System Status Bar */}
           <div className="flex items-center justify-between pb-3 border-b border-white/[0.08] text-[11px] text-[#94A3B8]">
@@ -183,7 +178,7 @@ export default function LiveSystemControlLoop() {
           <div className="space-y-2">
             
             {/* Worker 1: Frontend */}
-            <div className="p-3 rounded-lg bg-[#0D1117] border border-white/5 flex items-center justify-between">
+            <div className="p-3 rounded-lg bg-[#080A0F] border border-white/5 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <span className="w-2 h-2 rounded-full bg-[#10B981]" />
                 <span className="font-bold text-white">FRONTEND</span>
@@ -200,11 +195,11 @@ export default function LiveSystemControlLoop() {
                 ? 'bg-[#180A0E] border-[#EF4444]/40 text-[#EF4444]'
                 : activeStage === 5
                 ? 'bg-[#0A1812] border-[#10B981]/40 text-[#10B981]'
-                : 'bg-[#0D1117] border-white/5 text-white'
+                : 'bg-[#080A0F] border-white/5 text-white'
             } flex items-center justify-between`}>
               <div className="flex items-center gap-2.5">
                 <span className={`w-2 h-2 rounded-full ${
-                  activeStage >= 2 && activeStage <= 4 ? 'bg-[#EF4444] animate-ping' : 'bg-[#10B981]'
+                  activeStage >= 2 && activeStage <= 4 ? 'bg-[#EF4444]' : 'bg-[#10B981]'
                 }`} />
                 <span className="font-bold text-white">BACKEND</span>
                 <span className="text-[#64748B] text-[10px]">cargo run --bin api</span>
@@ -221,7 +216,7 @@ export default function LiveSystemControlLoop() {
             </div>
 
             {/* Worker 3: Database */}
-            <div className="p-3 rounded-lg bg-[#0D1117] border border-white/5 flex items-center justify-between">
+            <div className="p-3 rounded-lg bg-[#080A0F] border border-white/5 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <span className="w-2 h-2 rounded-full bg-[#10B981]" />
                 <span className="font-bold text-white">DATABASE</span>
@@ -233,7 +228,7 @@ export default function LiveSystemControlLoop() {
             </div>
 
             {/* Worker 4: Tests */}
-            <div className="p-3 rounded-lg bg-[#0D1117] border border-white/5 flex items-center justify-between">
+            <div className="p-3 rounded-lg bg-[#080A0F] border border-white/5 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <span className="w-2 h-2 rounded-full bg-[#38BDF8]" />
                 <span className="font-bold text-white">TESTS</span>
@@ -245,7 +240,7 @@ export default function LiveSystemControlLoop() {
             </div>
 
             {/* Worker 5: Agent */}
-            <div className="p-3 rounded-lg bg-[#0D1117] border border-white/5 flex items-center justify-between">
+            <div className="p-3 rounded-lg bg-[#080A0F] border border-white/5 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <span className="w-2 h-2 rounded-full bg-[#A855F7]" />
                 <span className="font-bold text-white">AGENT (CLAUDE)</span>
@@ -259,8 +254,8 @@ export default function LiveSystemControlLoop() {
           </div>
 
           {/* Dynamic Context Panel Below Processes */}
-          {activeStage >= 2 && activeStage <= 3 && (
-            <div className="p-3.5 rounded-lg bg-[#180A0E] border border-[#EF4444]/30 space-y-2">
+          {activeStage === 2 && (
+            <div className="p-3 rounded-lg bg-[#180A0E] border border-[#EF4444]/30 space-y-1.5">
               <div className="flex items-center justify-between text-[11px]">
                 <span className="text-[#EF4444] font-bold flex items-center gap-1.5">
                   <AlertTriangle className="w-3.5 h-3.5" />
@@ -274,23 +269,38 @@ export default function LiveSystemControlLoop() {
             </div>
           )}
 
+          {activeStage === 3 && (
+            <div className="p-3 rounded-lg bg-[#180A0E] border border-[#EF4444]/30 space-y-1.5">
+              <div className="flex items-center justify-between text-[11px]">
+                <span className="text-[#EF4444] font-bold flex items-center gap-1.5">
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>CRASHLENS EVIDENCE</span>
+                </span>
+                <span className="text-[10px] text-[#94A3B8]">Stderr Isolated</span>
+              </div>
+              <p className="text-[#F4A7AE] text-[11px]">
+                Offending process: <code className="text-white bg-black/40 px-1 py-0.5 rounded">PID 9184 (node.exe)</code> bound to <code className="text-white bg-black/40 px-1 py-0.5 rounded">0.0.0.0:8080</code>.
+              </p>
+            </div>
+          )}
+
           {activeStage === 4 && (
-            <div className="p-3.5 rounded-lg bg-[#140C20] border border-[#A855F7]/30 space-y-2">
+            <div className="p-3 rounded-lg bg-[#140C20] border border-[#A855F7]/30 space-y-1.5">
               <div className="flex items-center justify-between text-[11px]">
                 <span className="text-[#A855F7] font-bold flex items-center gap-1.5">
                   <Bot className="w-3.5 h-3.5" />
                   <span>MISSION AI INVESTIGATION</span>
                 </span>
-                <span className="text-[10px] text-[#A855F7]">Synthesis Complete</span>
+                <span className="text-[10px] text-[#A855F7]">Root Cause Identified</span>
               </div>
               <p className="text-[#CBD5E1] text-[11px]">
-                Conflicting orphaned process <code className="text-white bg-black/40 px-1 py-0.5 rounded">node.exe (PID 9184)</code> holds port 8080.
+                4 events correlated. Likely cause: orphaned dev server from prior session. Propose termination of PID 9184.
               </p>
             </div>
           )}
 
           {activeStage === 5 && (
-            <div className="p-3.5 rounded-lg bg-[#0A1812] border border-[#10B981]/30 flex items-center justify-between text-[11px]">
+            <div className="p-3 rounded-lg bg-[#0A1812] border border-[#10B981]/30 flex items-center justify-between text-[11px]">
               <span className="text-[#10B981] font-bold flex items-center gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>PID 9184 terminated. Port 8080 freed. Backend restarted.</span>

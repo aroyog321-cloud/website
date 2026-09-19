@@ -1,7 +1,6 @@
 import React from 'react';
 import VirtualCockpit from './VirtualCockpit/VirtualCockpit';
-import { useCockpit } from '../context/CockpitContext';
-import { Download, ChevronRight, ArrowDown } from 'lucide-react';
+import { Download, ArrowDown } from 'lucide-react';
 
 export default function HeroCinematic({ onOpenDownload }) {
   const scrollToControlLoop = () => {
@@ -12,17 +11,17 @@ export default function HeroCinematic({ onOpenDownload }) {
   };
 
   return (
-    <section id="cockpit" className="relative pt-12 pb-20 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto flex flex-col items-center select-none">
+    <section id="cockpit" className="relative pt-10 sm:pt-14 pb-20 px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto flex flex-col items-center select-none">
       
       {/* Subtle Atmospheric Section Background */}
-      <div className="absolute top-0 inset-x-0 h-[600px] bg-radial-atmosphere pointer-events-none -z-10" />
+      <div className="absolute top-0 inset-x-0 h-[500px] bg-radial-atmosphere pointer-events-none -z-10" />
       <div className="absolute inset-0 bg-tech-grid opacity-20 pointer-events-none -z-10" />
 
       {/* Hero Header Composition */}
-      <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto mb-12">
+      <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto mb-10 sm:mb-12">
         
         {/* Eyebrow */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0D1117] border border-white/10 text-[11px] font-mono text-[#94A3B8] mb-6 shadow-sm">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0D1117] border border-white/10 text-[11px] font-mono text-[#94A3B8] mb-6">
           <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
           <span className="text-[#E2E8F0] font-semibold tracking-wider uppercase">AI DEVELOPER COMMAND CENTER</span>
         </div>
@@ -63,15 +62,15 @@ export default function HeroCinematic({ onOpenDownload }) {
       </div>
 
       {/* The Actual OUTARCH Interface (Centerpiece) */}
-      <div className="w-full relative z-10 rounded-xl glass-panel overflow-hidden transition-all duration-300 border border-white/10 shadow-2xl">
+      <div className="w-full relative z-10 rounded-xl bg-[#080A0F] border border-white/10 overflow-hidden transition-all duration-300 shadow-2xl">
         
-        {/* Cockpit Frame Header */}
-        <div className="px-5 py-3 border-b border-white/[0.08] bg-[#0A0D14]/95 flex items-center justify-between text-xs text-[#94A3B8]">
+        {/* Cockpit Window Chrome Header */}
+        <div className="px-4 py-2.5 border-b border-white/[0.08] bg-[#0D1117] flex items-center justify-between text-xs text-[#94A3B8]">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#EF4444]/70" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#F59E0B]/70" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#10B981]/70" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#EF4444]/60" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#F59E0B]/60" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#10B981]/60" />
             </div>
             <span className="font-mono text-[11px] text-[#CBD5E1] pl-2 border-l border-white/10 flex items-center gap-2">
               <span className="font-semibold text-white">OUTARCH Groundstation</span>
@@ -80,9 +79,9 @@ export default function HeroCinematic({ onOpenDownload }) {
             </span>
           </div>
           
-          <div className="flex items-center gap-5 text-[11px] font-mono">
+          <div className="flex items-center gap-4 text-[11px] font-mono">
             <span className="text-[#64748B] hidden sm:inline">Interactive preview — click tabs or workers</span>
-            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full badge-running font-semibold text-[10px]">
+            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md badge-running font-semibold text-[10px]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
               <span>DAEMON ONLINE</span>
             </div>

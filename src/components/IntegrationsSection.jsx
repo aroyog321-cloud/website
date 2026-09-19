@@ -5,10 +5,6 @@ import {
   Cpu, 
   Smartphone, 
   Globe, 
-  ShieldCheck, 
-  ArrowRight,
-  Check,
-  Zap,
   Layers
 } from 'lucide-react';
 
@@ -20,9 +16,9 @@ export default function IntegrationsSection() {
       category: 'AI Telemetry & Synthesis',
       desc: 'Connect Anthropic Claude, Google Gemini, OpenAI, Groq, OpenRouter, NVIDIA NIM, or local Ollama / vLLM with OS-level credential encryption.',
       badge: 'Local DPAPI Encryption',
-      badgeTone: 'text-[#38BDF8] bg-[#38BDF8]/10 border-[#38BDF8]/30',
+      badgeTone: 'badge-observing',
       icon: Bot,
-      iconColor: 'text-[#38BDF8] bg-[#081824] border-[#38BDF8]/30 shadow-[0_0_15px_rgba(56,189,248,0.25)]',
+      iconColor: 'text-[#38BDF8]',
       specs: ['Local Ollama & vLLM support', 'Automated crash diff synthesis', 'Per-worker token analytics']
     },
     {
@@ -31,9 +27,9 @@ export default function IntegrationsSection() {
       category: 'Editor Synchronization',
       desc: 'Includes official extension (mission-control-bridge-0.2.0.vsix) for two-way sync: active file path, editor cursor line/col, diagnostics/problems, and git branch state.',
       badge: 'Two-Way IPC',
-      badgeTone: 'text-[#00E5FF] bg-[#00E5FF]/10 border-[#00E5FF]/30',
+      badgeTone: 'badge-observing',
       icon: FileCode,
-      iconColor: 'text-[#00E5FF] bg-[#081820] border-[#00E5FF]/30 shadow-[0_0_15px_rgba(0,229,255,0.25)]',
+      iconColor: 'text-[#38BDF8]',
       specs: ['Live diagnostic streaming', 'Focus editor file from terminal', 'Coordinated branch switches']
     },
     {
@@ -42,9 +38,9 @@ export default function IntegrationsSection() {
       category: 'Agent Protocol Firewall',
       desc: 'Runs a local Model Context Protocol server enabling Claude Code, Codex, and external agents to inspect terminals and ports through single-use approval gates.',
       badge: 'Single-Use Tokens',
-      badgeTone: 'text-[#C084FC] bg-[#C084FC]/10 border-[#C084FC]/30',
+      badgeTone: 'badge-ai',
       icon: Cpu,
-      iconColor: 'text-[#C084FC] bg-[#140C20] border-[#A855F7]/30 shadow-[0_0_15px_rgba(168,85,247,0.25)]',
+      iconColor: 'text-[#A855F7]',
       specs: ['Intercepts destructive shell runs', 'Read-only scoped terminal logs', 'Zero environment secret exposure']
     },
     {
@@ -53,9 +49,9 @@ export default function IntegrationsSection() {
       category: 'Encrypted Remote HUD',
       desc: 'Pair your Android device over encrypted local LAN without cloud servers. Receive critical crash alerts and approve high-stakes decisions from anywhere on your network.',
       badge: 'Encrypted Local LAN',
-      badgeTone: 'text-[#00F5A0] bg-[#00F5A0]/10 border-[#00F5A0]/30',
+      badgeTone: 'badge-running',
       icon: Smartphone,
-      iconColor: 'text-[#00F5A0] bg-[#081812] border-[#00F5A0]/30 shadow-[0_0_15px_rgba(0,245,160,0.25)]',
+      iconColor: 'text-[#10B981]',
       specs: ['Zero cloud relay dependency', 'Push approval for Needs You items', 'Real-time worker telemetry pulse']
     },
     {
@@ -64,9 +60,9 @@ export default function IntegrationsSection() {
       category: 'In-Canvas Preview (Alt+B)',
       desc: 'Electron WebContentsView mounted directly beside your terminal grid. Automatically opens detected dev ports (localhost:3000, 5173) with live reload.',
       badge: 'In-Canvas Preview',
-      badgeTone: 'text-[#FFB800] bg-[#FFB800]/10 border-[#FFB800]/30',
+      badgeTone: 'badge-waiting',
       icon: Globe,
-      iconColor: 'text-[#FFB800] bg-[#1A1208] border-[#FFB800]/30 shadow-[0_0_15px_rgba(255,184,0,0.25)]',
+      iconColor: 'text-[#F59E0B]',
       specs: ['Automatic localhost detection', 'Side-by-side terminal & browser', 'Integrated dev console']
     }
   ];
@@ -76,7 +72,7 @@ export default function IntegrationsSection() {
       
       {/* Section Header */}
       <div className="max-w-3xl mb-16">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C084FC]/10 border border-[#C084FC]/30 text-xs font-mono text-[#C084FC] mb-4">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#A855F7]/10 border border-[#A855F7]/25 text-xs font-mono text-[#A855F7] mb-4">
           <Layers className="w-3.5 h-3.5" />
           <span>13 // INTEGRATIONS &amp; BRIDGES</span>
         </div>
@@ -95,35 +91,35 @@ export default function IntegrationsSection() {
           return (
             <div
               key={item.id}
-              className="rounded-2xl spotlight-card p-8 flex flex-col justify-between shadow-xl border border-white/10"
+              className="rounded-xl bg-[#0D1117] p-7 flex flex-col justify-between border border-white/10 hover:border-white/20 transition-all duration-150"
             >
               <div>
                 <div className="flex items-center justify-between mb-5">
-                  <div className={`w-11 h-11 rounded-xl border flex items-center justify-center ${item.iconColor}`}>
-                    <Icon className="w-5 h-5" />
+                  <div className="w-10 h-10 rounded-lg bg-[#131822] border border-white/10 flex items-center justify-center">
+                    <Icon className={`w-5 h-5 ${item.iconColor}`} />
                   </div>
-                  <span className={`font-mono text-[10px] px-2.5 py-1 rounded-full border font-bold ${item.badgeTone}`}>
+                  <span className={`font-mono text-[10px] px-2 py-0.5 rounded font-bold ${item.badgeTone}`}>
                     {item.badge}
                   </span>
                 </div>
 
-                <span className="font-mono text-[10px] text-[#94A3B8] uppercase tracking-wider block mb-1.5 font-bold">
+                <span className="font-mono text-[10px] text-[#64748B] uppercase tracking-wider block mb-1 font-bold">
                   {item.category}
                 </span>
 
-                <h3 className="font-display text-lg font-bold text-white mb-2.5">
+                <h3 className="font-display text-lg font-bold text-white mb-2">
                   {item.name}
                 </h3>
 
-                <p className="font-sans text-xs text-[#CBD5E1] leading-relaxed mb-6">
+                <p className="font-sans text-xs text-[#94A3B8] leading-relaxed mb-6">
                   {item.desc}
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-white/[0.06] space-y-2 font-mono text-[11px] text-[#94A3B8]">
+              <div className="pt-4 border-t border-white/[0.06] space-y-1.5 font-mono text-[11px] text-[#94A3B8]">
                 {item.specs.map((spec, sIdx) => (
                   <div key={sIdx} className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#00F5A0] shadow-[0_0_4px_#00F5A0]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
                     <span className="text-[#E2E8F0]">{spec}</span>
                   </div>
                 ))}

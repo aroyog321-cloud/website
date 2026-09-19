@@ -1,13 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 
 /**
- * ParticleGridCanvas - Subtle, high-performance ambient cyber constellation & energy grid.
- * Reacts dynamically to cursor velocity and proximity.
+ * ParticleGridCanvas - Subtle, high-performance ambient constellation.
+ * Very low density and opacity to keep visual focus strictly on the product interface.
  */
 export default function ParticleGridCanvas() {
   const canvasRef = useRef(null);
 
   useEffect(() => {
+    // Respect reduced-motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -19,7 +24,7 @@ export default function ParticleGridCanvas() {
     let mouse = {
       x: width / 2,
       y: height / 2,
-      radius: 180,
+      radius: 120,
       active: false,
     };
 
@@ -44,26 +49,25 @@ export default function ParticleGridCanvas() {
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     document.addEventListener('mouseleave', handleMouseLeave);
 
-    // Particle nodes definition
-    const particleCount = Math.min(Math.floor((width * height) / 28000), 65);
+    // Keep particle count low (max 28) for calm atmosphere
+    const particleCount = Math.min(Math.floor((width * height) / 45000), 28);
     let particles = [];
 
     const colors = [
-      'rgba(0, 229, 255, ',    // Laser Cyan
-      'rgba(0, 245, 160, ',    // Electric Emerald
-      'rgba(168, 85, 247, ',   // Hyper Violet
-      'rgba(59, 130, 246, ',   // Royal Blue
+      'rgba(56, 189, 248, ',   // Sky Blue
+      'rgba(168, 85, 247, ',  // Purple
+      'rgba(16, 185, 129, ',  // Emerald
     ];
 
     class Particle {
       constructor() {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
-        this.size = Math.random() * 1.5 + 0.5;
-        this.vx = (Math.random() - 0.5) * 0.4;
-        this.vy = (Math.random() - 0.5) * 0.4;
+        this.size = Math.random() * 1.2 + 0.5;
+        this.vx = (Math.random() - 0.5) * 0.18;
+        this.vy = (Math.random() - 0.5) * 0.18;
         this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.baseAlpha = Math.random() * 0.35 + 0.15;
+        this.baseAlpha = Math.random() * 0.15 + 0.05;
       }
 
       update() {
@@ -75,13 +79,12 @@ export default function ParticleGridCanvas() {
         if (this.y < 0) this.y = height;
         if (this.y > height) this.y = 0;
 
-        // Mouse interaction
         if (mouse.active) {
           const dx = mouse.x - this.x;
           const dy = mouse.y - this.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < mouse.radius) {
-            const force = (1 - dist / mouse.radius) * 1.5;
+            const force = (1 - dist / mouse.radius) * 0.8;
             this.x -= (dx / dist) * force;
             this.y -= (dy / dist) * force;
           }
@@ -95,7 +98,7 @@ export default function ParticleGridCanvas() {
           const dy = mouse.y - this.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < mouse.radius) {
-            alpha = Math.min(1, this.baseAlpha + (1 - dist / mouse.radius) * 0.6);
+            alpha = Math.min(0.35, this.baseAlpha + (1 - dist / mouse.radius) * 0.2);
           }
         }
 
@@ -127,16 +130,15 @@ export default function ParticleGridCanvas() {
       if (isTabActive) {
         ctx.clearRect(0, 0, width, height);
 
-        // Connect nearby particles with subtle laser filaments
         for (let i = 0; i < particles.length; i++) {
           for (let j = i + 1; j < particles.length; j++) {
             const dx = particles[i].x - particles[j].x;
             const dy = particles[i].y - particles[j].y;
             const dist = Math.sqrt(dx * dx + dy * dy);
 
-            if (dist < 110) {
-              const alpha = (1 - dist / 110) * 0.12;
-              ctx.strokeStyle = `rgba(0, 229, 255, ${alpha})`;
+            if (dist < 100) {
+              const alpha = (1 - dist / 100) * 0.04;
+              ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
               ctx.lineWidth = 0.5;
               ctx.beginPath();
               ctx.moveTo(particles[i].x, particles[i].y);
@@ -146,7 +148,6 @@ export default function ParticleGridCanvas() {
           }
         }
 
-        // Draw and update each particle
         particles.forEach((p) => {
           p.update();
           p.draw();
@@ -170,7 +171,7 @@ export default function ParticleGridCanvas() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0 opacity-60"
+      className="fixed inset-0 pointer-events-none z-0 opacity-40"
       style={{ willChange: 'transform' }}
     />
   );

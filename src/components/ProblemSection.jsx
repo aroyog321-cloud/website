@@ -1,19 +1,8 @@
 import React, { useState } from 'react';
 import { 
-  Terminal, 
-  Flame, 
-  Layers, 
-  ArrowRight,
-  ShieldAlert, 
-  Check, 
-  X, 
-  Split, 
   AlertTriangle, 
-  Server, 
-  Cpu, 
-  Database, 
-  Radio,
-  Zap,
+  Check, 
+  Terminal,
   Activity
 } from 'lucide-react';
 
@@ -21,21 +10,21 @@ export default function ProblemSection() {
   const [selectedProcess, setSelectedProcess] = useState('api-server');
 
   const chaoticProcesses = [
-    { id: 'frontend-dev', name: 'frontend-dev', cmd: 'vite dev --port 3000', state: 'RUNNING', port: '3000', log: 'vite v6.4.3 ready in 240ms', tone: 'text-[#00F5A0]', dotColor: 'bg-[#00F5A0] shadow-[0_0_8px_#00F5A0]' },
-    { id: 'api-server', name: 'api-server', cmd: 'cargo run --bin api', state: 'CRASHED', port: '8080', log: 'error: address already in use (os error 10048)', error: true, tone: 'text-[#FF3366]', dotColor: 'bg-[#FF3366] shadow-[0_0_8px_#FF3366]' },
-    { id: 'claude-code', name: 'claude-code', cmd: 'claude --autonomous', state: 'WAITING SIGN-OFF', port: '—', log: 'Agent requests rm -rf dist/ && pnpm build', waiting: true, tone: 'text-[#FFB800]', dotColor: 'bg-[#FFB800] shadow-[0_0_8px_#FFB800]' },
-    { id: 'postgres', name: 'postgres', cmd: 'docker compose up db', state: 'RUNNING', port: '5432', log: 'database system is ready to accept connections', tone: 'text-[#00F5A0]', dotColor: 'bg-[#00F5A0] shadow-[0_0_8px_#00F5A0]' },
-    { id: 'vitest-watcher', name: 'vitest-watcher', cmd: 'vitest watch', state: 'FAILED TESTS', port: '—', log: 'FAIL test/auth.test.ts (1 failed, 23 passed)', error: true, tone: 'text-[#FF3366]', dotColor: 'bg-[#FF3366] shadow-[0_0_8px_#FF3366]' },
-    { id: 'redis-cache', name: 'redis-cache', cmd: 'redis-server', state: 'RUNNING', port: '6379', log: 'Ready to accept connections tcp', tone: 'text-[#00F5A0]', dotColor: 'bg-[#00F5A0] shadow-[0_0_8px_#00F5A0]' },
+    { id: 'frontend-dev', name: 'frontend-dev', cmd: 'vite dev --port 3000', state: 'RUNNING', badgeClass: 'badge-running', dotColor: 'bg-[#10B981]', log: 'vite v6.4.3 ready in 240ms' },
+    { id: 'api-server', name: 'api-server', cmd: 'cargo run --bin api', state: 'FAILED', badgeClass: 'badge-failed', dotColor: 'bg-[#EF4444]', log: 'error: address already in use (os error 10048)', error: true },
+    { id: 'claude-code', name: 'claude-code', cmd: 'claude --autonomous', state: 'WAITING', badgeClass: 'badge-waiting', dotColor: 'bg-[#F59E0B]', log: 'Agent requests rm -rf dist/ && pnpm build', waiting: true },
+    { id: 'postgres', name: 'postgres', cmd: 'docker compose up db', state: 'RUNNING', badgeClass: 'badge-running', dotColor: 'bg-[#10B981]', log: 'database system is ready to accept connections' },
+    { id: 'vitest-watcher', name: 'vitest-watcher', cmd: 'vitest watch', state: 'OBSERVING', badgeClass: 'badge-observing', dotColor: 'bg-[#38BDF8]', log: 'PASS 24 test suites completed' },
+    { id: 'redis-cache', name: 'redis-cache', cmd: 'redis-server', state: 'RUNNING', badgeClass: 'badge-running', dotColor: 'bg-[#10B981]', log: 'Ready to accept connections tcp port 6379' },
   ];
 
   const stateVocab = [
-    { label: 'RUNNING', desc: 'Process alive & streaming output', color: 'bg-[#00F5A0]/10 text-[#00F5A0] border-[#00F5A0]/30 shadow-[0_0_10px_rgba(0,245,160,0.1)]' },
-    { label: 'OBSERVING', desc: 'PTY output stream parsed for ports/URLs', color: 'bg-[#00E5FF]/10 text-[#00E5FF] border-[#00E5FF]/30 shadow-[0_0_10px_rgba(0,229,255,0.1)]' },
-    { label: 'WAITING', desc: 'Agent requires human judgment', color: 'bg-[#C084FC]/10 text-[#C084FC] border-[#C084FC]/30 shadow-[0_0_10px_rgba(192,132,252,0.1)]' },
-    { label: 'NEEDS YOU', desc: 'Active triage blocker in queue', color: 'bg-[#FFB800]/10 text-[#FFB800] border-[#FFB800]/30 shadow-[0_0_10px_rgba(255,184,0,0.1)]' },
-    { label: 'FAILED', desc: 'CrashLens isolates stderr cause', color: 'bg-[#FF3366]/10 text-[#FF3366] border-[#FF3366]/30 shadow-[0_0_10px_rgba(255,51,102,0.1)]' },
-    { label: 'RESOLVED', desc: 'Action verified & logged to memory', color: 'bg-[#00F5A0]/10 text-[#00F5A0] border-[#00F5A0]/30 shadow-[0_0_10px_rgba(0,245,160,0.1)]' },
+    { label: 'RUNNING', desc: 'Process alive & streaming output', badge: 'badge-running' },
+    { label: 'OBSERVING', desc: 'PTY output parsed for ports & URLs', badge: 'badge-observing' },
+    { label: 'WAITING', desc: 'Agent requires human judgment', badge: 'badge-waiting' },
+    { label: 'NEEDS YOU', desc: 'Active triage blocker in queue', badge: 'badge-needs-you' },
+    { label: 'FAILED', desc: 'CrashLens isolates stderr cause', badge: 'badge-failed' },
+    { label: 'RESOLVED', desc: 'Action verified & logged to memory', badge: 'badge-running' },
   ];
 
   return (
@@ -43,7 +32,7 @@ export default function ProblemSection() {
       
       {/* 02 · Section Header: Development Is Too Loud */}
       <div className="max-w-3xl mb-16">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF3366]/10 border border-[#FF3366]/30 text-xs font-mono text-[#FF3366] mb-4">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EF4444]/10 border border-[#EF4444]/25 text-xs font-mono text-[#EF4444] mb-4">
           <AlertTriangle className="w-3.5 h-3.5" />
           <span>02 // THE EXECUTION CRISIS</span>
         </div>
@@ -59,14 +48,14 @@ export default function ProblemSection() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
         
         {/* Left: The Fragmented Terminal Sprawl */}
-        <div className="lg:col-span-6 rounded-2xl spotlight-card p-6 font-mono text-xs space-y-3 border border-white/10 shadow-2xl">
+        <div className="lg:col-span-6 rounded-xl bg-[#0D1117] p-6 font-mono text-xs space-y-3 border border-white/10 shadow-xl">
           <div className="flex items-center justify-between text-[#94A3B8] pb-3 border-b border-white/[0.08] text-[11px]">
             <span className="flex items-center gap-2 text-white font-bold">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#FF3366] shadow-[0_0_8px_#FF3366] animate-ping" />
+              <span className="w-2 h-2 rounded-full bg-[#EF4444]" />
               <span>UNSUPERVISED CONCURRENT SPRAWL</span>
             </span>
-            <span className="text-[#FF3366] bg-[#FF3366]/10 px-2 py-0.5 rounded border border-[#FF3366]/30 font-bold">
-              2 BLIND FAILURES
+            <span className="badge-failed px-2 py-0.5 rounded text-[10px] font-bold">
+              1 BLIND FAILURE
             </span>
           </div>
 
@@ -77,25 +66,25 @@ export default function ProblemSection() {
                 <div 
                   key={p.id}
                   onClick={() => setSelectedProcess(p.id)}
-                  className={`p-3.5 rounded-xl border transition-all duration-200 cursor-pointer ${
+                  className={`p-3 rounded-lg border transition-all duration-150 cursor-pointer ${
                     p.error 
-                      ? 'bg-[#180A0E] border-[#FF3366]/40 hover:border-[#FF3366] shadow-[0_0_15px_rgba(255,51,102,0.15)]' 
+                      ? 'bg-[#180A0E] border-[#EF4444]/30' 
                       : p.waiting
-                      ? 'bg-[#181308] border-[#FFB800]/40 hover:border-[#FFB800] shadow-[0_0_15px_rgba(255,184,0,0.15)]'
-                      : 'bg-[#080D18]/80 border-white/[0.08] hover:border-white/20'
-                  } ${isSelected ? 'ring-2 ring-white/40 scale-[1.01]' : ''}`}
+                      ? 'bg-[#181308] border-[#F59E0B]/30'
+                      : 'bg-[#080A0F] border-white/5 hover:border-white/15'
+                  } ${isSelected ? 'ring-1 ring-white/30' : ''}`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-2.5">
-                      <span className={`w-2 h-2 rounded-full ${p.dotColor}`} />
+                      <span className={`w-1.5 h-1.5 rounded-full ${p.dotColor}`} />
                       <span className="font-bold text-white tracking-wide">{p.name}</span>
                       <span className="text-[#64748B] text-[10px] hidden sm:inline">{p.cmd}</span>
                     </div>
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded bg-black/40 ${p.tone}`}>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${p.badgeClass}`}>
                       {p.state}
                     </span>
                   </div>
-                  <p className={`text-[11px] truncate font-mono ${p.error ? 'text-[#FFA3B3]' : p.waiting ? 'text-[#FFE4A3]' : 'text-[#94A3B8]'}`}>
+                  <p className={`text-[11px] truncate font-mono ${p.error ? 'text-[#F4A7AE]' : p.waiting ? 'text-[#FDE68A]' : 'text-[#94A3B8]'}`}>
                     &gt; {p.log}
                   </p>
                 </div>
@@ -104,15 +93,15 @@ export default function ProblemSection() {
           </div>
 
           <div className="pt-3 text-[11px] text-[#94A3B8] flex items-center justify-between border-t border-white/[0.06]">
-            <span>Result: 20 minutes wasted investigating port locks</span>
-            <span className="text-[#FF3366] font-bold">High cognitive drag</span>
+            <span>Result: Silent port locks and scrollback drift</span>
+            <span className="text-[#EF4444] font-bold">High cognitive drag</span>
           </div>
         </div>
 
         {/* Right: The OUTARCH Control Layer */}
-        <div className="lg:col-span-6 rounded-2xl spotlight-card spotlight-card-emerald p-7 flex flex-col justify-between space-y-6 border border-[#00F5A0]/20 shadow-2xl">
+        <div className="lg:col-span-6 rounded-xl bg-[#0D1117] p-6 sm:p-7 flex flex-col justify-between space-y-6 border border-white/10 shadow-xl">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F5A0]/10 border border-[#00F5A0]/30 text-xs font-mono text-[#00F5A0] mb-4 shadow-[0_0_12px_rgba(0,245,160,0.2)]">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#10B981]/10 border border-[#10B981]/25 text-xs font-mono text-[#10B981] mb-4">
               <Check className="w-3.5 h-3.5" />
               <span>03 // THE CONTROL LAYER</span>
             </div>
@@ -130,11 +119,11 @@ export default function ProblemSection() {
               <span className="font-mono text-[11px] text-white block font-bold tracking-wider uppercase">
                 SIX DEFINITIVE SYSTEM STATES:
               </span>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {stateVocab.map((item, idx) => (
                   <div 
                     key={idx}
-                    className={`p-2.5 rounded-xl border font-mono text-center transition-transform hover:scale-[1.02] ${item.color}`}
+                    className={`p-2.5 rounded-lg border font-mono text-center ${item.badge}`}
                   >
                     <span className="text-[10px] font-black block tracking-wide">{item.label}</span>
                     <span className="text-[9px] text-[#94A3B8] block truncate mt-0.5">{item.desc}</span>
@@ -144,11 +133,11 @@ export default function ProblemSection() {
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#080D18]/90 border border-[#00F5A0]/20 text-xs font-sans flex items-center justify-between gap-4 shadow-lg">
+          <div className="p-3.5 rounded-lg bg-[#080A0F] border border-white/10 text-xs font-sans flex items-center justify-between gap-4">
             <span className="text-[#CBD5E1] text-xs leading-relaxed">
               Supervision by Exception means zero unnecessary noise or interruptions.
             </span>
-            <span className="font-mono text-[11px] text-[#00F5A0] font-black whitespace-nowrap px-2.5 py-1 rounded bg-[#00F5A0]/10 border border-[#00F5A0]/30">
+            <span className="font-mono text-[11px] text-[#10B981] font-bold whitespace-nowrap px-2.5 py-1 rounded badge-running">
               100% Focused
             </span>
           </div>

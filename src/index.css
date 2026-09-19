@@ -4,33 +4,33 @@
 
 :root {
   color-scheme: dark;
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Space Grotesk', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', Consolas, monospace;
 
   /* Level 1 — Base Palette (Calm, Deep Obsidian & Charcoal) */
   --bg-void: #07090E;
   --bg-surface-1: #0D1117;
   --bg-surface-2: #131822;
-  --bg-surface-3: #1A202C;
+  --bg-surface-3: #1A2230;
   
-  --border-subtle: rgba(255, 255, 255, 0.07);
-  --border-medium: rgba(255, 255, 255, 0.12);
-  --border-bright: rgba(255, 255, 255, 0.22);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-medium: rgba(255, 255, 255, 0.10);
+  --border-bright: rgba(255, 255, 255, 0.18);
   
   --text-primary: #FFFFFF;
   --text-secondary: #E2E8F0;
   --text-muted: #94A3B8;
   --text-dim: #64748B;
 
-  /* Level 3 — State Colors (Information, Not Decoration) */
+  /* Level 3 — Semantic State Colors (Information & System State) */
   --color-running: #10B981;    /* Green */
-  --color-observing: #3B82F6;  /* Blue */
+  --color-observing: #38BDF8;  /* Blue */
   --color-waiting: #F59E0B;    /* Amber */
-  --color-needs-you: #F97316;  /* Orange/Amber */
-  --color-failed: #EF4444;     /* Red/Crimson */
+  --color-needs-you: #F97316;  /* Orange */
+  --color-failed: #EF4444;     /* Red */
   --color-resolved: #10B981;   /* Green */
-  --color-ai: #8B5CF6;         /* Purple */
+  --color-ai: #A855F7;         /* Purple */
 }
 
 html {
@@ -70,7 +70,7 @@ html.lenis, html.lenis body {
   font-variant-numeric: tabular-nums;
 }
 
-/* Custom Minimal Scrollbar */
+/* Minimal Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -86,20 +86,20 @@ html.lenis, html.lenis body {
   background: #2D3748;
 }
 
-/* Restrained Atmospheric Grids & Section Lighting */
+/* Restrained Atmospheric Grids & Lighting */
 .bg-tech-grid {
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 40px 40px;
+    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
 .bg-radial-atmosphere {
-  background: radial-gradient(circle 900px at 50% -80px, rgba(59, 130, 246, 0.07), rgba(139, 92, 246, 0.04) 50%, transparent 80%);
+  background: radial-gradient(circle 800px at 50% -60px, rgba(56, 189, 248, 0.04), rgba(168, 85, 247, 0.02) 50%, transparent 80%);
 }
 
 .bg-radial-subtle {
-  background: radial-gradient(circle 600px at 50% 50%, rgba(16, 185, 129, 0.03), transparent 70%);
+  background: radial-gradient(circle 600px at 50% 50%, rgba(16, 185, 129, 0.02), transparent 70%);
 }
 
 /* Precision Glass Panels */
@@ -107,14 +107,13 @@ html.lenis, html.lenis body {
   background: rgba(13, 17, 23, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .glass-panel-subtle {
   background: rgba(10, 13, 19, 0.75);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* Restrained Interactive Spotlight Card */
@@ -123,8 +122,8 @@ html.lenis, html.lenis body {
   --mouse-y: 50%;
   position: relative;
   background: #0D1117;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: border-color 0.2s ease;
   overflow: hidden;
 }
 
@@ -136,12 +135,12 @@ html.lenis, html.lenis body {
   right: 0;
   bottom: 0;
   background: radial-gradient(
-    450px circle at var(--mouse-x) var(--mouse-y),
-    rgba(59, 130, 246, 0.06),
+    380px circle at var(--mouse-x) var(--mouse-y),
+    rgba(255, 255, 255, 0.03),
     transparent 65%
   );
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease;
   pointer-events: none;
   z-index: 1;
 }
@@ -151,13 +150,12 @@ html.lenis, html.lenis body {
 }
 
 .spotlight-card:hover {
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
-/* High-Quality Typography */
+/* Clean Editorial Titanium Typography */
 .text-titanium {
-  background: linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 50%, #CBD5E1 100%);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 60%, #CBD5E1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -168,53 +166,52 @@ html.lenis, html.lenis body {
   -webkit-text-fill-color: transparent;
 }
 
-/* Subtle Shimmer for Primary CTAs */
+/* Primary Developer Action Button */
 .btn-primary {
   background: #FFFFFF;
   color: #07090E;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .btn-primary:hover {
   background: #F1F5F9;
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
 }
 
 /* State Badges & Indicators (Information-First) */
 .badge-running {
   color: #10B981;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.22);
 }
 
 .badge-observing {
   color: #38BDF8;
-  background: rgba(56, 189, 248, 0.1);
-  border: 1px solid rgba(56, 189, 248, 0.25);
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.22);
 }
 
 .badge-waiting {
   color: #F59E0B;
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.25);
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.22);
 }
 
 .badge-needs-you {
   color: #F97316;
-  background: rgba(249, 115, 22, 0.12);
-  border: 1px solid rgba(249, 115, 22, 0.3);
+  background: rgba(249, 115, 22, 0.10);
+  border: 1px solid rgba(249, 115, 22, 0.25);
 }
 
 .badge-failed {
   color: #EF4444;
-  background: rgba(239, 68, 68, 0.12);
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.10);
+  border: 1px solid rgba(239, 68, 68, 0.25);
 }
 
 .badge-ai {
   color: #A855F7;
-  background: rgba(168, 85, 247, 0.1);
-  border: 1px solid rgba(168, 85, 247, 0.25);
+  background: rgba(168, 85, 247, 0.08);
+  border: 1px solid rgba(168, 85, 247, 0.22);
 }
 
 /* Reduced Motion Override */

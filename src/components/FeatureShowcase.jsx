@@ -1,41 +1,22 @@
 import React, { useState } from 'react';
-import { useCockpit } from '../context/CockpitContext';
 import { 
   Workflow, 
   Smartphone, 
   Cpu, 
   Maximize2, 
   KeyRound, 
-  ArrowRight,
-  Shield, 
-  Sparkles,
-  Zap,
-  Globe,
-  CheckCircle2,
+  Play, 
+  Check, 
+  AlertTriangle,
+  Bot, 
+  FileText,
   Lock,
-  ChevronRight,
-  Play,
-  Check,
-  X,
-  Search,
-  Bot,
-  RefreshCw,
-  Sliders,
-  ExternalLink,
+  Sparkles,
   Terminal,
-  Radio,
-  SlidersHorizontal,
-  FolderSync
+  CheckCircle2
 } from 'lucide-react';
 
 export default function FeatureShowcase() {
-  const { 
-    activeView, 
-    setActiveView,
-    focusMode, 
-    setFocusMode
-  } = useCockpit();
-
   const [activeTab, setActiveTab] = useState('recipes');
   const [activeRecipeRunning, setActiveRecipeRunning] = useState(false);
   const [recipeStep, setRecipeStep] = useState(0);
@@ -57,25 +38,25 @@ export default function FeatureShowcase() {
   };
 
   const majorTabs = [
-    { id: 'recipes', num: '01', label: 'Workspace Recipes (DAG)', icon: Workflow, tone: 'text-[#C084FC]', activeBorder: 'border-[#C084FC]/40 text-[#C084FC]', glow: 'shadow-[0_0_15px_rgba(192,132,252,0.2)]' },
-    { id: 'mobile', num: '02', label: 'Mobile Companion (Android)', icon: Smartphone, tone: 'text-[#00F5A0]', activeBorder: 'border-[#00F5A0]/40 text-[#00F5A0]', glow: 'shadow-[0_0_15px_rgba(0,245,160,0.2)]' },
-    { id: 'mcp', num: '03', label: 'Secure MCP Gateway', icon: Cpu, tone: 'text-[#00E5FF]', activeBorder: 'border-[#00E5FF]/40 text-[#00E5FF]', glow: 'shadow-[0_0_15px_rgba(0,229,255,0.2)]' },
-    { id: 'focus', num: '04', label: 'Focus Mode (Alt+F)', icon: Maximize2, tone: 'text-[#38BDF8]', activeBorder: 'border-[#38BDF8]/40 text-[#38BDF8]', glow: 'shadow-[0_0_15px_rgba(56,189,248,0.2)]' },
-    { id: 'byok', num: '05', label: 'BYOK Multi-LLM Vault', icon: KeyRound, tone: 'text-[#FFB800]', activeBorder: 'border-[#FFB800]/40 text-[#FFB800]', glow: 'shadow-[0_0_15px_rgba(255,184,0,0.2)]' },
+    { id: 'recipes', num: '01', label: 'Workspace Recipes (DAG)', icon: Workflow, tone: 'text-[#A855F7]' },
+    { id: 'mobile', num: '02', label: 'Mobile Companion (Android)', icon: Smartphone, tone: 'text-[#10B981]' },
+    { id: 'mcp', num: '03', label: 'Secure MCP Gateway', icon: Cpu, tone: 'text-[#38BDF8]' },
+    { id: 'focus', num: '04', label: 'Focus Mode (Alt+F)', icon: Maximize2, tone: 'text-[#38BDF8]' },
+    { id: 'byok', num: '05', label: 'BYOK Multi-LLM Vault', icon: KeyRound, tone: 'text-[#F59E0B]' },
   ];
 
   return (
     <section id="features" className="py-24 px-6 max-w-7xl mx-auto select-none border-t border-white/[0.06]">
       
       {/* Section Header */}
-      <div className="max-w-4xl mb-16">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00E5FF]/10 border border-[#00E5FF]/30 text-xs font-mono text-[#00E5FF] mb-4 shadow-[0_0_15px_rgba(0,229,255,0.15)]">
+      <div className="max-w-4xl mb-12">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#38BDF8]/10 border border-[#38BDF8]/25 text-xs font-mono text-[#38BDF8] mb-4">
           <Sparkles className="w-3.5 h-3.5" />
           <span>MAJOR ARCHITECTURAL CAPABILITIES</span>
         </div>
-        <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-black tracking-[-0.03em] uppercase leading-[0.98] text-titanium">
+        <h2 className="font-display text-4xl sm:text-6xl font-black tracking-[-0.03em] uppercase leading-[0.98] text-titanium">
           Engineered For <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F5A0] via-[#00E5FF] to-[#A855F7]">
+          <span className="text-[#94A3B8]">
             Repeatable Autonomy.
           </span>
         </h2>
@@ -85,7 +66,7 @@ export default function FeatureShowcase() {
       </div>
 
       {/* Interactive Major Feature Spotlight Navigation Strip */}
-      <div className="flex items-center gap-2.5 overflow-x-auto pb-4 mb-10 no-scrollbar">
+      <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-8 no-scrollbar font-mono text-xs">
         {majorTabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -93,14 +74,14 @@ export default function FeatureShowcase() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2.5 px-4 py-3 rounded-xl border text-xs font-mono whitespace-nowrap transition-all duration-200 ${
+              className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg border whitespace-nowrap transition-all duration-150 ${
                 isActive 
-                  ? `bg-[#0F1728] text-white ${tab.activeBorder} ${tab.glow} font-bold scale-[1.02]` 
-                  : 'bg-[#080D18]/80 text-[#94A3B8] border-white/[0.08] hover:border-white/20 hover:text-white'
+                  ? 'bg-[#131822] text-white border-white/20 font-bold shadow-sm' 
+                  : 'bg-[#0D1117] text-[#94A3B8] border-white/5 hover:border-white/15 hover:text-white'
               }`}
             >
               <Icon className={`w-4 h-4 ${tab.tone}`} />
-              <span className="font-bold text-[10px] text-[#64748B]">{tab.num}</span>
+              <span className="text-[10px] text-[#64748B]">{tab.num}</span>
               <span>{tab.label}</span>
             </button>
           );
@@ -108,40 +89,40 @@ export default function FeatureShowcase() {
       </div>
 
       {/* ACTIVE SPOTLIGHT COMPONENT CONTAINER */}
-      <div className="glass-panel spotlight-card rounded-3xl p-6 sm:p-10 mb-20 border border-white/10 shadow-2xl bg-[#060914]">
+      <div className="rounded-xl p-6 sm:p-8 border border-white/10 bg-[#0D1117] shadow-xl">
         
         {/* TAB 01: WORKSPACE RECIPES (DAG ENGINE) */}
         {activeTab === 'recipes' && (
-          <div id="recipes-feature" className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div id="recipes-feature" className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-5 space-y-4">
-              <span className="font-mono text-xs text-[#C084FC] font-bold uppercase tracking-wider block">
+              <span className="font-mono text-xs text-[#A855F7] font-bold uppercase tracking-wider block">
                 01 // REPEATABLE WORKSPACE ORCHESTRATION
               </span>
-              <h3 className="font-display text-3xl sm:text-4xl font-black text-white tracking-tight">
+              <h3 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
                 Workspace Recipes: Declarative DAG Engine
               </h3>
-              <p className="font-sans text-sm text-[#CBD5E1] leading-relaxed">
-                Never manually open 8 terminal tabs in order again. OUTARCH Recipes launch dependencies sequentially with active readiness probes (waiting for port/log match) before launching dependent services.
+              <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">
+                Never manually open 8 terminal tabs in order again. OUTARCH Recipes launch dependencies sequentially with active readiness probes (waiting for port or log match) before launching dependent services.
               </p>
               <div className="pt-2">
                 <button
                   onClick={handleRunRecipeDemo}
                   disabled={activeRecipeRunning}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#A855F7] to-[#00E5FF] text-[#030509] font-mono text-xs font-bold transition-all shadow-lg hover:brightness-110 active:scale-95 disabled:opacity-50 btn-shimmer"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white hover:bg-[#F1F5F9] text-[#07090E] font-mono text-xs font-bold transition-all disabled:opacity-50"
                 >
-                  <Play className="w-4 h-4 fill-current" />
+                  <Play className="w-3.5 h-3.5 fill-current" />
                   <span>{activeRecipeRunning ? 'EXECUTING RECIPE DAG...' : 'RUN "FULL-STACK-DEV" RECIPE DEMO'}</span>
                 </button>
               </div>
             </div>
 
-            <div className="lg:col-span-7 bg-[#080D18] rounded-2xl border border-white/10 p-6 font-mono text-xs space-y-3 shadow-xl">
-              <div className="flex items-center justify-between pb-3 mb-2 border-b border-white/[0.08] text-[11px] text-[#94A3B8]">
+            <div className="lg:col-span-7 bg-[#080A0F] rounded-lg border border-white/10 p-5 font-mono text-xs space-y-2.5">
+              <div className="flex items-center justify-between pb-2.5 mb-1 border-b border-white/[0.08] text-[11px] text-[#94A3B8]">
                 <span className="text-white font-bold flex items-center gap-2">
-                  <Workflow className="w-4 h-4 text-[#C084FC]" />
+                  <Workflow className="w-3.5 h-3.5 text-[#A855F7]" />
                   <span>DAG EXECUTION PIPELINE</span>
                 </span>
-                <span className="text-[#C084FC] font-bold bg-[#A855F7]/10 px-2 py-0.5 rounded border border-[#A855F7]/30">4 STAGES</span>
+                <span className="badge-ai px-2 py-0.5 rounded text-[10px] font-bold">4 STAGES</span>
               </div>
 
               {[
@@ -155,16 +136,16 @@ export default function FeatureShowcase() {
                 return (
                   <div 
                     key={idx}
-                    className={`p-3.5 rounded-xl border transition-all flex items-center justify-between ${
+                    className={`p-3 rounded-md border transition-all flex items-center justify-between ${
                       isPassed 
-                        ? 'bg-[#00F5A0]/10 border-[#00F5A0]/30 text-[#00F5A0] shadow-[0_0_10px_rgba(0,245,160,0.1)]' 
+                        ? 'bg-[#0A1812] border-[#10B981]/30 text-[#10B981]' 
                         : isCurrent
-                        ? 'bg-[#A855F7]/15 border-[#A855F7]/40 text-[#C084FC] animate-pulse'
-                        : 'bg-[#0A101C] border-white/5 text-[#64748B]'
+                        ? 'bg-[#140C20] border-[#A855F7]/40 text-[#A855F7]'
+                        : 'bg-[#0D1117] border-white/5 text-[#64748B]'
                     }`}
                   >
                     <div className="flex items-center gap-2.5">
-                      <span className={`w-2.5 h-2.5 rounded-full ${isPassed ? 'bg-[#00F5A0] shadow-[0_0_6px_#00F5A0]' : 'bg-[#64748B]'}`} />
+                      <span className={`w-2 h-2 rounded-full ${isPassed ? 'bg-[#10B981]' : isCurrent ? 'bg-[#A855F7] animate-pulse' : 'bg-[#64748B]'}`} />
                       <span className="font-bold">{s.name}</span>
                     </div>
                     <span className="text-[10px] font-mono">{isPassed ? 'READY (PASS)' : s.match}</span>
@@ -177,58 +158,58 @@ export default function FeatureShowcase() {
 
         {/* TAB 02: MOBILE COMPANION (ANDROID) */}
         {activeTab === 'mobile' && (
-          <div id="mobile-feature" className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div id="mobile-feature" className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-5 space-y-4">
-              <span className="font-mono text-xs text-[#00F5A0] font-bold uppercase tracking-wider block">
+              <span className="font-mono text-xs text-[#10B981] font-bold uppercase tracking-wider block">
                 02 // ENCRYPTED LOCAL LAN SUPERVISION
               </span>
-              <h3 className="font-display text-3xl sm:text-4xl font-black text-white tracking-tight">
+              <h3 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
                 Mobile Companion (Android APK)
               </h3>
-              <p className="font-sans text-sm text-[#CBD5E1] leading-relaxed">
+              <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">
                 Pair your Android device over encrypted local LAN with zero cloud relays. Receive instant push alerts for crashed workers and approve high-stakes agent mutations right from your phone.
               </p>
               <div className="pt-2">
                 <button
                   onClick={() => setMobileApproved(!mobileApproved)}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#00F5A0] hover:bg-[#34D399] text-[#030509] font-mono text-xs font-bold transition-all shadow-[0_0_20px_rgba(0,245,160,0.35)] btn-shimmer"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#10B981] hover:bg-[#059669] text-[#07090E] font-mono text-xs font-bold transition-all"
                 >
-                  <Smartphone className="w-4 h-4" />
+                  <Smartphone className="w-3.5 h-3.5" />
                   <span>{mobileApproved ? 'DECISION APPROVED FROM PHONE' : 'SIMULATE REMOTE MOBILE APPROVAL'}</span>
                 </button>
               </div>
             </div>
 
-            <div className="lg:col-span-7 bg-[#080D18] rounded-2xl border border-white/10 p-6 font-mono text-xs shadow-xl space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-                <span className="text-[#00F5A0] font-bold flex items-center gap-2">
-                  <Smartphone className="w-4 h-4 text-[#00F5A0]" />
+            <div className="lg:col-span-7 bg-[#080A0F] rounded-lg border border-white/10 p-5 font-mono text-xs space-y-3">
+              <div className="flex items-center justify-between pb-2.5 border-b border-white/[0.08]">
+                <span className="text-[#10B981] font-bold flex items-center gap-2">
+                  <Smartphone className="w-3.5 h-3.5 text-[#10B981]" />
                   <span>OUTARCH MOBILE // LOCAL LAN ENCRYPTION</span>
                 </span>
-                <span className="text-[10px] bg-[#00F5A0]/10 px-2 py-0.5 rounded border border-[#00F5A0]/30 text-[#00F5A0] font-bold">
+                <span className="badge-running text-[10px] px-2 py-0.5 rounded font-bold">
                   PAIRED (LAN)
                 </span>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#0B1322] border border-white/10 space-y-2">
-                <span className="text-[#FFB800] font-bold text-[11px] block">REMOTE TRIAGE NOTIFICATION:</span>
+              <div className="p-3.5 rounded-md bg-[#0D1117] border border-white/5 space-y-1.5">
+                <span className="text-[#F59E0B] font-bold text-[11px] block">REMOTE TRIAGE NOTIFICATION:</span>
                 <p className="text-[#CBD5E1] text-[11px] leading-relaxed">
-                  Worker <code className="text-white font-bold">claude-code</code> requests permission to execute <code className="text-[#00E5FF]">rm -rf dist/ && pnpm build</code>.
+                  Worker <code className="text-white font-bold">claude-code</code> requests permission to execute <code className="text-[#38BDF8]">rm -rf dist/ && pnpm build</code>.
                 </p>
               </div>
 
               {mobileApproved ? (
-                <div className="p-3.5 rounded-xl bg-[#00F5A0]/15 border border-[#00F5A0]/40 text-[#00F5A0] flex items-center justify-between">
+                <div className="p-3 rounded-md bg-[#0A1812] border border-[#10B981]/30 text-[#10B981] flex items-center justify-between">
                   <span className="flex items-center gap-2 font-bold">
                     <CheckCircle2 className="w-4 h-4" />
                     <span>Authorized via Mobile Companion. Token dispatched.</span>
                   </span>
-                  <span className="text-[10px] bg-[#00F5A0]/20 px-2 py-0.5 rounded font-bold">APPROVED</span>
+                  <span className="badge-running text-[10px] px-2 py-0.5 rounded font-bold">APPROVED</span>
                 </div>
               ) : (
-                <div className="p-3.5 rounded-xl bg-[#141C2E] border border-white/10 flex items-center justify-between">
+                <div className="p-3 rounded-md bg-[#0D1117] border border-white/5 flex items-center justify-between">
                   <span className="text-[#94A3B8]">Awaiting push sign-off from operator...</span>
-                  <span className="text-[#FFB800] text-[10px] font-bold animate-pulse">PENDING IN QUEUE</span>
+                  <span className="badge-waiting text-[10px] px-2 py-0.5 rounded font-bold">PENDING IN QUEUE</span>
                 </div>
               )}
             </div>
@@ -237,110 +218,126 @@ export default function FeatureShowcase() {
 
         {/* TAB 03: SECURE MCP GATEWAY */}
         {activeTab === 'mcp' && (
-          <div id="mcp-feature" className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div id="mcp-feature" className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-5 space-y-4">
-              <span className="font-mono text-xs text-[#00E5FF] font-bold uppercase tracking-wider block">
+              <span className="font-mono text-xs text-[#38BDF8] font-bold uppercase tracking-wider block">
                 03 // AGENT PROTOCOL FIREWALL
               </span>
-              <h3 className="font-display text-3xl sm:text-4xl font-black text-white tracking-tight">
+              <h3 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
                 Secure Model Context Protocol Gateway
               </h3>
-              <p className="font-sans text-sm text-[#CBD5E1] leading-relaxed">
-                Runs a local MCP server enabling Claude Code, Cursor, Codex, and autonomous CLI swarms to inspect supervised terminals and listening ports through single-use approval gates.
+              <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">
+                Runs a local MCP server enabling Claude Code, Cursor, and autonomous CLI swarms to inspect supervised terminals and listening ports through single-use approval gates.
               </p>
               <div className="pt-2">
                 <button
                   onClick={() => setMcpTokenActive(!mcpTokenActive)}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#00E5FF]/15 border border-[#00E5FF]/40 text-xs font-mono text-[#00E5FF] hover:bg-[#00E5FF]/25 transition-all font-bold"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#131822] hover:bg-[#1A2230] border border-white/10 text-xs font-mono text-white transition-all font-bold"
                 >
-                  <Lock className="w-4 h-4" />
+                  <Lock className="w-3.5 h-3.5 text-[#38BDF8]" />
                   <span>{mcpTokenActive ? 'REVOKE ACTIVE MCP TOKEN' : 'ISSUE SINGLE-USE MCP TOKEN'}</span>
                 </button>
               </div>
             </div>
 
-            <div className="lg:col-span-7 bg-[#080D18] rounded-2xl border border-white/10 p-6 font-mono text-xs shadow-xl space-y-3">
-              <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+            <div className="lg:col-span-7 bg-[#080A0F] rounded-lg border border-white/10 p-5 font-mono text-xs space-y-3">
+              <div className="flex items-center justify-between pb-2.5 border-b border-white/[0.08]">
                 <div className="flex items-center gap-2 text-white font-bold">
-                  <Cpu className="w-4 h-4 text-[#00E5FF]" />
+                  <Cpu className="w-3.5 h-3.5 text-[#38BDF8]" />
                   <span>MCP SERVER // LOCAL PORT 4848</span>
                 </div>
-                <span className={`text-[10px] px-2.5 py-0.5 rounded-full border font-bold ${
-                  mcpTokenActive ? 'text-[#00F5A0] bg-[#00F5A0]/10 border-[#00F5A0]/30' : 'text-[#FF3366] bg-[#FF3366]/10 border-[#FF3366]/30'
+                <span className={`text-[10px] px-2 py-0.5 rounded font-bold ${
+                  mcpTokenActive ? 'badge-running' : 'badge-failed'
                 }`}>
                   {mcpTokenActive ? 'GATEWAY ACTIVE' : 'TOKEN REVOKED'}
                 </span>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#0B1322] border border-white/10 space-y-2">
-                <span className="text-[#00E5FF] text-[10px] font-bold block">SCOPED CLIENTS CONNECTED:</span>
+              <div className="p-3.5 rounded-md bg-[#0D1117] border border-white/5 space-y-2">
+                <span className="text-[#38BDF8] text-[10px] font-bold block">SCOPED CLIENTS CONNECTED:</span>
                 <div className="space-y-1 text-[#CBD5E1] text-[11px]">
                   <div className="flex items-center justify-between">
                     <span>Claude Code Agent CLI (PID 1420)</span>
-                    <span className="text-[#00F5A0]">Read Terminal Streams</span>
+                    <span className="text-[#10B981]">Read Terminal Streams</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span>VS Code Bridge Extension</span>
-                    <span className="text-[#00F5A0]">Two-Way Diagnostics</span>
+                    <span className="text-[#10B981]">Two-Way Diagnostics</span>
                   </div>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#070B14] border border-white/5 text-[11px] text-[#94A3B8]">
+              <div className="p-2.5 rounded-md bg-[#0D1117] border border-white/5 text-[11px] text-[#64748B]">
                 <span>Zero environment secret exposure. Shell writes strictly intercepted.</span>
               </div>
             </div>
           </div>
         )}
 
-        {/* TAB 04: FULLSCREEN FOCUS MODE */}
+        {/* TAB 04: FULLSCREEN FOCUS MODE (SIGNATURE MOMENT) */}
         {activeTab === 'focus' && (
-          <div id="focus-feature" className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div id="focus-feature" className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-5 space-y-4">
               <span className="font-mono text-xs text-[#38BDF8] font-bold uppercase tracking-wider block">
                 04 // ZERO-CHROME CODING CANVAS
               </span>
-              <h3 className="font-display text-3xl sm:text-4xl font-black text-white tracking-tight">
-                Fullscreen Focus Mode (Alt+F)
+              <h3 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                Focus Mode (Alt+F)
               </h3>
-              <p className="font-sans text-sm text-[#CBD5E1] leading-relaxed">
-                Hit Alt+F to collapse navigation sidebars and secondary rails—allocating 100% of your screen to your focused terminal pane while background workers continue running silently.
+              <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">
+                Hit <code className="text-white bg-black/40 px-1 py-0.5 rounded font-mono">Alt+F</code> to collapse navigation sidebars and peripheral noise. The entire interface calms and focuses on the active terminal while background workers continue running silently.
               </p>
               <div className="pt-2">
                 <button
                   onClick={() => setFocusDemoState(!focusDemoState)}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#38BDF8]/15 border border-[#38BDF8]/40 text-xs font-mono text-[#38BDF8] hover:bg-[#38BDF8]/25 transition-all font-bold"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#131822] hover:bg-[#1A2230] border border-white/10 text-xs font-mono text-white transition-all font-bold"
                 >
-                  <Maximize2 className="w-4 h-4" />
-                  <span>{focusDemoState ? 'RESTORE NORMAL CANVAS' : 'TOGGLE FOCUS MODE (ALT+F)'}</span>
+                  <Maximize2 className="w-3.5 h-3.5 text-[#38BDF8]" />
+                  <span>{focusDemoState ? 'RESTORE FULL WORKSPACE' : 'ACTIVATE FOCUS MODE (ALT+F)'}</span>
                 </button>
               </div>
             </div>
 
-            <div className={`lg:col-span-7 rounded-2xl border transition-all duration-300 p-6 font-mono text-xs shadow-xl ${
-              focusDemoState ? 'bg-[#020408] border-[#38BDF8]/50 shadow-[0_0_30px_rgba(56,189,248,0.2)]' : 'bg-[#080D18] border-white/10'
+            <div className={`lg:col-span-7 rounded-lg border transition-all duration-200 p-5 font-mono text-xs space-y-3 ${
+              focusDemoState ? 'bg-[#050608] border-[#38BDF8]/40' : 'bg-[#080A0F] border-white/10'
             }`}>
-              <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/[0.08]">
+              <div className="flex items-center justify-between pb-2.5 border-b border-white/[0.08]">
                 <span className="text-white font-bold flex items-center gap-2">
-                  <Terminal className="w-4 h-4 text-[#38BDF8]" />
-                  <span>MONOSPACE CANVAS // 100% SCREEN ALLOCATION</span>
+                  <Terminal className="w-3.5 h-3.5 text-[#38BDF8]" />
+                  <span>{focusDemoState ? 'FOCUSED PTY // BACKEND SERVER' : 'MONOSPACE CANVAS // 2x2 GRID'}</span>
                 </span>
-                <span className="text-[10px] text-[#38BDF8] font-bold">ALT+F ACTIVE</span>
+                <span className={`text-[10px] px-2 py-0.5 rounded font-bold ${focusDemoState ? 'badge-observing' : 'text-[#64748B]'}`}>
+                  {focusDemoState ? 'ALT+F ACTIVE' : 'NORMAL VIEW'}
+                </span>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 mb-3">
-                <div className="p-3.5 rounded-xl bg-[#0B1322] border border-white/5 space-y-1">
-                  <span className="text-[#00E5FF] font-bold text-[11px] block">PANE 1 · DEV SERVER</span>
-                  <code className="text-[#94A3B8] text-[10px] block">&gt; vite dev [ready: 3000]</code>
+              {focusDemoState ? (
+                <div className="p-4 rounded-md bg-[#0D1117] border border-white/10 space-y-2">
+                  <div className="flex items-center justify-between text-[11px]">
+                    <span className="text-white font-bold">cargo run --bin api</span>
+                    <span className="badge-running px-1.5 py-0.5 rounded text-[9px] font-bold">RUNNING</span>
+                  </div>
+                  <div className="text-[#94A3B8] text-[11px] font-mono leading-relaxed space-y-1">
+                    <div>[09:14:22] API server listening on 0.0.0.0:8080</div>
+                    <div>[09:14:23] Database connection pool initialized (10 conn)</div>
+                    <div>[09:14:25] HTTP 200 GET /health — 0.4ms</div>
+                  </div>
                 </div>
-                <div className="p-3.5 rounded-xl bg-[#0B1322] border border-white/5 space-y-1">
-                  <span className="text-[#00F5A0] font-bold text-[11px] block">PANE 2 · IN-CANVAS BROWSER</span>
-                  <code className="text-[#94A3B8] text-[10px] block">Alt+B [localhost:3000]</code>
+              ) : (
+                <div className="grid grid-cols-2 gap-2.5">
+                  <div className="p-3 rounded-md bg-[#0D1117] border border-white/5 space-y-1">
+                    <span className="text-[#38BDF8] font-bold text-[10px] block">PANE 1 · DEV SERVER</span>
+                    <code className="text-[#94A3B8] text-[10px] block">&gt; vite dev [3000]</code>
+                  </div>
+                  <div className="p-3 rounded-md bg-[#0D1117] border border-white/5 space-y-1">
+                    <span className="text-[#10B981] font-bold text-[10px] block">PANE 2 · IN-CANVAS BROWSER</span>
+                    <code className="text-[#94A3B8] text-[10px] block">Alt+B [localhost:3000]</code>
+                  </div>
                 </div>
-              </div>
+              )}
 
-              <div className="p-3 rounded-xl bg-[#050812] border border-white/5 text-[10px] text-[#94A3B8]">
-                <span>Directional keyboard navigation with Alt+Arrow Keys. Double click borders to auto-even.</span>
+              <div className="p-2.5 rounded-md bg-[#0D1117] border border-white/5 text-[10px] text-[#64748B]">
+                <span>{focusDemoState ? 'Peripheral noise silenced. Background workers continue running.' : 'Directional keyboard navigation with Alt+Arrow Keys.'}</span>
               </div>
             </div>
           </div>
@@ -348,15 +345,15 @@ export default function FeatureShowcase() {
 
         {/* TAB 05: BYOK MULTI-LLM VAULT */}
         {activeTab === 'byok' && (
-          <div id="byok-feature" className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div id="byok-feature" className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-5 space-y-4">
-              <span className="font-mono text-xs text-[#FFB800] font-bold uppercase tracking-wider block">
+              <span className="font-mono text-xs text-[#F59E0B] font-bold uppercase tracking-wider block">
                 05 // HARDWARE KEYCHAIN ENCRYPTION
               </span>
-              <h3 className="font-display text-3xl sm:text-4xl font-black text-white tracking-tight">
-                BYOK Multi-LLM Vault (Bring Your Own Key)
+              <h3 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                BYOK Multi-LLM Vault
               </h3>
-              <p className="font-sans text-sm text-[#CBD5E1] leading-relaxed">
+              <p className="font-sans text-sm text-[#94A3B8] leading-relaxed">
                 Connect Anthropic Claude, Google Gemini, OpenAI, Groq, OpenRouter, NVIDIA NIM, or local Ollama instances with OS-level credential encryption (Windows DPAPI, macOS Keychain, Linux Secret Service).
               </p>
               <div className="pt-2">
@@ -365,10 +362,10 @@ export default function FeatureShowcase() {
                     <button
                       key={prov}
                       onClick={() => setSelectedProvider(prov)}
-                      className={`px-3 py-1.5 rounded-lg font-mono text-xs uppercase font-bold transition-all ${
+                      className={`px-3 py-1.5 rounded-md font-mono text-xs uppercase font-bold transition-all ${
                         selectedProvider === prov
-                          ? 'bg-[#FFB800] text-[#030509] shadow-[0_0_12px_rgba(255,184,0,0.3)]'
-                          : 'bg-[#0E1524] text-[#94A3B8] hover:text-white border border-white/5'
+                          ? 'bg-white text-[#07090E]'
+                          : 'bg-[#080A0F] text-[#94A3B8] hover:text-white border border-white/5'
                       }`}
                     >
                       {prov}
@@ -378,153 +375,38 @@ export default function FeatureShowcase() {
               </div>
             </div>
 
-            <div className="lg:col-span-7 bg-[#080D18] rounded-2xl border border-white/10 p-6 font-mono text-xs shadow-xl space-y-3">
-              <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+            <div className="lg:col-span-7 bg-[#080A0F] rounded-lg border border-white/10 p-5 font-mono text-xs space-y-3">
+              <div className="flex items-center justify-between pb-2.5 border-b border-white/[0.08]">
                 <div className="flex items-center gap-2 text-white font-bold">
-                  <KeyRound className="w-4 h-4 text-[#FFB800]" />
+                  <KeyRound className="w-3.5 h-3.5 text-[#F59E0B]" />
                   <span>DPAPI VAULT // ENCRYPTED PROVIDER</span>
                 </div>
-                <span className="text-[10px] text-[#00F5A0] px-2.5 py-0.5 rounded-full bg-[#00F5A0]/10 border border-[#00F5A0]/30 font-bold">
+                <span className="badge-running text-[10px] px-2 py-0.5 rounded font-bold">
                   OS SECURED
                 </span>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#0B1322] border border-white/10 space-y-2">
+              <div className="p-3.5 rounded-md bg-[#0D1117] border border-white/5 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-[#FFB800] text-[10px] font-bold">ACTIVE MODEL:</span>
-                  <span className="text-white font-bold uppercase">{selectedProvider} 3.5</span>
+                  <span className="text-[#F59E0B] text-[10px] font-bold">ACTIVE MODEL:</span>
+                  <span className="text-white font-bold uppercase">{selectedProvider}</span>
                 </div>
                 <div className="flex items-center justify-between text-[11px] text-[#CBD5E1]">
                   <span>Key Storage:</span>
-                  <span className="text-[#00F5A0]">Windows DPAPI Local Cipher</span>
+                  <span className="text-[#10B981]">Native OS Keychain</span>
                 </div>
                 <div className="flex items-center justify-between text-[11px] text-[#CBD5E1]">
                   <span>Local LLM Option:</span>
-                  <span className="text-[#00E5FF]">Ollama / vLLM (Offline Mode)</span>
+                  <span className="text-[#38BDF8]">Ollama / vLLM (Offline Mode)</span>
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-[#050812] border border-white/5 text-[10px] text-[#94A3B8]">
-                <span>Zero telemetry. Per-worker token usage and cost tracking in Ops Drawer.</span>
+              <div className="p-2.5 rounded-md bg-[#0D1117] border border-white/5 text-[10px] text-[#64748B]">
+                <span>Zero telemetry. Per-worker token usage and cost tracking stored locally.</span>
               </div>
             </div>
           </div>
         )}
-
-      </div>
-
-      {/* 5 Prominent Major Capability Feature Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        {/* Card 1: Recipes */}
-        <div className="rounded-3xl spotlight-card spotlight-card-purple p-8 flex flex-col justify-between shadow-xl bg-[#060A14] border border-white/10">
-          <div>
-            <div className="w-12 h-12 rounded-2xl bg-[#140C20] border border-[#A855F7]/30 flex items-center justify-center text-[#C084FC] mb-5 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
-              <Workflow className="w-6 h-6" />
-            </div>
-            <span className="font-mono text-[10px] text-[#C084FC] uppercase tracking-wider block mb-1 font-bold">
-              01 // REPEATABLE DAG ENGINE
-            </span>
-            <h3 className="font-display text-xl font-bold text-white mb-2">
-              Workspace Recipes
-            </h3>
-            <p className="font-sans text-xs text-[#CBD5E1] leading-relaxed">
-              Launch complex multi-service stacks in deterministic order with readiness probes (waiting for port/log match) and 1-click partial recovery.
-            </p>
-          </div>
-          <div className="pt-4 mt-6 border-t border-white/[0.06] flex items-center justify-between font-mono text-[11px] text-[#94A3B8]">
-            <span>Declarative Dependencies</span>
-            <span className="text-[#C084FC] font-bold">DAG Readiness</span>
-          </div>
-        </div>
-
-        {/* Card 2: Mobile Companion */}
-        <div className="rounded-3xl spotlight-card spotlight-card-emerald p-8 flex flex-col justify-between shadow-xl bg-[#060A14] border border-white/10">
-          <div>
-            <div className="w-12 h-12 rounded-2xl bg-[#081812] border border-[#00F5A0]/30 flex items-center justify-center text-[#00F5A0] mb-5 shadow-[0_0_15px_rgba(0,245,160,0.2)]">
-              <Smartphone className="w-6 h-6" />
-            </div>
-            <span className="font-mono text-[10px] text-[#00F5A0] uppercase tracking-wider block mb-1 font-bold">
-              02 // ENCRYPTED REMOTE HUD
-            </span>
-            <h3 className="font-display text-xl font-bold text-white mb-2">
-              Mobile Companion (Android)
-            </h3>
-            <p className="font-sans text-xs text-[#CBD5E1] leading-relaxed">
-              Pair your Android phone over encrypted local LAN without cloud servers. Receive crash alerts and approve high-stakes agent mutations remotely.
-            </p>
-          </div>
-          <div className="pt-4 mt-6 border-t border-white/[0.06] flex items-center justify-between font-mono text-[11px] text-[#94A3B8]">
-            <span>Encrypted Local LAN</span>
-            <span className="text-[#00F5A0] font-bold">Push Approvals</span>
-          </div>
-        </div>
-
-        {/* Card 3: MCP Gateway */}
-        <div className="rounded-3xl spotlight-card p-8 flex flex-col justify-between shadow-xl bg-[#060A14] border border-white/10">
-          <div>
-            <div className="w-12 h-12 rounded-2xl bg-[#081820] border border-[#00E5FF]/30 flex items-center justify-center text-[#00E5FF] mb-5 shadow-[0_0_15px_rgba(0,229,255,0.2)]">
-              <Cpu className="w-6 h-6" />
-            </div>
-            <span className="font-mono text-[10px] text-[#00E5FF] uppercase tracking-wider block mb-1 font-bold">
-              03 // AGENT PROTOCOL FIREWALL
-            </span>
-            <h3 className="font-display text-xl font-bold text-white mb-2">
-              Secure MCP Gateway
-            </h3>
-            <p className="font-sans text-xs text-[#CBD5E1] leading-relaxed">
-              Local Model Context Protocol server enabling Claude Code, Cursor, and external agents to inspect terminals via single-use approval tokens.
-            </p>
-          </div>
-          <div className="pt-4 mt-6 border-t border-white/[0.06] flex items-center justify-between font-mono text-[11px] text-[#94A3B8]">
-            <span>Single-Use Tokens</span>
-            <span className="text-[#00E5FF] font-bold">Zero Secret Leakage</span>
-          </div>
-        </div>
-
-        {/* Card 4: Focus Mode */}
-        <div className="rounded-3xl spotlight-card p-8 flex flex-col justify-between shadow-xl bg-[#060A14] border border-white/10">
-          <div>
-            <div className="w-12 h-12 rounded-2xl bg-[#081624] border border-[#38BDF8]/30 flex items-center justify-center text-[#38BDF8] mb-5 shadow-[0_0_15px_rgba(56,189,248,0.2)]">
-              <Maximize2 className="w-6 h-6" />
-            </div>
-            <span className="font-mono text-[10px] text-[#38BDF8] uppercase tracking-wider block mb-1 font-bold">
-              04 // CODING CANVAS
-            </span>
-            <h3 className="font-display text-xl font-bold text-white mb-2">
-              Focus Mode (Alt+F)
-            </h3>
-            <p className="font-sans text-xs text-[#CBD5E1] leading-relaxed">
-              100% distraction-free full-width terminal canvas, multi-pane layouts (1, 2, 4, 6-pane, mosaic), and embedded workspace browser (`Alt+B`).
-            </p>
-          </div>
-          <div className="pt-4 mt-6 border-t border-white/[0.06] flex items-center justify-between font-mono text-[11px] text-[#94A3B8]">
-            <span>Alt+F Instant Focus</span>
-            <span className="text-[#38BDF8] font-bold">Alt+B Browser</span>
-          </div>
-        </div>
-
-        {/* Card 5: BYOK Multi-LLM */}
-        <div className="rounded-3xl spotlight-card spotlight-card-amber p-8 flex flex-col justify-between shadow-xl bg-[#060A14] border border-white/10">
-          <div>
-            <div className="w-12 h-12 rounded-2xl bg-[#1A1208] border border-[#FFB800]/30 flex items-center justify-center text-[#FFB800] mb-5 shadow-[0_0_15px_rgba(255,184,0,0.2)]">
-              <KeyRound className="w-6 h-6" />
-            </div>
-            <span className="font-mono text-[10px] text-[#FFB800] uppercase tracking-wider block mb-1 font-bold">
-              05 // HARDWARE KEYCHAIN
-            </span>
-            <h3 className="font-display text-xl font-bold text-white mb-2">
-              BYOK Multi-LLM Engine
-            </h3>
-            <p className="font-sans text-xs text-[#CBD5E1] leading-relaxed">
-              Bring Your Own Key for Claude, Gemini, OpenAI, Groq, or local Ollama with hardware DPAPI encryption and token analytics per worker.
-            </p>
-          </div>
-          <div className="pt-4 mt-6 border-t border-white/[0.06] flex items-center justify-between font-mono text-[11px] text-[#94A3B8]">
-            <span>Hardware DPAPI</span>
-            <span className="text-[#FFB800] font-bold">Local Ollama &amp; Cloud</span>
-          </div>
-        </div>
 
       </div>
 

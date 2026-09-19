@@ -8,11 +8,12 @@
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', Consolas, monospace;
 
-  /* Level 1 — Base Palette (Calm, Deep Obsidian & Charcoal) */
-  --bg-void: #07090E;
-  --bg-surface-1: #0D1117;
-  --bg-surface-2: #131822;
-  --bg-surface-3: #1A2230;
+  /* Level 1 — Deep Dark Foundation (Near-Black, Deep Navy & Charcoal) */
+  --bg-void: #05070B;
+  --bg-surface-1: #0A0E17;
+  --bg-surface-2: #101624;
+  --bg-surface-3: #182032;
+  --bg-surface-4: #222D44;
   
   --border-subtle: rgba(255, 255, 255, 0.06);
   --border-medium: rgba(255, 255, 255, 0.10);
@@ -23,9 +24,9 @@
   --text-muted: #94A3B8;
   --text-dim: #64748B;
 
-  /* Level 3 — Semantic State Colors (Information & System State) */
+  /* Level 3 — Semantic Functional State Colors */
   --color-running: #10B981;    /* Green */
-  --color-observing: #38BDF8;  /* Blue */
+  --color-observing: #0EA5E9;  /* Blue */
   --color-waiting: #F59E0B;    /* Amber */
   --color-needs-you: #F97316;  /* Orange */
   --color-failed: #EF4444;     /* Red */
@@ -35,11 +36,11 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: #07090E;
+  background-color: #05070B;
 }
 
 body {
-  background-color: #07090E;
+  background-color: #05070B;
   color: #F8FAFC;
   font-family: var(--font-sans);
   overflow-x: hidden;
@@ -63,6 +64,7 @@ html.lenis, html.lenis body {
 
 .font-display {
   font-family: var(--font-display);
+  letter-spacing: -0.035em;
 }
 
 .font-mono {
@@ -76,44 +78,56 @@ html.lenis, html.lenis body {
   height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #07090E;
+  background: #05070B;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1A2230;
+  background: #182032;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2D3748;
+  background: #25334D;
 }
 
-/* Restrained Atmospheric Grids & Lighting */
+/* Restrained Atmospheric Lighting & Grid Textures */
 .bg-tech-grid {
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-  background-size: 32px 32px;
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+.bg-radial-hero {
+  background: radial-gradient(circle 900px at 50% -120px, rgba(56, 189, 248, 0.09), rgba(168, 85, 247, 0.05) 45%, rgba(20, 184, 166, 0.03) 70%, transparent 90%);
 }
 
 .bg-radial-atmosphere {
-  background: radial-gradient(circle 800px at 50% -60px, rgba(56, 189, 248, 0.04), rgba(168, 85, 247, 0.02) 50%, transparent 80%);
+  background: radial-gradient(circle 800px at 50% 0%, rgba(56, 189, 248, 0.06), rgba(168, 85, 247, 0.03) 50%, transparent 80%);
 }
 
 .bg-radial-subtle {
-  background: radial-gradient(circle 600px at 50% 50%, rgba(16, 185, 129, 0.02), transparent 70%);
+  background: radial-gradient(circle 600px at 50% 50%, rgba(16, 185, 129, 0.03), transparent 70%);
 }
 
-/* Precision Glass Panels */
+/* Precision Product Frames & Glass Panels */
 .glass-panel {
-  background: rgba(13, 17, 23, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(10, 14, 23, 0.82);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 16px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
 }
 
 .glass-panel-subtle {
-  background: rgba(10, 13, 19, 0.75);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(8, 11, 18, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
 }
 
 /* Restrained Interactive Spotlight Card */
@@ -121,9 +135,9 @@ html.lenis, html.lenis body {
   --mouse-x: 50%;
   --mouse-y: 50%;
   position: relative;
-  background: #0D1117;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  transition: border-color 0.2s ease;
+  background: #0A0E17;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
 }
 
@@ -135,8 +149,8 @@ html.lenis, html.lenis body {
   right: 0;
   bottom: 0;
   background: radial-gradient(
-    380px circle at var(--mouse-x) var(--mouse-y),
-    rgba(255, 255, 255, 0.03),
+    450px circle at var(--mouse-x) var(--mouse-y),
+    rgba(56, 189, 248, 0.05),
     transparent 65%
   );
   opacity: 0;
@@ -150,7 +164,11 @@ html.lenis, html.lenis body {
 }
 
 .spotlight-card:hover {
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
 }
 
 /* Clean Editorial Titanium Typography */
@@ -166,52 +184,72 @@ html.lenis, html.lenis body {
   -webkit-text-fill-color: transparent;
 }
 
-/* Primary Developer Action Button */
+/* Primary Action Button (Vercel/Linear Level Precision) */
 .btn-primary {
   background: #FFFFFF;
-  color: #07090E;
-  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #05070B;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 
+    0 2px 8px rgba(255, 255, 255, 0.15),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
 }
 .btn-primary:hover {
-  background: #F1F5F9;
-  transform: translateY(-1px);
+  background: #F8FAFC;
+  transform: translateY(-1.5px);
+  box-shadow: 
+    0 6px 20px rgba(255, 255, 255, 0.25),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
 }
 
-/* State Badges & Indicators (Information-First) */
+.btn-secondary {
+  background: rgba(13, 18, 28, 0.8);
+  color: #E2E8F0;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(12px);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-secondary:hover {
+  background: rgba(19, 26, 40, 0.95);
+  border-color: rgba(255, 255, 255, 0.20);
+  color: #FFFFFF;
+  transform: translateY(-1.5px);
+}
+
+/* State Badges & Indicators (Information & State-Driven) */
 .badge-running {
   color: #10B981;
-  background: rgba(16, 185, 129, 0.08);
-  border: 1px solid rgba(16, 185, 129, 0.22);
+  background: rgba(16, 185, 129, 0.10);
+  border: 1px solid rgba(16, 185, 129, 0.25);
 }
 
 .badge-observing {
   color: #38BDF8;
-  background: rgba(56, 189, 248, 0.08);
-  border: 1px solid rgba(56, 189, 248, 0.22);
+  background: rgba(56, 189, 248, 0.10);
+  border: 1px solid rgba(56, 189, 248, 0.25);
 }
 
 .badge-waiting {
   color: #F59E0B;
-  background: rgba(245, 158, 11, 0.08);
-  border: 1px solid rgba(245, 158, 11, 0.22);
+  background: rgba(245, 158, 11, 0.10);
+  border: 1px solid rgba(245, 158, 11, 0.25);
 }
 
 .badge-needs-you {
   color: #F97316;
-  background: rgba(249, 115, 22, 0.10);
-  border: 1px solid rgba(249, 115, 22, 0.25);
+  background: rgba(249, 115, 22, 0.12);
+  border: 1px solid rgba(249, 115, 22, 0.30);
 }
 
 .badge-failed {
   color: #EF4444;
-  background: rgba(239, 68, 68, 0.10);
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.30);
 }
 
 .badge-ai {
   color: #A855F7;
-  background: rgba(168, 85, 247, 0.08);
-  border: 1px solid rgba(168, 85, 247, 0.22);
+  background: rgba(168, 85, 247, 0.10);
+  border: 1px solid rgba(168, 85, 247, 0.25);
 }
 
 /* Reduced Motion Override */

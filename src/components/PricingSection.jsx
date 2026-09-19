@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, Terminal, ArrowRight, ShieldCheck, HelpCircle, Sparkles } from 'lucide-react';
+import { Check, ArrowRight } from 'lucide-react';
 
 export default function PricingSection({ onOpenDownload, onSelectPlan }) {
   const [annualBilling, setAnnualBilling] = useState(false);
@@ -12,12 +12,12 @@ export default function PricingSection({ onOpenDownload, onSelectPlan }) {
       priceMonthly: '$0',
       priceAnnual: '$0',
       period: 'forever',
-      ctaLabel: 'Download Free (v2.19)',
+      ctaLabel: 'Download Free (v2.19.0)',
       popular: false,
       features: [
         'Local developer cockpit & multi-terminal manager',
         'Up to 20 local terminal workers & PTY sessions',
-        'Core Recipes DAG engine (ordered stack startup)',
+        'Core Recipes DAG engine (ordered startup)',
         'Local operational memory & SQLite fact store',
         'Direct keystroke injection & ANSI color support',
         '100% offline & local execution (zero cloud telemetry)'
@@ -32,15 +32,15 @@ export default function PricingSection({ onOpenDownload, onSelectPlan }) {
       period: 'per month',
       ctaLabel: 'Start Pro Preview',
       popular: true,
-      badge: 'MOST POPULAR',
+      badge: 'RECOMMENDED',
       features: [
         'Everything in Community Edition',
         'Radical Attention ("Needs You" human-in-the-loop decision room)',
         'MCP Security Gateway with scoped token & tool firewalls',
         'Focus Mode & cognitive noise reduction',
-        'Crash synthesis with automatic environment forensics',
+        'CrashLens diagnostics & port conflict resolution',
         'Encrypted local LAN Mobile Companion pairing',
-        'Priority feature updates & direct developer support'
+        'Priority updates & direct developer support'
       ],
     },
     {
@@ -64,97 +64,89 @@ export default function PricingSection({ onOpenDownload, onSelectPlan }) {
   ];
 
   return (
-    <section id="pricing" className="py-24 px-4 sm:px-6 max-w-7xl mx-auto select-none">
+    <section id="pricing" className="py-28 px-6 max-w-7xl mx-auto select-none border-t border-white/[0.04]">
       
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-14">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/40 border border-blue-500/30 text-blue-400 font-mono text-xs font-semibold mb-4">
-          <Terminal className="w-3.5 h-3.5" />
-          <span>TRANSPARENT EDITIONS</span>
-        </div>
-        <h2 className="font-display text-3xl sm:text-5xl font-black text-white tracking-tight uppercase">
-          Predictable, Developer-First Pricing
+      <div className="max-w-3xl mb-16">
+        <span className="font-mono text-xs text-[#8B93A1] uppercase tracking-wider block mb-3">
+          // Transparent Editions
+        </span>
+        <h2 className="font-display text-4xl sm:text-6xl font-black text-[#F4F6F8] tracking-tight uppercase leading-[1.05]">
+          Predictable, Developer-First Pricing.
         </h2>
-        <p className="font-sans text-zinc-400 text-sm sm:text-base mt-4 leading-relaxed">
+        <p className="font-sans text-[#8B93A1] text-base sm:text-lg mt-6 leading-relaxed">
           Start for free locally on your machine. Upgrade when you need advanced agent governance and high-stakes decision supervision.
         </p>
 
         {/* Monthly / Annual Toggle */}
-        <div className="mt-8 inline-flex items-center gap-3 p-1.5 rounded-xl bg-[#090d16] border border-[#1b2336] font-mono text-xs">
+        <div className="mt-8 inline-flex items-center gap-2 p-1 rounded-lg bg-[#0B0D12] border border-[#1A1E26] font-sans text-xs">
           <button
             onClick={() => setAnnualBilling(false)}
-            className={`px-4 py-1.5 rounded-lg transition-all ${
-              !annualBilling 
-                ? 'bg-blue-600 text-white font-bold shadow-[0_0_15px_rgba(59,130,246,0.3)]' 
-                : 'text-zinc-400 hover:text-zinc-200'
+            className={`px-3.5 py-1.5 rounded-md transition-colors ${
+              !annualBilling ? 'bg-[#F4F6F8] text-[#050608] font-medium' : 'text-[#8B93A1] hover:text-white'
             }`}
           >
             Monthly Billing
           </button>
           <button
             onClick={() => setAnnualBilling(true)}
-            className={`px-4 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
-              annualBilling 
-                ? 'bg-blue-600 text-white font-bold shadow-[0_0_15px_rgba(59,130,246,0.3)]' 
-                : 'text-zinc-400 hover:text-zinc-200'
+            className={`px-3.5 py-1.5 rounded-md transition-colors flex items-center gap-1.5 ${
+              annualBilling ? 'bg-[#F4F6F8] text-[#050608] font-medium' : 'text-[#8B93A1] hover:text-white'
             }`}
           >
             <span>Annual Billing</span>
-            <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">
-              SAVE 20%
-            </span>
+            <span className="text-[10px] text-[#10b981] font-mono">(-20%)</span>
           </button>
         </div>
       </div>
 
-      {/* 3 Pricing Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-16">
+      {/* 3 Pricing Tiers in Clean Minimal Architecture */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {plans.map((plan) => {
           const displayPrice = annualBilling ? plan.priceAnnual : plan.priceMonthly;
 
           return (
             <div
               key={plan.id}
-              className={`rounded-2xl bg-[#080b12] border p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 relative ${
+              className={`rounded-2xl p-8 sm:p-10 flex flex-col justify-between transition-all duration-200 ${
                 plan.popular 
-                  ? 'border-blue-500/70 shadow-[0_0_50px_rgba(59,130,246,0.18)] bg-[#0b0f1c] ring-1 ring-blue-500/40 lg:-translate-y-2' 
-                  : 'border-[#171d2b] hover:border-[#263249]'
+                  ? 'bg-[#0A0D14] border border-white/20' 
+                  : 'bg-[#080A0F] border border-[#1A1E26]'
               }`}
             >
-              {plan.badge && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-mono text-[10px] font-bold tracking-wider uppercase shadow-lg">
-                  {plan.badge}
-                </div>
-              )}
-
               <div>
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-display text-xl font-bold text-white tracking-wide">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="font-display text-xl font-bold text-[#F4F6F8]">
                     {plan.name}
                   </h3>
+                  {plan.badge && (
+                    <span className="font-mono text-[10px] text-[#10b981] bg-[#10b981]/10 px-2 py-0.5 rounded border border-[#10b981]/20">
+                      {plan.badge}
+                    </span>
+                  )}
                 </div>
 
-                <p className="font-sans text-xs text-zinc-400 leading-relaxed mb-6 min-h-[36px]">
+                <p className="font-sans text-xs text-[#8B93A1] leading-relaxed mb-8 min-h-[36px]">
                   {plan.tagline}
                 </p>
 
                 {/* Price Display */}
-                <div className="pb-6 border-b border-[#161c28] mb-6">
-                  <div className="flex items-baseline gap-1.5 font-display">
-                    <span className="text-4xl sm:text-5xl font-black text-white tracking-tight">
+                <div className="pb-8 border-b border-white/[0.06] mb-8">
+                  <div className="flex items-baseline gap-2 font-display">
+                    <span className="text-5xl font-black text-[#F4F6F8] tracking-tight">
                       {displayPrice}
                     </span>
-                    <span className="font-mono text-zinc-400 text-xs">
+                    <span className="font-sans text-xs text-[#8B93A1]">
                       / {plan.period}
                     </span>
                   </div>
                 </div>
 
                 {/* Feature List */}
-                <ul className="space-y-3 font-sans text-xs mb-8">
+                <ul className="space-y-3 font-sans text-xs text-[#8B93A1] mb-10">
                   {plan.features.map((feat, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5 text-zinc-300">
-                      <Check className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <li key={idx} className="flex items-start gap-3">
+                      <Check className="w-4 h-4 text-[#10b981] flex-shrink-0 mt-0.5" />
                       <span className="leading-relaxed">{feat}</span>
                     </li>
                   ))}
@@ -170,10 +162,10 @@ export default function PricingSection({ onOpenDownload, onSelectPlan }) {
                     onSelectPlan(plan);
                   }
                 }}
-                className={`w-full py-3.5 rounded-xl font-mono text-xs font-bold tracking-wider uppercase flex items-center justify-center gap-2 transition-all ${
+                className={`w-full py-3 rounded-lg font-medium text-xs tracking-tight flex items-center justify-center gap-2 transition-all ${
                   plan.popular
-                    ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-[0_0_25px_rgba(59,130,246,0.35)] hover:shadow-[0_0_35px_rgba(59,130,246,0.5)]'
-                    : 'bg-[#121624] hover:bg-[#1a2134] border border-[#222c42] text-zinc-200'
+                    ? 'bg-[#F4F6F8] hover:bg-white text-[#050608]'
+                    : 'bg-[#10131A] hover:bg-[#161B24] border border-white/10 text-[#F4F6F8]'
                 }`}
               >
                 <span>{plan.ctaLabel}</span>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Terminal, ArrowRight, ShieldCheck, Download, Keyboard, Sparkles } from 'lucide-react';
+import { Menu, X, Download, Keyboard, Terminal } from 'lucide-react';
 
 export default function Navbar({ 
   activeRoute = 'home', 
@@ -19,8 +19,8 @@ export default function Navbar({
   }, []);
 
   const navLinks = [
-    { label: 'Virtual Cockpit', href: '#cockpit', action: () => onRouteChange('home', 'cockpit') },
-    { label: 'The Problem', href: '#problem', action: () => onRouteChange('home', 'problem') },
+    { label: 'Product', href: '#cockpit', action: () => onRouteChange('home', 'cockpit') },
+    { label: 'Problem', href: '#problem', action: () => onRouteChange('home', 'problem') },
     { label: 'Features', href: '#features', action: () => onRouteChange('home', 'features') },
     { label: 'Integrations', href: '#integrations', action: () => onRouteChange('home', 'integrations') },
     { label: 'Architecture', href: '#architecture', action: () => onRouteChange('home', 'architecture') },
@@ -29,19 +29,19 @@ export default function Navbar({
   ];
 
   return (
-    <header className={`sticky top-0 z-40 w-full transition-all duration-200 select-none ${
+    <header className={`sticky top-0 z-40 w-full transition-all duration-300 select-none ${
       scrolled 
-        ? 'bg-[#050608]/90 backdrop-blur-xl border-b border-[#161b26] shadow-[0_10px_30px_rgba(0,0,0,0.5)]' 
-        : 'bg-[#050608]/60 backdrop-blur-md border-b border-[#10141e]'
+        ? 'bg-[#050608]/90 backdrop-blur-xl border-b border-[#161B26]' 
+        : 'bg-[#050608]/60 backdrop-blur-md border-b border-white/[0.04]'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         
         {/* Brand Lockup */}
         <div 
           onClick={() => onRouteChange('home', 'cockpit')} 
           className="flex items-center gap-3 cursor-pointer group"
         >
-          <div className="w-8 h-8 rounded-lg bg-[#0c101a] border border-blue-500/40 p-1 flex items-center justify-center text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.2)] group-hover:border-blue-400 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all">
+          <div className="w-8 h-8 rounded-lg bg-[#0B0D11] border border-white/10 p-1 flex items-center justify-center group-hover:border-white/20 transition-all">
             <img 
               src="/outarch-icon.png" 
               alt="OUTARCH" 
@@ -50,60 +50,60 @@ export default function Navbar({
             />
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="font-display text-lg font-black tracking-[0.14em] text-white">
+            <span className="font-display text-lg font-bold tracking-tight text-[#F4F6F8]">
               OUTARCH
             </span>
-            <span className="font-mono text-[10px] text-blue-400/90 font-medium px-1.5 py-0.5 rounded bg-blue-950/60 border border-blue-500/30 hidden sm:inline">
-              v2.19.0
+            <span className="font-mono text-[10px] text-[#8B93A1] tracking-wider uppercase">
+              2.19.0
             </span>
           </div>
         </div>
 
-        {/* Desktop Links */}
-        <nav className="hidden lg:flex items-center gap-1 font-sans text-xs font-medium text-zinc-300">
+        {/* Desktop Links - Refined Inter Sans */}
+        <nav className="hidden lg:flex items-center gap-8 text-xs font-medium text-[#8B93A1]">
           {navLinks.map((link, idx) => (
             <button
               key={idx}
               onClick={link.action}
-              className="px-3 py-2 rounded-lg text-zinc-300 hover:text-white hover:bg-[#121724] transition-all"
+              className="hover:text-[#F4F6F8] transition-colors py-1 relative group"
             >
-              {link.label}
+              <span>{link.label}</span>
+              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white/40 transition-all duration-200 group-hover:w-full" />
             </button>
           ))}
         </nav>
 
         {/* Right Action Stack */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-4">
           <button
             onClick={onOpenShortcuts}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0b0f19] border border-[#1a2336] text-zinc-400 hover:text-white hover:border-blue-500/40 transition-colors font-mono text-xs"
-            title="View Keyboard Shortcuts (or press ?)"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-mono text-[#8B93A1] hover:text-[#F4F6F8] hover:bg-white/[0.04] transition-colors"
+            title="Keyboard Shortcuts"
           >
-            <Keyboard className="w-3.5 h-3.5 text-blue-400" />
-            <span>Shortcuts</span>
-            <kbd className="px-1.5 py-0.2 bg-[#121826] border border-[#232f48] rounded text-[10px] text-blue-300">?</kbd>
+            <Keyboard className="w-3.5 h-3.5 text-[#8B93A1]" />
+            <kbd className="px-1.5 py-0.5 rounded bg-[#10131A] border border-white/10 text-[10px] text-[#8B93A1]">?</kbd>
           </button>
 
           <button
             onClick={() => onRouteChange('auth', 'signin')}
-            className="px-3 py-2 text-xs font-sans font-medium text-zinc-400 hover:text-white transition-colors"
+            className="text-xs font-medium text-[#8B93A1] hover:text-[#F4F6F8] transition-colors px-2 py-1.5"
           >
             Sign in
           </button>
 
           <button
             onClick={onOpenDownload}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-sans font-semibold tracking-wide transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] hover:-translate-y-0.5 active:translate-y-0"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#F4F6F8] hover:bg-white text-[#050608] text-xs font-medium tracking-tight transition-all active:scale-[0.98]"
           >
             <Download className="w-3.5 h-3.5" />
-            <span>Download Cockpit</span>
+            <span>Download</span>
           </button>
         </div>
 
         {/* Mobile Hamburger Toggle */}
         <button
           onClick={() => setMobileMenuOpen(prev => !prev)}
-          className="lg:hidden p-2 text-zinc-400 hover:text-white"
+          className="lg:hidden p-2 text-[#8B93A1] hover:text-white"
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
@@ -112,8 +112,8 @@ export default function Navbar({
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#07090e]/95 backdrop-blur-xl border-b border-[#181f2c] p-4 space-y-3 animate-fade-in">
-          <nav className="flex flex-col space-y-1 font-sans text-sm">
+        <div className="lg:hidden bg-[#050608]/98 backdrop-blur-2xl border-b border-[#161B26] p-6 space-y-4 animate-fade-in">
+          <nav className="flex flex-col space-y-3 text-sm">
             {navLinks.map((link, idx) => (
               <button
                 key={idx}
@@ -121,46 +121,37 @@ export default function Navbar({
                   link.action();
                   setMobileMenuOpen(false);
                 }}
-                className="text-left px-3 py-2.5 rounded-lg text-zinc-300 hover:bg-[#121722] hover:text-white font-medium"
+                className="text-left py-2 text-[#8B93A1] hover:text-white font-medium transition-colors"
               >
                 {link.label}
               </button>
             ))}
           </nav>
 
-          <div className="pt-3 border-t border-[#141822] flex flex-col gap-2 font-sans">
+          <div className="pt-4 border-t border-white/[0.06] flex flex-col gap-3">
             <button
               onClick={() => {
                 if (onOpenShortcuts) onOpenShortcuts();
                 setMobileMenuOpen(false);
               }}
-              className="w-full py-2.5 px-3 flex items-center justify-between text-xs font-mono text-zinc-300 bg-[#0c101a] border border-[#1a2336] rounded-lg"
+              className="w-full py-2 px-3 flex items-center justify-between text-xs font-mono text-[#8B93A1] bg-[#0B0D11] border border-white/10 rounded-lg"
             >
               <div className="flex items-center gap-2">
-                <Keyboard className="w-4 h-4 text-blue-400" />
-                <span>Keyboard Shortcuts</span>
+                <Keyboard className="w-4 h-4" />
+                <span>Shortcuts</span>
               </div>
-              <kbd className="px-1.5 py-0.5 bg-[#121826] rounded text-[10px] text-blue-300">?</kbd>
+              <kbd className="px-1.5 py-0.5 bg-[#10131A] rounded text-[10px]">?</kbd>
             </button>
 
-            <button
-              onClick={() => {
-                onRouteChange('auth', 'signin');
-                setMobileMenuOpen(false);
-              }}
-              className="w-full py-2.5 text-center text-xs font-medium text-zinc-300 hover:bg-[#121722] rounded-lg"
-            >
-              Sign in
-            </button>
             <button
               onClick={() => {
                 onOpenDownload();
                 setMobileMenuOpen(false);
               }}
-              className="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold rounded-lg flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(59,130,246,0.3)]"
+              className="w-full py-3 bg-[#F4F6F8] hover:bg-white text-[#050608] text-xs font-medium rounded-lg flex items-center justify-center gap-2"
             >
               <Download className="w-4 h-4" />
-              <span>Download Cockpit (v2.19.0)</span>
+              <span>Download OUTARCH 2.19.0</span>
             </button>
           </div>
         </div>

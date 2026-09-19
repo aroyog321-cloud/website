@@ -3,9 +3,11 @@ import Lenis from 'lenis';
 import { CockpitProvider } from './context/CockpitContext';
 import Navbar from './components/Navbar';
 import HeroCinematic from './components/HeroCinematic';
+import LiveSystemControlLoop from './components/LiveSystemControlLoop';
 import ProblemSection from './components/ProblemSection';
 import PhilosophySection from './components/PhilosophySection';
 import FeatureShowcase from './components/FeatureShowcase';
+import ArchitectureSection from './components/ArchitectureSection';
 import IntegrationsSection from './components/IntegrationsSection';
 import PricingSection from './components/PricingSection';
 import FaqSection from './components/FaqSection';
@@ -17,7 +19,6 @@ import CommandPaletteModal from './components/CommandPaletteModal';
 
 import CursorGlow from './components/CursorGlow';
 import ParticleGridCanvas from './components/ParticleGridCanvas';
-import AmbientHudOverlay from './components/AmbientHudOverlay';
 
 export default function App() {
   const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'auth'
@@ -99,16 +100,13 @@ export default function App() {
 
   return (
     <CockpitProvider>
-      <div className="min-h-screen bg-[#030509] text-[#F8FAFC] flex flex-col selection:bg-[#00E5FF]/20 selection:text-white relative bg-grain overflow-x-hidden">
+      <div className="min-h-screen bg-[#07090E] text-[#F8FAFC] flex flex-col selection:bg-white/20 selection:text-white relative bg-grain overflow-x-hidden">
         
-        {/* Dynamic Interactive Cursor Glow & Spotlight HUD */}
+        {/* Restrained Dynamic Cursor Glow */}
         <CursorGlow />
 
-        {/* Ambient Interactive Particle Constellation Grid */}
+        {/* Ambient Subtle Particle Constellation */}
         <ParticleGridCanvas />
-
-        {/* Fixed Ambient HUD Telemetry Status */}
-        <AmbientHudOverlay onOpenCommandPalette={() => setCommandPaletteOpen(true)} />
 
         {/* Top Developer Navbar */}
         {currentRoute !== 'auth' && (
@@ -133,17 +131,23 @@ export default function App() {
           {/* Main Comprehensive Product Experience */}
           {currentRoute === 'home' && (
             <>
-              {/* 01 · Hero & Live Interactive Virtual Cockpit Centerpiece */}
+              {/* 01 · Hero with Real Large OUTARCH Interface */}
               <HeroCinematic onOpenDownload={handleOpenDownload} />
 
-              {/* 02 & 03 · The Problem & The Control Layer */}
+              {/* 02 · Signature Live System Control Loop (01 BUILD -> 06 RESOLVE) */}
+              <LiveSystemControlLoop />
+
+              {/* 03 · The Problem: Execution Crisis & 6 Definitive States */}
               <ProblemSection />
 
               {/* 04 · Product Philosophy: Why OUTARCH Exists */}
               <PhilosophySection />
 
-              {/* 05–10 · Major Features Spotlight (Recipes DAG, Mobile Companion, Secure MCP, Focus Mode, BYOK) */}
+              {/* 05–09 · Major Features (Recipes, Mobile Companion, MCP, Focus Mode, BYOK) */}
               <FeatureShowcase />
+
+              {/* 10 · System Architecture: Real 4-Tier Engine Diagram */}
+              <ArchitectureSection />
 
               {/* 11 · Integrations Hub (Mission AI, VS Code, MCP Gateway, Android LAN Companion, Browser) */}
               <IntegrationsSection />
@@ -156,14 +160,14 @@ export default function App() {
               {/* 13 · Developer FAQ */}
               <FaqSection />
 
-              {/* 14 · High-Impact Final CTA & Platform Deployment */}
+              {/* 14 · High-Impact Final CTA */}
               <FinalCtaSection />
             </>
           )}
 
         </main>
 
-        {/* 15 · Developer Footer */}
+        {/* 15 · Restrained Developer Footer */}
         {currentRoute !== 'auth' && (
           <Footer 
             onOpenReel={() => handleRouteChange('home', 'cockpit')} 

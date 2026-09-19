@@ -1,5 +1,6 @@
 import React from 'react';
 import { Download, Smartphone, Check } from 'lucide-react';
+import MagneticButton from './MagneticButton';
 
 export default function PricingSection({ onOpenDownload }) {
   const downloadTiers = [
@@ -45,13 +46,16 @@ export default function PricingSection({ onOpenDownload }) {
   return (
     <section id="download-section" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto select-none">
       
-      {/* Section Header */}
+      {/* Section Header with Fluid Typography */}
       <div className="max-w-3xl mb-16">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10B981]/10 border border-[#10B981]/25 text-xs font-mono text-[#10B981] mb-4 backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(16,185,129,0.2)]">
           <Download className="w-3.5 h-3.5" />
           <span>GET OUTARCH</span>
         </div>
-        <h2 className="font-display text-4xl sm:text-6xl font-black text-titanium tracking-[-0.03em] uppercase leading-[0.96]">
+        <h2 
+          className="font-display font-black text-titanium tracking-[-0.035em] uppercase leading-[0.96]"
+          style={{ fontSize: 'clamp(2.25rem, 5vw, 4.25rem)' }}
+        >
           Download OUTARCH.
         </h2>
         <p className="font-sans text-[#CBD5E1] text-base sm:text-lg mt-5 leading-relaxed">
@@ -100,13 +104,14 @@ export default function PricingSection({ onOpenDownload }) {
             </div>
           </div>
 
-          <button
+          <MagneticButton
             onClick={downloadTiers[0].ctaAction}
-            className="w-full py-4 rounded-xl btn-primary text-xs font-mono font-bold tracking-wider uppercase flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(255,255,255,0.25)]"
+            strength={0.2}
+            className="w-full py-4 rounded-xl btn-primary text-xs font-mono font-bold tracking-wider uppercase flex items-center justify-center gap-2 shadow-[0_4px_25px_rgba(255,255,255,0.25),0_0_20px_rgba(16,185,129,0.2)]"
           >
             <Download className="w-4 h-4" />
             <span>{downloadTiers[0].cta}</span>
-          </button>
+          </MagneticButton>
         </div>
 
         {/* Android Companion Card (5-col Bento) */}
@@ -147,13 +152,14 @@ export default function PricingSection({ onOpenDownload }) {
             </div>
           </div>
 
-          <button
+          <MagneticButton
             onClick={downloadTiers[1].ctaAction}
-            className="w-full py-4 rounded-xl bg-[#141C2B] hover:bg-[#1A253A] border border-white/20 text-white text-xs font-mono font-bold tracking-wider uppercase flex items-center justify-center gap-2 transition-all shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)]"
+            strength={0.2}
+            className="w-full py-4 rounded-xl bg-[#141C2B] hover:bg-[#1A253A] border border-white/20 text-white text-xs font-mono font-bold tracking-wider uppercase flex items-center justify-center gap-2 transition-all shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15),0_0_20px_rgba(56,189,248,0.15)]"
           >
             <Smartphone className="w-4 h-4 text-[#38BDF8]" />
             <span>{downloadTiers[1].cta}</span>
-          </button>
+          </MagneticButton>
         </div>
 
       </div>

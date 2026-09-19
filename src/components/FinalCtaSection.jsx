@@ -1,5 +1,6 @@
 import React from 'react';
 import { Download, Monitor, Apple, Cpu, Smartphone } from 'lucide-react';
+import MagneticButton from './MagneticButton';
 
 export default function FinalCtaSection() {
   const platforms = [
@@ -23,7 +24,10 @@ export default function FinalCtaSection() {
           <span className="text-[#E2E8F0] font-semibold tracking-wider uppercase">// DEVELOPER COMMAND CENTER</span>
         </div>
 
-        <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-black tracking-[-0.04em] uppercase leading-[0.92] mb-6 text-titanium">
+        <h2 
+          className="font-display font-black tracking-[-0.04em] uppercase leading-[0.92] mb-6 text-titanium"
+          style={{ fontSize: 'clamp(2.5rem, 6vw, 4.75rem)' }}
+        >
           BUILD WITHOUT <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-b from-[#94A3B8] to-[#475569]">LOSING CONTROL.</span>
         </h2>
@@ -32,15 +36,16 @@ export default function FinalCtaSection() {
           Run terminals, agents, workflows and projects from one calm, holographic control surface.
         </p>
 
-        {/* Primary Download CTA */}
+        {/* Primary Download CTA with Magnetic Hover Physics */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-10">
-          <a
+          <MagneticButton
             href="#download-section"
-            className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-9 py-4 rounded-xl btn-primary text-[#06080D] font-bold text-xs font-mono tracking-wider uppercase transition-all shadow-[0_4px_25px_rgba(255,255,255,0.3)]"
+            strength={0.25}
+            className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-9 py-4 rounded-xl btn-primary text-[#06080D] font-bold text-xs font-mono tracking-wider uppercase transition-all shadow-[0_4px_25px_rgba(255,255,255,0.3),0_0_25px_rgba(16,185,129,0.2)]"
           >
             <Download className="w-4 h-4" />
             <span>DOWNLOAD OUTARCH</span>
-          </a>
+          </MagneticButton>
         </div>
 
         {/* Platform Availability Row */}

@@ -1,75 +1,69 @@
 /** @type {import('tailwindcss').Config} */
+// Radius rule for the whole site: interactive controls are pills, cards and
+// panels are 20px (rounded-card), inputs and small chips are 12px (rounded-field).
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,jsx}'],
+  // Button variants are composed as btn--${variant}, which the scanner cannot see.
+  safelist: [{ pattern: /^btn--(primary|glass|mint|sm|lg)$/ }],
   theme: {
     extend: {
       colors: {
-        void: "#050608",
-        canvas: "#0B0D11",
-        surface: {
-          DEFAULT: "#10131A",
-          1: "#10131A",
-          2: "#161B24",
-          3: "#1F2633",
-          4: "#2A3344",
+        ink: {
+          DEFAULT: '#04060a',
+          900: '#070a10',
+          800: '#0b0f16',
+          700: '#10151e',
+          600: '#171d28',
+          500: '#222a37',
         },
-        border: {
-          subtle: "rgba(195, 211, 228, 0.08)",
-          DEFAULT: "rgba(195, 211, 228, 0.14)",
-          strong: "rgba(225, 237, 249, 0.25)",
+        line: {
+          DEFAULT: 'rgba(255,255,255,0.09)',
+          soft: 'rgba(255,255,255,0.06)',
+          strong: 'rgba(255,255,255,0.16)',
         },
-        mc: {
-          text: "#EEF2F6",
-          soft: "#D3DCE6",
-          muted: "#9AA5B5",
-          dim: "#6B7788",
-          accent: "#A9DDC4",
-          "accent-strong": "#C2ECD8",
-          blue: "#3B82F6",
-          cyan: "#22D3EE",
-          ai: "#AFC6F3",
-          warning: "#EDC58B",
-          danger: "#F2A7AE",
-          ok: "#A9DDC4",
-        }
+        fg: {
+          DEFAULT: '#f4f6fa',
+          soft: '#c9d0da',
+          muted: '#98a2b0',
+          dim: '#6c7684',
+        },
+        brand: {
+          blue: '#2f7bff',
+          sky: '#6aa6ff',
+          mint: '#3fd0b5',
+          violet: '#9b7bff',
+          amber: '#f5b942',
+          red: '#ff5f5f',
+          green: '#32d583',
+        },
       },
       fontFamily: {
-        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
-        display: ["Space Grotesk", "Inter", "sans-serif"],
-        mono: ["JetBrains Mono", "Cascadia Code", "Consolas", "monospace"],
+        sans: ['"Geist Variable"', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'sans-serif'],
+        mono: ['"Geist Mono Variable"', 'ui-monospace', 'SFMono-Regular', 'Consolas', 'monospace'],
+        term: ['"JetBrains Mono Variable"', '"Geist Mono Variable"', 'ui-monospace', 'Consolas', 'monospace'],
       },
-      animation: {
-        "pulse-subtle": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "glitch-1": "glitch1 4s infinite linear alternate-reverse",
-        "glitch-2": "glitch2 3.2s infinite linear alternate-reverse",
-        "scanline": "scanline 8s linear infinite",
+      borderRadius: {
+        card: '20px',
+        field: '12px',
+      },
+      maxWidth: {
+        page: '1240px',
       },
       keyframes: {
-        glitch1: {
-          "0%, 90%": { transform: "translate(0, 0)" },
-          "92%": { transform: "translate(-2px, 1px)" },
-          "94%": { transform: "translate(2px, -1px)" },
-          "96%": { transform: "translate(-1px, 1px)" },
-          "98%": { transform: "translate(1px, -1px)" },
-          "100%": { transform: "translate(0, 0)" },
-        },
-        glitch2: {
-          "0%, 88%": { transform: "translate(0, 0)" },
-          "91%": { transform: "translate(2px, -1px)" },
-          "93%": { transform: "translate(-2px, 1px)" },
-          "95%": { transform: "translate(1px, -1px)" },
-          "97%": { transform: "translate(-1px, 1px)" },
-          "100%": { transform: "translate(0, 0)" },
-        },
-        scanline: {
-          "0%": { transform: "translateY(-100%)" },
-          "100%": { transform: "translateY(1000%)" },
-        }
-      }
+        'marquee': { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
+        'spin-slow': { to: { transform: 'rotate(360deg)' } },
+        'pulse-ring': { '0%': { transform: 'scale(.8)', opacity: '.7' }, '100%': { transform: 'scale(2.2)', opacity: '0' } },
+        'shine': { from: { transform: 'translateX(-120%) skewX(-18deg)' }, to: { transform: 'translateX(220%) skewX(-18deg)' } },
+        'caret': { '0%,49%': { opacity: '1' }, '50%,100%': { opacity: '0' } },
+      },
+      animation: {
+        marquee: 'marquee 38s linear infinite',
+        'spin-slow': 'spin-slow 14s linear infinite',
+        'pulse-ring': 'pulse-ring 1.8s cubic-bezier(.2,.7,.3,1) infinite',
+        shine: 'shine 1.1s cubic-bezier(.2,.7,.3,1)',
+        caret: 'caret 1.05s steps(1) infinite',
+      },
     },
   },
   plugins: [],
-}
+};

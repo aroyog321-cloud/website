@@ -1,197 +1,94 @@
-import React, { useState, useEffect } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import Lenis from 'lenis';
-import { CockpitProvider } from './context/CockpitContext';
-import Navbar from './components/Navbar';
-import HeroCinematic from './components/HeroCinematic';
-import LiveSystemControlLoop from './components/LiveSystemControlLoop';
-import ProblemSection from './components/ProblemSection';
-import PhilosophySection from './components/PhilosophySection';
-import FeatureShowcase from './components/FeatureShowcase';
-import ArchitectureSection from './components/ArchitectureSection';
-import IntegrationsSection from './components/IntegrationsSection';
-import PricingSection from './components/PricingSection';
-import FaqSection from './components/FaqSection';
-import FinalCtaSection from './components/FinalCtaSection';
-import AuthScreen from './components/AuthScreen';
-import Footer from './components/Footer';
-import KeyboardShortcutsModal from './components/KeyboardShortcutsModal';
-import CommandPaletteModal from './components/CommandPaletteModal';
+import Backdrop from './components/Backdrop.jsx';
+import Cursor from './components/Cursor.jsx';
+import Footer from './components/Footer.jsx';
+import Nav from './components/Nav.jsx';
+import { Lockup } from './components/Brand.jsx';
+import { Link, scrollToId, useRouter } from './lib/router.jsx';
+import Home from './pages/Home.jsx';
 
-import CursorGlow from './components/CursorGlow';
-import ParticleGridCanvas from './components/ParticleGridCanvas';
-import AtmosphericBackground from './components/AtmosphericBackground';
+// Pages other than the home page load on demand.
+const PricingPage = lazy(() => import('./pages/PricingPage.jsx'));
+const CheckoutPage = lazy(() => import('./pages/CheckoutPage.jsx'));
+const AuthPage = lazy(() => import('./pages/AuthPage.jsx'));
+const AccountPage = lazy(() => import('./pages/AccountPage.jsx'));
+const LegalPage = lazy(() => import('./pages/LegalPage.jsx'));
+const NotFound = lazy(() => import('./pages/NotFound.jsx'));
+
+const LEGAL = new Set(['/terms', '/privacy', '/refunds', '/delivery', '/contact']);
+
+function page(path) {
+  if (path === '/') return Home;
+  if (path === '/pricing') return PricingPage;
+  if (path === '/checkout' || path === '/checkout/return') return CheckoutPage;
+  if (path === '/auth') return AuthPage;
+  if (path === '/account') return AccountPage;
+  if (LEGAL.has(path)) return LegalPage;
+  return NotFound;
+}
+
+const TITLES = {
+  '/': 'OUTARCH | The command center for your terminals and AI agents',
+  '/pricing': 'Pricing | OUTARCH',
+  '/checkout': 'Checkout | OUTARCH',
+  '/checkout/return': 'Payment | OUTARCH',
+  '/auth': 'Sign in | OUTARCH',
+  '/account': 'Your account | OUTARCH',
+  '/terms': 'Terms of service | OUTARCH',
+  '/privacy': 'Privacy policy | OUTARCH',
+  '/refunds': 'Refunds and cancellation | OUTARCH',
+  '/delivery': 'Delivery | OUTARCH',
+  '/contact': 'Contact | OUTARCH',
+};
+
+function useSmoothScroll() {
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const lenis = new Lenis({ duration: 1.1, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+    window.__lenis = lenis;
+    let frame = 0;
+    const loop = time => { lenis.raf(time); frame = requestAnimationFrame(loop); };
+    frame = requestAnimationFrame(loop);
+    return () => { cancelAnimationFrame(frame); lenis.destroy(); window.__lenis = null; };
+  }, []);
+}
+
+function PageFallback() {
+  return <div className="grid min-h-[70dvh] place-items-center" role="status" aria-label="Loading">
+    <span className="h-8 w-8 animate-spin rounded-full border-2 border-white/15 border-t-brand-sky"/>
+  </div>;
+}
 
 export default function App() {
-  const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'auth'
-  const [shortcutsModalOpen, setShortcutsModalOpen] = useState(false);
-  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  const { path, hash, query } = useRouter();
+  const Page = page(path);
+  // Signing in for the desktop app is a single-purpose page: no site navigation.
+  const focused = path === '/auth' && query.get('client') === 'desktop';
 
-  // Initialize Lenis Smooth Scrolling
+  useSmoothScroll();
+  useEffect(() => { document.title = TITLES[path] || 'OUTARCH'; }, [path]);
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 2.0,
-      infinite: false,
-    });
+    if (!hash) return undefined;
+    const timer = window.setTimeout(() => scrollToId(hash.slice(1)), 120);
+    return () => window.clearTimeout(timer);
+    // Only on first arrival at a page with a hash; in-page links scroll themselves.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [path]);
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
-    return () => {
-      lenis.destroy();
-    };
-  }, []);
-
-  // Global key listener for shortcuts overlay ('?' or 'F1') and command palette ('Cmd+K' or 'Ctrl+K')
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        setCommandPaletteOpen(prev => !prev);
-      } else if ((e.key === '?' || e.key === 'F1') && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
-        e.preventDefault();
-        setShortcutsModalOpen(prev => !prev);
-      } else if (e.key === 'Escape') {
-        setShortcutsModalOpen(false);
-        setCommandPaletteOpen(false);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
-
-  const handleRouteChange = (route, sectionId) => {
-    if (route === 'auth') {
-      setCurrentRoute('auth');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-
-    setCurrentRoute('home');
-    if (sectionId) {
-      setTimeout(() => {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 50);
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
-
-  const handleOpenDownload = () => {
-    if (currentRoute !== 'home') {
-      setCurrentRoute('home');
-    }
-    setTimeout(() => {
-      const el = document.getElementById('download-section');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
-  };
-
-  return (
-    <CockpitProvider>
-      <div className="min-h-screen bg-[#05060A] text-[#F8FAFC] flex flex-col selection:bg-sky-500/20 selection:text-sky-200 relative overflow-x-hidden">
-        
-        {/* Layered Atmospheric Background with Depth & Radial Lighting */}
-        <AtmosphericBackground />
-
-        {/* Dynamic Cursor Glow */}
-        <CursorGlow />
-
-        {/* Ambient Subtle Particle Constellation */}
-        <ParticleGridCanvas />
-
-        {/* Top Developer Navbar */}
-        {currentRoute !== 'auth' && (
-          <Navbar
-            activeRoute={currentRoute}
-            onRouteChange={handleRouteChange}
-            onOpenDownload={handleOpenDownload}
-            onOpenShortcuts={() => setShortcutsModalOpen(true)}
-          />
-        )}
-
-        {/* Main Content Flow */}
-        <main className="flex-1 relative z-10">
-          
-          {/* Authentication View */}
-          {currentRoute === 'auth' && (
-            <AuthScreen
-              onNavigateHome={() => handleRouteChange('home')}
-            />
-          )}
-
-          {/* Main Comprehensive Product Experience */}
-          {currentRoute === 'home' && (
-            <>
-              {/* 01 · Hero with Real Large OUTARCH Interface */}
-              <HeroCinematic onOpenDownload={handleOpenDownload} />
-
-              {/* 02 · Signature Live System Control Loop (01 BUILD -> 06 RESOLVE) */}
-              <LiveSystemControlLoop />
-
-              {/* 03 · The Problem: Execution Crisis & 6 Definitive States */}
-              <ProblemSection />
-
-              {/* 04 · Product Philosophy: Why OUTARCH Exists */}
-              <PhilosophySection />
-
-              {/* 05–09 · Major Features (Recipes, Mobile Companion, MCP, Focus Mode, BYOK) */}
-              <FeatureShowcase />
-
-              {/* 10 · System Architecture: Real 4-Tier Engine Diagram */}
-              <ArchitectureSection />
-
-              {/* 11 · Integrations Hub (Mission AI, VS Code, MCP Gateway, Android LAN Companion, Browser) */}
-              <IntegrationsSection />
-
-              {/* 12 · Direct Application Downloads (Desktop & Mobile Companion) */}
-              <PricingSection 
-                onOpenDownload={handleOpenDownload}
-              />
-
-              {/* 13 · Developer FAQ */}
-              <FaqSection />
-
-              {/* 14 · High-Impact Final CTA */}
-              <FinalCtaSection />
-            </>
-          )}
-
-        </main>
-
-        {/* 15 · Developer Footer */}
-        {currentRoute !== 'auth' && (
-          <Footer 
-            onOpenReel={() => handleRouteChange('home', 'cockpit')} 
-          />
-        )}
-
-        {/* Interactive Keyboard Shortcuts Overlay */}
-        <KeyboardShortcutsModal
-          isOpen={shortcutsModalOpen}
-          onClose={() => setShortcutsModalOpen(false)}
-        />
-
-        {/* Global Command Palette Overlay (Cmd+K) */}
-        <CommandPaletteModal
-          isOpen={commandPaletteOpen}
-          onClose={() => setCommandPaletteOpen(false)}
-          onNavigate={handleRouteChange}
-        />
-
-      </div>
-    </CockpitProvider>
-  );
+  return <>
+    <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[90] focus:rounded-full focus:bg-brand-blue focus:px-4 focus:py-2">Skip to content</a>
+    <Backdrop/>
+    <div className="grain" aria-hidden="true"/>
+    <Cursor/>
+    {focused
+      ? <header className="relative z-[2] mx-auto flex h-20 max-w-page items-center px-5 md:px-8"><Link to="/" aria-label="OUTARCH home"><Lockup/></Link></header>
+      : <Nav/>}
+    <main id="main" className="relative z-[1]">
+      <Suspense fallback={<PageFallback/>}>
+        <Page/>
+      </Suspense>
+    </main>
+    {focused ? null : <Footer/>}
+  </>;
 }

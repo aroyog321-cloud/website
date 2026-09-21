@@ -1,64 +1,32 @@
 import React from 'react';
-import { ExternalLink } from 'lucide-react';
-import GlitchLogo from './GlitchLogo';
+import { Link } from '../lib/router.jsx';
+import { Lockup } from './Brand.jsx';
 
-export default function Footer({ onOpenReel }) {
-  return (
-    <footer className="bg-[#05070B] text-slate-400 text-xs font-sans border-t border-white/[0.08] select-none py-16 px-6 relative">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between gap-12">
-        
-        {/* Brand Lockup */}
-        <div className="space-y-4 max-w-sm">
-          <GlitchLogo size="normal" />
+const COLUMNS = [
+  ['Product', [['Live demo', '/#demo'], ['Features', '/#features'], ['How it works', '/#how'], ['Mobile companion', '/#mobile'], ['Download', '/#download']]],
+  ['Plans', [['Pricing', '/pricing'], ['Compare plans', '/pricing#compare'], ['Your account', '/account'], ['Sign in', '/auth'], ['Create account', '/auth?mode=signup']]],
+  ['Policies', [['Terms of service', '/terms'], ['Privacy policy', '/privacy'], ['Refunds and cancellation', '/refunds'], ['Delivery', '/delivery'], ['Contact', '/contact']]],
+];
 
-          <p className="font-mono text-xs font-bold text-slate-200 tracking-wider">
-            BUILD WITHOUT LOSING CONTROL.
-          </p>
-
-          <p className="text-slate-400 text-xs leading-relaxed">
-            Local developer command center for running, observing, and supervising multi-terminal processes and autonomous AI agents.
-          </p>
-        </div>
-
-        {/* Clean Essential Links */}
-        <div className="flex flex-wrap gap-12 font-medium">
-          <div className="space-y-3">
-            <span className="font-mono text-[11px] uppercase tracking-wider text-slate-200 font-bold block">
-              Navigation
-            </span>
-            <ul className="space-y-2 text-xs">
-              <li><a href="#cockpit" className="hover:text-white transition-colors">Product</a></li>
-              <li><a href="#control-loop" className="hover:text-white transition-colors">Control Loop</a></li>
-              <li><a href="#features" className="hover:text-white transition-colors">Features</a></li>
-              <li><a href="#architecture" className="hover:text-white transition-colors">Architecture</a></li>
-              <li><a href="#faq" className="hover:text-white transition-colors">FAQ</a></li>
-            </ul>
-          </div>
-
-          <div className="space-y-3">
-            <span className="font-mono text-[11px] uppercase tracking-wider text-slate-200 font-bold block">
-              Platforms
-            </span>
-            <ul className="space-y-2 text-xs">
-              <li><a href="#download-section" className="hover:text-white transition-colors">Desktop Workstation</a></li>
-              <li><a href="#download-section" className="hover:text-white transition-colors">Android Mobile Companion</a></li>
-              <li><a href="https://github.com/aroyog321-cloud/outarch" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors inline-flex items-center gap-1"><span>GitHub Repository</span><ExternalLink className="w-3 h-3" /></a></li>
-            </ul>
-          </div>
-        </div>
-
+export default function Footer() {
+  return <footer className="relative z-[1] mt-10 border-t border-line">
+    <div className="mx-auto grid grid-cols-1 max-w-page gap-12 px-5 py-16 md:grid-cols-[1.3fr_2fr] md:px-8">
+      <div className="max-w-sm">
+        <Link to="/" aria-label="OUTARCH home"><Lockup/></Link>
+        <p className="mt-5 text-[14.5px] leading-relaxed text-fg-muted">A local command center for developers on Windows: every terminal, dev server and AI coding agent in one window, with you in charge of what runs.</p>
       </div>
-
-      {/* Bottom Copyright */}
-      <div className="max-w-7xl mx-auto pt-10 mt-12 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-slate-500">
-        <div>
-          © {new Date().getFullYear()} OUTARCH Command Center.
-        </div>
-        <div>
-          Local-First Developer Platform
-        </div>
+      <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+        {COLUMNS.map(([title, links]) => <div key={title}>
+          <h3 className="text-[13px] font-medium text-fg">{title}</h3>
+          <ul className="mt-4 space-y-2.5">
+            {links.map(([label, to]) => <li key={to}><Link to={to} className="link-underline text-[14px] text-fg-muted hover:text-fg">{label}</Link></li>)}
+          </ul>
+        </div>)}
       </div>
-
-    </footer>
-  );
+    </div>
+    <div className="mx-auto flex max-w-page flex-col gap-2 border-t border-line-soft px-5 py-6 text-[13px] text-fg-dim sm:flex-row sm:items-center sm:justify-between md:px-8">
+      <p>© {new Date().getFullYear()} OUTARCH. All rights reserved.</p>
+      <p>Built for Windows 11. Your code and terminals stay on your computer.</p>
+    </div>
+  </footer>;
 }

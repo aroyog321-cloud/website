@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { BACKLOG, DEFAULT_PANES, PROJECT, RECIPE, SCRIPTS, WORKERS, shellReply } from './demoData.js';
+import { BACKLOG, DEFAULT_PANES, PROJECT, RECIPE, SCRIPTS, WORKERS, claudeScriptFor, shellReply } from './demoData.js';
 
 // The demo's whole state and every way it changes. One tick is TICK_MS; each
 // running worker prints at most one line per tick, so the panes read like
@@ -31,7 +31,7 @@ export function initialState() {
     tick: 0,
     seq: 10,
     codes: { W: 1, A: 0, M: 0 },
-    route: 'workspace',
+    route: 'groundstation',
     layout: '2x2',
     panes: [...DEFAULT_PANES],
     folder: 'all',
@@ -448,6 +448,16 @@ export function reducer(previous, action) {
       append(worker, [line(`PS ${PROJECT.path}> ${action.text}`, 'cmd'), ...shellReply(action.text)]);
       return state;
     }
+    case 'CLAUDE': {
+      // A visitor typed into the demo's Claude Code: echo it, then play a reply.
+      const worker = state.workers.claude;
+      const text = action.text.trim().slice(0, 200);
+      if (!text || !worker || worker.status !== 'running' || !claudeIdle(worker)) return previous;
+      append(worker, [line(''), line(`> ${text}`, 'cmd'), line('')]);
+      worker.script = claudeScriptFor(text);
+      worker.step = 0;
+      return state;
+    }
     case 'RESET':
       return initialState();
     default:
@@ -466,6 +476,12 @@ export function relativeTime(tickNow, tickThen, { short = false } = {}) {
   if (seconds < 8) return 'just now';
   if (seconds < 60) return `${seconds}s ago`;
   return `${Math.floor(seconds / 60)}m ago`;
+}
+
+// Claude Code has finished its current script and is waiting at its input.
+export function claudeIdle(worker) {
+  const script = SCRIPTS[worker.script];
+  return !script || worker.step >= script.length;
 }
 
 export function runtime(state, worker) {

@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowClockwise, ArrowSquareOut, Crown, Receipt, SignOut, Sparkle } from '@phosphor-icons/react';
+import {
+  ArrowClockwise, ArrowSquareOut, CalendarBlank, Check, Code, Crown, DeviceMobile, DownloadSimple, Lock, Receipt, ShieldCheck, SignOut, Sparkle, WindowsLogo,
+} from '@phosphor-icons/react';
 import { Button, EASE, Reveal } from '../components/ui.jsx';
-import { formatMoney } from '../lib/currency.js';
-import { useRouter } from '../lib/router.jsx';
+import { priceOf, useCatalog } from '../lib/catalog.js';
+import { formatMoney, useCurrency } from '../lib/currency.js';
+import { Link, useRouter } from '../lib/router.jsx';
 import { website } from '../lib/supabase.js';
 
 // Who is signed in on the website, the plan the OUTARCH app honours, how much
@@ -39,6 +42,149 @@ const STATUS = {
   refunded: ['Refunded', 'text-brand-sky bg-brand-blue/10 shadow-[inset_0_0_0_1px_rgba(47,123,255,0.35)]'],
 };
 
+// Everything the account service holds about the signed-in person, read with
+// their own session (row level security lets each account read only its own
+// rows), as one JSON file. Nothing here needs a server change; a table that
+// cannot be read is noted in the file instead of failing the whole export.
+const EXPORT_TABLES = [
+  ['profile', 'profiles', 'id'],
+  ['subscription', 'subscriptions', 'user_id'],
+  ['usageCounters', 'usage_counters', 'user_id'],
+  ['planRequests', 'upgrade_requests', 'user_id'],
+  ['payments', 'payments', 'user_id'],
+];
+
+async function exportAccountData(userId, entitlements) {
+  const client = website();
+  const out = {
+    exportedAt: new Date().toISOString(),
+    note: 'Your OUTARCH account data as held by the account service. Projects, code, terminal output and keys stay on your computer and are not included.',
+    account: entitlements?.user || null,
+    plan: entitlements?.plan || null,
+    limits: entitlements?.limits || null,
+  };
+  for (const [name, table, column] of EXPORT_TABLES) {
+    const { data, error } = await client.from(table).select('*').eq(column, userId);
+    out[name] = error ? { error: 'Could not be read. Ask us for it and we will send it.' } : data;
+  }
+  const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `outarch-account-data-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function YourData({ entitlements }) {
+  const [state, setState] = useState('idle');
+  const download = async () => {
+    setState('working');
+    try {
+      const { data } = await website().auth.getUser();
+      if (!data?.user) throw new Error('signed out');
+      await exportAccountData(data.user.id, entitlements);
+      setState('done');
+    } catch { setState('failed'); }
+  };
+  return <div className="card mt-6 p-7 sm:p-9">
+    <h2 className="flex items-center gap-2 text-[19px] font-semibold"><ShieldCheck size={20} className="text-brand-mint"/>Your data</h2>
+    <p className="mt-3 max-w-[62ch] text-[14.5px] leading-relaxed text-fg-muted">We hold your email, plan, usage counts and any plan requests or payments. Your projects, code and keys stay on your computer. <Link to="/privacy" className="link-underline text-fg">Privacy policy</Link> · <Link to="/data-retention" className="link-underline text-fg">Retention and deletion</Link></p>
+    <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-field bg-white/[0.03] p-5 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]">
+      <div className="min-w-0">
+        <p className="text-[15px] font-medium">Download a copy</p>
+        <p className="mt-1 text-[13.5px] leading-relaxed text-fg-muted">Everything the account service holds about you, as a JSON file.</p>
+        <p className="mt-1 min-h-[18px] text-[12.5px] text-fg-dim" role="status">{state === 'done' ? 'Downloaded.' : state === 'failed' ? 'The download failed. Sign in again and retry.' : ''}</p>
+      </div>
+      <button type="button" onClick={() => void download()} disabled={state === 'working'} className="btn btn--glass btn--sm"><DownloadSimple size={15}/>{state === 'working' ? 'Preparing…' : 'Download my data'}</button>
+    </div>
+  </div>;
+}
+
+function daysLeft(value) {
+  const at = Date.parse(value || '');
+  return Number.isFinite(at) ? Math.max(0, Math.ceil((at - Date.now()) / 86400000)) : null;
+}
+
+// Four numbers at the top of the dashboard.
+function Summary({ plan, paid, ends, usedText, paymentsCount }) {
+  const days = daysLeft(ends);
+  const tiles = [
+    [Crown, 'Plan', plan.name, paid ? 'Prepaid' : 'Free forever'],
+    [CalendarBlank, 'Time left', paid ? (days == null ? 'No end date' : `${days} day${days === 1 ? '' : 's'}`) : 'Forever', paid && ends ? `Until ${formatDate(ends)}` : 'Never ends'],
+    [Sparkle, 'Mission AI today', usedText, 'Resets every day'],
+    [Receipt, 'Payments', String(paymentsCount), paymentsCount ? 'See billing history' : 'None yet'],
+  ];
+  return <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
+    {tiles.map(([Icon, label, value, note]) => <div key={label} className="card p-5">
+      <p className="flex items-center gap-2 text-[13px] text-fg-muted"><Icon size={15}/>{label}</p>
+      <p className="mt-2 truncate text-[22px] font-semibold tracking-[-0.02em]">{value}</p>
+      <p className="mt-0.5 truncate text-[12.5px] text-fg-dim">{note}</p>
+    </div>)}
+  </div>;
+}
+
+const UPGRADE_POINTS = {
+  pro: ['8 terminals at once', 'Unlimited projects', 'Unlimited Mission AI*', 'Mobile companion'],
+  ultimate: ['Unlimited terminals', 'Unlimited recipes and AI keys', 'Full MCP gateway', 'VS Code bridge and mobile companion'],
+};
+
+// Shown to a Free account: the two paid plans, straight to checkout.
+function Subscribe() {
+  const catalog = useCatalog();
+  const [currency] = useCurrency();
+  return <div className="card relative mt-6 overflow-hidden p-7 sm:p-9" style={{ background: 'linear-gradient(135deg, rgba(155,123,255,0.14), rgba(47,123,255,0.08) 45%, rgba(255,255,255,0.02))' }}>
+    <h2 className="flex items-center gap-2 text-[19px] font-semibold"><Crown size={20} weight="fill" className="text-brand-violet"/>Subscribe to unlock more</h2>
+    <p className="mt-2 max-w-[62ch] text-[14.5px] leading-relaxed text-fg-muted">Pay for a month or a year. Your plan switches on as soon as the payment clears, the app picks it up on its own, and nothing renews automatically.</p>
+    <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+      {['pro', 'ultimate'].map(id => {
+        const price = priceOf(catalog.prices, id, 'month', currency);
+        const featured = id === 'ultimate';
+        return <div key={id} className="flex flex-col rounded-[18px] bg-black/25 p-6 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)]">
+          <div className="flex items-center justify-between gap-3">
+            <p className="flex items-center gap-2 text-[18px] font-semibold"><Crown size={17} weight="fill" className={featured ? 'text-brand-violet' : 'text-brand-sky'}/>{featured ? 'Ultimate' : 'Pro'}</p>
+            <p><span className="text-[22px] font-semibold tracking-[-0.02em]">{price ? formatMoney(price.amount, currency) : '-'}</span><span className="text-[13px] text-fg-muted"> / month</span></p>
+          </div>
+          <ul className="mt-4 flex flex-1 flex-col gap-2">
+            {UPGRADE_POINTS[id].map(point => <li key={point} className="flex gap-2 text-[14px] text-fg-soft"><Check size={16} weight="bold" className="mt-0.5 shrink-0 text-brand-mint"/>{point}</li>)}
+          </ul>
+          <Button to={`/checkout?plan=${id}&period=month&currency=${currency}`} variant={featured ? 'primary' : 'mint'} className="mt-6 w-full" magnetic={false}>Get {featured ? 'Ultimate' : 'Pro'}</Button>
+        </div>;
+      })}
+    </div>
+    <p className="mt-4 text-[12.5px] text-fg-dim">*Fair-use limit of 2,000 Mission AI messages a day. <Link to="/pricing#compare" className="link-underline text-fg-muted hover:text-fg">Compare every limit</Link></p>
+  </div>;
+}
+
+// The apps this account can use, and what each one needs.
+function Apps({ limits, planId }) {
+  const mobile = Boolean(limits?.mobileCompanion);
+  const vscode = Boolean(limits?.vscodeBridge);
+  const row = (Icon, tone, title, body, action) => <div className="flex flex-wrap items-center gap-4 rounded-field bg-white/[0.03] p-5 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]">
+    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[13px]" style={{ background: `rgba(${tone},0.12)`, color: `rgb(${tone})`, boxShadow: `inset 0 0 0 1px rgba(${tone},0.35)` }}><Icon size={21} weight="duotone"/></span>
+    <div className="mr-auto min-w-0 flex-1"><p className="text-[15.5px] font-medium">{title}</p><p className="mt-0.5 text-[13.5px] leading-relaxed text-fg-muted">{body}</p></div>
+    <div className="flex flex-wrap gap-2">{action}</div>
+  </div>;
+  return <div className="card mt-6 p-7 sm:p-9">
+    <h2 className="flex items-center gap-2 text-[19px] font-semibold"><DeviceMobile size={20} className="text-brand-mint"/>Your apps</h2>
+    <p className="mt-2 text-[14.5px] text-fg-muted">Sign in to each one with this account and it follows your plan.</p>
+    <div className="mt-6 flex flex-col gap-3">
+      {row(WindowsLogo, '47,123,255', 'OUTARCH for Windows', 'Sign in from the app: it opens this website and comes back signed in.', <>
+        <a href="outarch://account/refresh" className="btn btn--glass btn--sm"><ArrowSquareOut size={15}/>Open OUTARCH</a>
+        <Link to="/#download" className="btn btn--glass btn--sm"><DownloadSimple size={15}/>Download</Link>
+      </>)}
+      {row(DeviceMobile, '63,208,181', 'Mobile companion', mobile ? 'Included in your plan. Pair your phone from OUTARCH, then add it to your home screen.' : 'Comes with Pro and Ultimate.', mobile
+        ? <Link to="/mobile" className="btn btn--mint btn--sm"><DeviceMobile size={15}/>Install on your phone</Link>
+        : <Link to="/checkout?plan=pro&period=month" className="btn btn--glass btn--sm"><Lock size={15}/>Upgrade to Pro</Link>)}
+      {row(Code, '155,123,255', 'VS Code bridge', vscode ? 'Included in your plan. The extension is coming soon to the VS Code Marketplace.' : 'Comes with Ultimate. The extension is coming soon to the VS Code Marketplace.', vscode
+        ? <span className="chip">Coming soon</span>
+        : <Link to={`/checkout?plan=ultimate&period=month`} className="btn btn--glass btn--sm"><Lock size={15}/>{planId === 'pro' ? 'Upgrade to Ultimate' : 'Get Ultimate'}</Link>)}
+    </div>
+  </div>;
+}
+
 function Skeleton() {
   return <div className="mx-auto max-w-[980px] px-5 pb-24 pt-36 md:px-8" role="status" aria-label="Loading your account">
     <div className="card h-40 animate-pulse"/>
@@ -60,7 +206,7 @@ export default function AccountPage() {
     if (!sessionData?.session) { navigate('/auth?next=/account', { replace: true }); return; }
     const [{ data, error: rpcError }, { data: rows }] = await Promise.all([
       website().rpc('get_entitlements'),
-      website().from('payments').select('id,plan_id,period,currency,amount,status,payment_method,period_end,created_at,paid_at').order('created_at', { ascending: false }).limit(20),
+      website().from('payments').select('id,plan_id,period,currency,amount,status,provider,payment_method,period_end,created_at,paid_at').order('created_at', { ascending: false }).limit(20),
     ]);
     if (rpcError) {
       // A session the server no longer accepts (revoked, or from another
@@ -112,12 +258,15 @@ export default function AccountPage() {
           {user.avatarUrl ? <img src={user.avatarUrl} alt="" className="h-full w-full object-cover" referrerPolicy="no-referrer"/> : (Array.from(String(user.name || user.email || 'O'))[0] || 'O').toUpperCase()}
         </span>
         <div className="mr-auto min-w-0">
+          <p className="text-[13px] font-medium uppercase tracking-[0.12em] text-brand-sky">Dashboard</p>
           <h1 className="display truncate text-[clamp(1.6rem,3vw,2.2rem)]">{user.name || user.email || 'Your account'}</h1>
           <p className="truncate text-[14.5px] text-fg-muted">{user.name && user.email ? `${user.email} · ` : ''}Signed in with {user.provider === 'google' ? 'Google' : 'email and password'}</p>
         </div>
         <button type="button" onClick={signOut} className="btn btn--glass btn--sm"><SignOut size={16}/>Sign out</button>
       </div>
     </Reveal>
+
+    <Reveal delay={0.03}><Summary plan={plan} paid={paid} ends={subscription.currentPeriodEnd} usedText={limit == null ? `${used} used` : `${used} of ${limit}`} paymentsCount={payments.filter(row => row.status === 'paid').length}/></Reveal>
 
     {error ? <p className="mt-6 rounded-field bg-brand-red/10 px-4 py-3 text-[14px] text-[#ffb3b3] shadow-[inset_0_0_0_1px_rgba(255,95,95,0.4)]" role="alert">{error}</p> : null}
 
@@ -149,6 +298,10 @@ export default function AccountPage() {
       </div>
     </Reveal>
 
+    {!paid ? <Reveal delay={0.08}><Subscribe/></Reveal> : null}
+
+    <Reveal delay={0.09}><Apps limits={entitlements?.limits} planId={plan.id}/></Reveal>
+
     <Reveal delay={0.1}>
       <div className="card mt-6 p-7 sm:p-9">
         <h2 className="flex items-center gap-2 text-[19px] font-semibold"><Receipt size={20} className="text-brand-sky"/>Billing history</h2>
@@ -163,7 +316,7 @@ export default function AccountPage() {
                     <td className="py-3 text-fg-soft">{formatDate(row.paid_at || row.created_at)}</td>
                     <td className="py-3 capitalize">{row.plan_id} · {row.period === 'year' ? '12 months' : '1 month'}</td>
                     <td className="py-3 font-mono">{formatMoney(row.amount, row.currency, { exact: true })}</td>
-                    <td className="py-3"><span className={`rounded-full px-2.5 py-1 text-[12px] font-medium ${style}`}>{label}</span></td>
+                    <td className="py-3"><span className={`rounded-full px-2.5 py-1 text-[12px] font-medium ${style}`}>{label}</span>{row.provider === 'simulated' ? <span className="ml-2 text-[12px] text-brand-amber">Test</span> : null}</td>
                     <td className="py-3 font-mono text-[12.5px] text-fg-dim">{row.id}</td>
                   </tr>;
                 })}
@@ -172,6 +325,10 @@ export default function AccountPage() {
           </div>
           : <p className="mt-4 text-[14.5px] text-fg-muted">No payments yet. When you buy a plan, the receipt and its order reference appear here.</p>}
       </div>
+    </Reveal>
+
+    <Reveal delay={0.12}>
+      <YourData entitlements={entitlements}/>
     </Reveal>
   </section>;
 }

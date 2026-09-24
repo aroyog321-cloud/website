@@ -21,6 +21,8 @@ export const billing = {
   config: () => call({ action: 'config' }),
   create: input => call({ action: 'create', ...input }),
   verify: orderId => call({ action: 'verify', orderId }),
+  // Test payments only: settles a test order as success, failed or cancelled.
+  simulate: (orderId, result, method) => call({ action: 'simulate', orderId, result, method }),
 };
 
 let sdk = null;

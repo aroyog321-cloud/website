@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import {
-  ArrowLeft, ArrowSquareOut, CalendarCheck, Check, CircleNotch, Crown, CreditCard, Info, Lock, ShieldCheck, WarningCircle,
+  ArrowLeft, ArrowSquareOut, CalendarCheck, Check, CircleNotch, Crown, CreditCard, Flask, Info, Lock, ShieldCheck, WarningCircle,
 } from '@phosphor-icons/react';
 import { Segmented } from '../components/Pricing.jsx';
+import TestGateway from '../components/TestGateway.jsx';
 import { EASE } from '../components/ui.jsx';
 import { billing, loadCashfree, waitForPayment } from '../lib/billing.js';
 import { priceOf, useCatalog } from '../lib/catalog.js';
@@ -19,7 +20,7 @@ import { website } from '../lib/supabase.js';
 
 const PLAN_POINTS = {
   pro: ['8 terminals at once', 'Unlimited projects', 'Unlimited Mission AI*', '3 recipes', '1 key of your own', 'Mobile companion', 'MCP gateway, read-only tools'],
-  ultimate: ['Unlimited terminals', 'Unlimited projects', 'Unlimited Mission AI*', 'Unlimited recipes', 'Unlimited keys of your own', 'Mobile companion', 'Full MCP gateway', 'VS Code bridge'],
+  ultimate: ['Unlimited terminals', 'Unlimited projects', 'Unlimited Mission AI*', 'Unlimited recipes', 'Unlimited AI keys of your own', 'Mobile companion', 'Full MCP gateway', 'VS Code bridge'],
 };
 
 const CODES = [
@@ -76,7 +77,7 @@ function Success({ planName, periodEnd }) {
       <a href="outarch://account/refresh" className="btn btn--primary"><ArrowSquareOut size={17}/>Open OUTARCH</a>
       <Link to="/account" className="btn btn--glass">Go to your account</Link>
     </div>
-    <p className="relative mt-6 text-[13px] text-fg-dim">Open OUTARCH makes the app read your new plan straight away. Otherwise it picks it up within five minutes.</p>
+    <p className="relative mt-6 text-[13px] text-fg-dim">Signed in to OUTARCH with this account? Open OUTARCH makes the app read your new plan straight away; otherwise it picks it up within five minutes. Not signed in yet? The app asks you to sign in when it starts.</p>
   </motion.div>;
 }
 
@@ -111,6 +112,8 @@ export default function CheckoutPage() {
   const [phase, setPhase] = useState(returning ? 'verifying' : 'loading');
   const [error, setError] = useState('');
   const [result, setResult] = useState(null);
+  // A test order open in the simulated payment window.
+  const [testOrder, setTestOrder] = useState(null);
 
   // Signed in? Otherwise sign up first and come back to exactly this checkout.
   useEffect(() => {
@@ -200,12 +203,13 @@ export default function CheckoutPage() {
 
   const pay = async () => {
     setTouched(true);
-    if (!phoneOk) { setError('Enter a valid mobile number. Cashfree needs it to process the payment.'); return; }
+    if (!phoneOk) { setError('Enter a valid mobile number. The payment gateway needs it to process the payment.'); return; }
     setError('');
     setPhase('creating');
     try {
       const order = await billing.create({ plan, period, currency: chargeCurrency, phone: phoneFor(code, number), name: name.trim() });
       setPhase('paying');
+      if (order.mode === 'simulated') { setTestOrder(order); return; }
       const cashfree = await loadCashfree(order.mode);
       const outcome = await cashfree.checkout({ paymentSessionId: order.paymentSessionId, redirectTarget: '_modal' });
       if (outcome?.redirect) return; // Cashfree is taking the browser to the bank or UPI app; /checkout/return picks it up.
@@ -214,6 +218,16 @@ export default function CheckoutPage() {
       setPhase('ready');
       setError(reason?.message || 'The payment could not be started. Try again.');
     }
+  };
+
+  // The test payment window reports how the order ended.
+  const testSettled = outcome => {
+    setTestOrder(null);
+    if (outcome?.status === 'paid') { setResult(outcome); setPhase('paid'); return; }
+    setPhase('ready');
+    if (outcome?.status === 'expired') setError('This payment window expired before it was paid. Nothing was charged. Start again.');
+    else if (outcome?.lastAttempt === 'FAILED') setError('The payment was declined. Nothing was charged. Try again or use another method.');
+    else setError('The payment was cancelled. Nothing was charged.');
   };
 
   const [requested, setRequested] = useState(false);
@@ -241,6 +255,7 @@ export default function CheckoutPage() {
       {['ready', 'creating', 'paying'].includes(phase) ? <motion.div key="form" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.5, ease: EASE }}>
         <Link to="/pricing" className="inline-flex items-center gap-1.5 text-[14px] text-fg-muted hover:text-fg"><ArrowLeft size={15}/>All plans</Link>
         <h1 className="display mt-4 text-[clamp(2rem,4vw,3rem)]">Checkout</h1>
+        {config?.mode === 'simulated' ? <p className="mt-3 inline-flex items-start gap-2 rounded-[14px] bg-brand-amber/10 px-3 py-1.5 text-[13px] text-brand-amber shadow-[inset_0_0_0_1px_rgba(245,185,66,0.35)]"><Flask size={15} className="mt-0.5 shrink-0"/>Test mode: payments are simulated until the payment gateway is connected. No money moves, and your plan switches on as it would after a real payment.</p> : null}
         {config?.mode === 'sandbox' && config?.enabled ? <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-brand-amber/10 px-3 py-1.5 text-[13px] text-brand-amber shadow-[inset_0_0_0_1px_rgba(245,185,66,0.35)]"><Info size={15}/>Test mode: use Cashfree's test cards or UPI; no real money moves.</p> : null}
 
         <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1.1fr_0.9fr]">
@@ -290,18 +305,29 @@ export default function CheckoutPage() {
                     </select>
                     <input id="checkout-phone" className="field" inputMode="tel" autoComplete="tel-national" placeholder={code === '+91' ? '98765 43210' : code === 'other' ? '+ country code and number' : 'Phone number'} value={number} onChange={event => setNumber(event.target.value)} onBlur={() => setTouched(true)} aria-invalid={touched && !phoneOk} aria-describedby="checkout-phone-help"/>
                   </div>
-                  <small id="checkout-phone-help" className={`text-[13px] ${touched && !phoneOk ? 'text-[#ffb3b3]' : 'text-fg-dim'}`}>{touched && !phoneOk ? (code === '+91' ? 'Enter the 10-digit mobile number.' : 'Enter a valid number for the country chosen.') : 'Cashfree requires it for the payment. We do not store it.'}</small>
+                  <small id="checkout-phone-help" className={`text-[13px] ${touched && !phoneOk ? 'text-[#ffb3b3]' : 'text-fg-dim'}`}>{touched && !phoneOk ? (code === '+91' ? 'Enter the 10-digit mobile number.' : 'Enter a valid number for the country chosen.') : 'The payment gateway requires it. We do not store it.'}</small>
                 </div>
                 <AnimatePresence>{error ? <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} role="alert" className="rounded-field bg-brand-red/10 px-4 py-3 text-[14px] text-[#ffb3b3] shadow-[inset_0_0_0_1px_rgba(255,95,95,0.4)]">{error}</motion.p> : null}</AnimatePresence>
                 <button type="submit" className="btn btn--primary btn--lg w-full" disabled={!config || !quote || quote.blocked || !charged || phase !== 'ready'}>
                   {phase === 'creating' || phase === 'paying' ? <CircleNotch size={18} className="animate-spin"/> : <Lock size={17} weight="bold"/>}
                   {phase === 'creating' ? 'Starting secure checkout…' : phase === 'paying' ? 'Complete the payment in the window' : charged ? `Pay ${formatMoney(charged.amount, chargeCurrency, { exact: false })}` : 'Pay'}
                 </button>
-                <p className="flex items-start gap-2 text-[13px] leading-relaxed text-fg-dim"><ShieldCheck size={17} className="mt-0.5 shrink-0 text-brand-mint"/>Payments are processed by Cashfree Payments with UPI, cards, netbanking and wallets. OUTARCH never sees your card or bank details. By paying you agree to the <Link to="/terms" className="underline hover:text-fg">terms</Link> and the <Link to="/refunds" className="underline hover:text-fg">refund policy</Link>.</p>
+                <p className="flex items-start gap-2 text-[13px] leading-relaxed text-fg-dim"><ShieldCheck size={17} className="mt-0.5 shrink-0 text-brand-mint"/>{config?.mode === 'simulated' ? 'Test mode: the payment window is simulated and nothing you type in it is sent anywhere.' : 'Payments are processed by Cashfree Payments with UPI, cards, netbanking and wallets. OUTARCH never sees your card or bank details.'} By paying you agree to the <Link to="/terms" className="underline hover:text-fg">terms</Link> and the <Link to="/refunds" className="underline hover:text-fg">refund policy</Link>. See the <Link to="/privacy" className="underline hover:text-fg">privacy policy</Link> for how your details are handled.</p>
               </form>}
           </div>
         </div>
       </motion.div> : null}
+    </AnimatePresence>
+    <AnimatePresence>
+      {testOrder ? <TestGateway
+        key={testOrder.orderId}
+        order={testOrder}
+        planName={testOrder.planName || planName}
+        periodLabel={period === 'year' ? '12 months' : '1 month'}
+        email={session.user?.email || ''}
+        onSettled={testSettled}
+        onClose={() => { setTestOrder(null); setPhase('ready'); setError('The payment was cancelled. Nothing was charged.'); }}
+      /> : null}
     </AnimatePresence>
   </section>;
 }

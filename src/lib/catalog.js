@@ -50,6 +50,8 @@ export function microsoftStoreLinks(id) {
   };
 }
 
+export const VS_CODE_MARKETPLACE_URL = 'https://marketplace.visualstudio.com/items?itemName=outarch.outarch-bridge&ssr=false';
+
 let catalogPromise = null;
 
 function loadCatalog() {
@@ -89,7 +91,8 @@ export function useCatalog() {
 }
 
 export function priceOf(prices, planId, period, currency) {
-  return prices.find(row => row.plan_id === planId && row.period === period && row.currency === currency) || null;
+  if (!Array.isArray(prices)) return null;
+  return prices.find(row => row && row.plan_id === planId && row.period === period && row.currency === currency) || null;
 }
 
 // The comparison rows, read from a plan's limits. null means unlimited.

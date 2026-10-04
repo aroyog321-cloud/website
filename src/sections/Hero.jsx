@@ -99,6 +99,7 @@ export function Hero() {
 
 export function DemoStage() {
   const reduce = useReducedMotion();
+
   // The window tilts up into place once, the first time it comes into view.
   // It used to follow every scroll frame, which redrew the whole replica each
   // frame and was the heaviest thing on the page to scroll past.

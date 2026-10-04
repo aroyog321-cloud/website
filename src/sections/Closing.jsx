@@ -6,7 +6,7 @@ import {
 import { PlanCards, PricingControls } from '../components/Pricing.jsx';
 import { Button, EASE, Reveal, SectionTitle, useSpotlight } from '../components/ui.jsx';
 import { Wordmark } from '../components/Brand.jsx';
-import { formatBytes, microsoftStoreLinks, useCatalog } from '../lib/catalog.js';
+import { formatBytes, microsoftStoreLinks, useCatalog, VS_CODE_MARKETPLACE_URL } from '../lib/catalog.js';
 import { useCurrency } from '../lib/currency.js';
 import { Link } from '../lib/router.jsx';
 
@@ -104,8 +104,10 @@ export function DownloadSection() {
               <span className="grid h-11 w-11 place-items-center rounded-[13px] bg-brand-violet/10 text-brand-violet shadow-[inset_0_0_0_1px_rgba(155,123,255,0.35)]"><Code size={22} weight="duotone"/></span>
               <div><h3 className="text-[18px] font-semibold">VS Code bridge</h3><p className="text-[13.5px] text-fg-muted">Ultimate</p></div>
             </div>
-            <p className="mt-4 text-[14.5px] leading-relaxed text-fg-muted">The extension is on its way to the official VS Code Marketplace. Once it is listed, install it from VS Code in one click, then connect it in OUTARCH under <span className="text-fg-soft">Integrations, VS Code Bridge</span>.</p>
-            <div className="mt-4"><span className="chip"><Code size={14}/>Coming soon to the VS Code Marketplace</span></div>
+            <p className="mt-4 text-[14.5px] leading-relaxed text-fg-muted">Install the extension from the official Visual Studio Marketplace in one click, then connect it in OUTARCH under <span className="text-fg-soft">Integrations, VS Code Bridge</span>.</p>
+            <div className="mt-5 flex flex-wrap items-center gap-2">
+              <Button href={VS_CODE_MARKETPLACE_URL} target="_blank" rel="noreferrer" variant="primary" size="sm" magnetic={false}><Code size={16} weight="bold"/>Install for VS Code</Button>
+            </div>
             <p className="mt-4 text-[13px] text-fg-dim">It shares file paths, diagnostics, Git state and VS Code terminal activity with the app on this computer, never file contents. <Link to="/ai-data#vs-code-bridge" className="link-underline text-fg-muted hover:text-fg">What it shares</Link></p>
           </article>
         </Reveal>
@@ -137,7 +139,7 @@ const FAQ = [
   ['What is project memory?', 'An arch_memory.md that OUTARCH keeps in your project, once you agree to it: what the project is for, how it runs, and every change, error and fix with who made it and why. AI agents such as Claude Code and Codex read it before they work and add a short entry when they finish. When you close OUTARCH after working by hand, Mission AI records what changed. Entries are only ever added, and secrets are removed.'],
   ['What is the mobile companion?', 'A web app for your phone that pairs with OUTARCH over your own network. Use it to see what is running, start or restart terminals and run recipes while you are away from your desk. It installs from the phone\'s browser, with no app store step, and comes with Pro and Ultimate.'],
   ['Do I need an account?', 'Not to download. The first time OUTARCH opens, it sends you to this website to create a free account or sign in, then brings you back. Your plan is tied to that account, and the app keeps working offline for up to 72 hours on the last plan it confirmed.'],
-  ['How does pricing work?', 'Plans are prepaid for a month or a year and paid on this website through Cashfree, with UPI, cards or netbanking. The app picks up a new plan within five minutes, and nothing renews automatically. When a plan ends, your account returns to Free and your projects and settings stay as they are.'],
+  ['How does pricing work?', 'Plans are prepaid for a month or a year and paid on this website through Dodo Payments, with UPI, cards, netbanking or digital wallets. The app picks up a new plan within five minutes, and nothing renews automatically. When a plan ends, your account returns to Free and your projects and settings stay as they are.'],
   ['Can I move from Pro to Ultimate?', 'Yes. Buy Ultimate and the Pro time you have left carries over, converted at the two monthly prices, so you never pay twice for the same days.'],
   ['Can I get a refund?', 'The refund and cancellation policy explains when you can and how to ask.'],
 ];
